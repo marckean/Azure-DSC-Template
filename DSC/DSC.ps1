@@ -6,7 +6,8 @@ param
 [string]$JukeboxID = "localhost",
 [string]$nodeName = $env:COMPUTERNAME,
 [string]$artifacts,
-[string]$artifactsSasToken
+[string]$artifactsSasToken,
+[string]$VNCKey
 )
 
 #Import-DscResource -Name 'xRemoteFile' -ModuleName '.\xPSDesiredStateConfiguration'
@@ -210,7 +211,7 @@ File RealVNCCopy
         }
         SetScript = {
             $process = "$env:ProgramFiles\RealVNC\VNC Server\vnclicense.exe"
-			$arguments = '-add SQAB2-FG7TW-29JVN-DQW6Y-6UWLA'
+			$arguments = "-add $($using:VNCKey)"
 			start-process $process -ArgumentList $arguments -Wait
 
 			New-ItemProperty -Path 'HKLM:\Software\RealVNC\vncserver' -Name 'Authentication' -Value 'VncAuth' -Force

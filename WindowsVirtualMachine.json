@@ -16,6 +16,13 @@
         "description": "Password for the Virtual Machine."
       }
     },
+    "VNCKey": {
+      "type": "string",
+      "defaultValue": "https://msmarcvault.vault.azure.net/secrets/VNCKey/ccd75beddbcf41e7b600358eac10abed",
+      "metadata": {
+        "description": "Key for VNC"
+      }
+    },
     "timeZone": {
       "type": "string",
       "defaultValue": "AUS Eastern Standard Time",
@@ -718,7 +725,8 @@
                 "JukeboxID": "[parameters('JukeboxID')]",
                 "nodeName": "[variables('vmName')]",
                 "artifacts": "[parameters('_artifactsLocation')]",
-                "artifactsSasToken": "[parameters('_artifactsLocationSasToken')]"          
+                "artifactsSasToken": "[parameters('_artifactsLocationSasToken')]",
+                "VNCKey": "[parameters('VNCKey')]"
               },
               //"configurationData": {
                 //"url": "[concat(parameters('_artifactsLocation'), variables('DSCArchiveFolder'), '/', variables('ConfigurationDataScriptName'))]"
