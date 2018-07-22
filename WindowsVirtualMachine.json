@@ -102,8 +102,11 @@
   "variables": {
     "virtualNetworkName": "eJukeNetwork",
     "addressPrefix": "192.168.0.0/16",
-    "subnetPrefix": "192.168.111.0/24",
-    "subnetName": "First",
+    "subnet1Prefix": "192.168.111.0/24",
+    "subnet1Name": "First",
+    "subnet2Prefix": "192.168.112.0/24",
+    "subnet2Name": "Second",
+    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'))]",
     "vmName": "[concat('eJukebox', parameters('JukeboxID'))]",
     "OSDiskName": "[concat('OsDisk', variables('vmName'))]",
     "imagePublisher": "MicrosoftWindowsServer",
@@ -284,9 +287,15 @@
         },
         "subnets": [
           {
-            "name": "[variables('subnetName')]",
+            "name": "[variables('subnet1Name')]",
             "properties": {
-              "addressPrefix": "[variables('subnetPrefix')]"
+              "addressPrefix": "[variables('subnet1Prefix')]"
+            }
+          },
+          {
+            "name": "[variables('subnet2Name')]",
+            "properties": {
+              "addressPrefix": "[variables('subnet2Prefix')]"
             }
           }
         ]
@@ -310,10 +319,7 @@
                 "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]"
               },
               "subnet": {
-                "name": "[variables('subnetName')]",
-                "properties": {
-                  "addressPrefix": "[variables('subnetPrefix')]"
-                }
+                "id": "[variables('subnetRef')]"
               }
             }
           }
