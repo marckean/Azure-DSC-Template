@@ -106,7 +106,8 @@
     "subnet1Name": "First",
     "subnet2Prefix": "192.168.112.0/24",
     "subnet2Name": "Second",
-    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'))]",
+    "subnet1Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnet1Name'))]",
+    "subnet2Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnet2Name'))]",
     "vmName": "[concat('eJukebox', parameters('JukeboxID'))]",
     "OSDiskName": "[concat('OsDisk', variables('vmName'))]",
     "imagePublisher": "MicrosoftWindowsServer",
@@ -319,7 +320,7 @@
                 "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]"
               },
               "subnet": {
-                "id": "[variables('subnetRef')]"
+                "id": "[variables('subnet1Ref')]"
               }
             }
           }
