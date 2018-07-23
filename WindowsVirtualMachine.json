@@ -72,6 +72,13 @@
         "description": "Name of Key Vault that has a secret"
       }
     },
+    "CrossResourceGroupName": {
+      "type": "string",
+      "defaultValue": "SharedResources",
+      "metadata": {
+        "description": "Name of the Cross Resource Deployment Resource Group"
+      }
+    },
     "vaultResourceGroup": {
       "type": "string",
       "defaultValue": "MSMarcVault",
@@ -356,7 +363,7 @@
       "dependsOn": [
         "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]",
         "[resourceId('Microsoft.Network/networkSecurityGroups', variables('NetworkSecurityGroupName'))]",
-        "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]"
+        "[resourceId('Microsoft.Resources/deployments', 'nestedTemplate')]"
       ]
     },
     {
