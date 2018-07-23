@@ -23,8 +23,7 @@
         },
         "secretName": "VNCKey"
       }
-    }
-  },
+    },
     "timeZone": {
       "type": "string",
       "defaultValue": "AUS Eastern Standard Time",
