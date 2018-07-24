@@ -84,7 +84,7 @@
         "description": "Resource Group of Key Vault that has a secret"
       }
     },
-    "secretUrlWithVersion2": {
+    "secretUrlWithVersion1": {
       "type": "string",
       "defaultValue": "https://msmarcvault.vault.azure.net/secrets/eJukebox-net-PK/73045146013f4a998ce13417598ec208",
       "metadata": {
@@ -385,7 +385,7 @@
               },
               "vaultCertificates": [
                 {
-                  "certificateUrl": "[parameters('secretUrlWithVersion2')]",
+                  "certificateUrl": "[parameters('secretUrlWithVersion1')]",
                   "certificateStore": "My"
                 }
               ]
