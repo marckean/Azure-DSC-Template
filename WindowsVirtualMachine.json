@@ -755,28 +755,13 @@
               //"configurationData": {
                 //"url": "[concat(parameters('_artifactsLocation'), variables('DSCArchiveFolder'), '/', variables('ConfigurationDataScriptName'))]"
               //},
-              "Properties": [
-                {
-                  "Name": "ConfigurationMode",
-                  "Value": "ApplyandAutoCorrect",
-                  "TypeName": "System.String"
-                },
-                {
-                  "Name": "RebootNodeIfNeeded",
-                  "Value": true,
-                  "TypeName": "System.Boolean"
-                },
-                {
-                  "Name": "ActionAfterReboot",
-                  "Value": "ContinueConfiguration",
-                  "TypeName": "System.String"
-                },
-                {
-                  "Name": "RefreshFrequencyMins",
-                  "Value": "30",
-                  "TypeName": "System.int"
-                }
-              ],
+              "RebootNodeIfNeeded": true,
+              "ConfigurationMode": "ApplyandAutoCorrect",
+              "ActionAfterReboot": "ContinueConfiguration",
+              "RefreshFrequencyMins": 30,
+              "privacy": {
+                "dataCollection": "enable"
+            },
             "advancedOptions": {
                 "forcePullAndApply": false
             }
