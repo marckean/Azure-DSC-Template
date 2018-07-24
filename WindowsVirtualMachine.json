@@ -281,7 +281,7 @@
       "dependsOn": []
     },
     {
-      "apiVersion": "2016-09-01",
+      "apiVersion": "2017-08-01",
       "name": "nestedTemplate",
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "SharedResources",
