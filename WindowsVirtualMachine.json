@@ -755,12 +755,36 @@
               //"configurationData": {
                 //"url": "[concat(parameters('_artifactsLocation'), variables('DSCArchiveFolder'), '/', variables('ConfigurationDataScriptName'))]"
               //},
-              "RebootNodeIfNeeded": true,
-              "ActionAfterReboot": "ContinueConfiguration",
-              "RefreshFrequencyMins": 30,
-              "privacy": {
-                "dataCollection": "enable"
-            },
+              "Properties": [
+                {
+                  "Name": "RegistrationKey",
+                  "Value": {
+                    "UserName": "PLACEHOLDER_DONOTUSE",
+                    "Password": "PrivateSettingsRef:registrationKeyPrivate"
+                  },
+                  "TypeName": "System.Management.Automation.PSCredential"
+                },
+                {
+                  "Name": "ConfigurationMode",
+                  "Value": "ApplyandAutoCorrect",
+                  "TypeName": "System.String"
+                },
+                {
+                  "Name": "RebootNodeIfNeeded",
+                  "Value": true,
+                  "TypeName": "System.Boolean"
+                },
+                {
+                  "Name": "ActionAfterReboot",
+                  "Value": "ContinueConfiguration",
+                  "TypeName": "System.String"
+                },
+                {
+                  "Name": "RefreshFrequencyMins",
+                  "Value": "30",
+                  "TypeName": "System.int"
+                }
+              ],
             "advancedOptions": {
                 "forcePullAndApply": false
             }
