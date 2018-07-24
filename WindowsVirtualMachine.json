@@ -285,9 +285,6 @@
       "name": "nestedTemplate",
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "SharedResources",
-      "tags": {
-        "displayName": "nestedTemplate"
-      },
       "properties": {
           "mode": "Incremental",
           "template": {
