@@ -10,6 +10,29 @@ $dest = "C:"
 #New-Item -Path $dest -ItemType directory
 Invoke-WebRequest $source -OutFile "$dest\$fileToInstall"
 
+
+
+# The DSC configuration that will generate metaconfigurations
+[DscLocalConfigurationManager()]
+Configuration LCMConfig
+{
+    Node localhost
+    {
+        Settings
+        {
+            RefreshFrequencyMins = 30
+            ConfigurationMode = 'ApplyandAutoCorrect'
+            RebootNodeIfNeeded = $true
+            ActionAfterReboot = 'ContinueConfiguration'
+            ConfigurationModeFrequencyMins = 15
+        }
+    }
+}
+
+LCMConfig -OutputPath "$env:SystemDrive\LCMConfig"
+Set-DscLocalConfigurationManager -Path "$env:SystemDrive\LCMConfig" -Verbose -Force
+
+
 <# Dropbox
 $dropboxDBfile = Get-ChildItem -Path $env:USERPROFILE\AppData\Local -Recurse -ErrorAction SilentlyContinue | ? {$_.Name -eq 'host.db'}
 $base64path = gc $dropboxDBfile.FullName | select -index 1
