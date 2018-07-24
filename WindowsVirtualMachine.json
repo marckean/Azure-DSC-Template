@@ -131,7 +131,6 @@
     "StorageAccountName": "[concat('diagstg', uniqueString(resourceGroup().id))]",
     "CustomScriptScriptFolder": "CustomScripts",
     "CustomScriptScriptFileName": "CustomScript.ps1",
-    "ConfigurationDataScriptName": "ConfigurationData.psd1",
     "FileToBeCopied": "UserLogonScript.ps1",
     "dscArchiveFolder": "DSC",
     "dscFileName": "DSC.ps1",
