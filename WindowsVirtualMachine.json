@@ -757,14 +757,6 @@
               //},
               "Properties": [
                 {
-                  "Name": "RegistrationKey",
-                  "Value": {
-                    "UserName": "PLACEHOLDER_DONOTUSE",
-                    "Password": "PrivateSettingsRef:registrationKeyPrivate"
-                  },
-                  "TypeName": "System.Management.Automation.PSCredential"
-                },
-                {
                   "Name": "ConfigurationMode",
                   "Value": "ApplyandAutoCorrect",
                   "TypeName": "System.String"
