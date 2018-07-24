@@ -84,13 +84,6 @@
         "description": "Resource Group of Key Vault that has a secret"
       }
     },
-    "secretUrlWithVersion1": {
-      "type": "string",
-      "defaultValue": "https://msmarcvault.vault.azure.net/secrets/DSC-Encryption/59787d401b4b4403bf4b3fee28784ff8",
-      "metadata": {
-        "description": "Url of the certificate in Key Vault"
-      }
-    },
     "secretUrlWithVersion2": {
       "type": "string",
       "defaultValue": "https://msmarcvault.vault.azure.net/secrets/eJukebox-net-PK/73045146013f4a998ce13417598ec208",
@@ -391,10 +384,6 @@
                 "id": "[resourceId(parameters('vaultResourceGroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
               },
               "vaultCertificates": [
-                {
-                  "certificateUrl": "[parameters('secretUrlWithVersion1')]",
-                  "certificateStore": "My"
-                },
                 {
                   "certificateUrl": "[parameters('secretUrlWithVersion2')]",
                   "certificateStore": "My"
