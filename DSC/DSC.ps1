@@ -19,104 +19,13 @@ xArchive, xRemoteFile, xPSEndpoint, xWindowsOptionalFeature
 $BuildData = "$env:SystemDrive\SourceFiles"
 Node $env:COMPUTERNAME
   {
-<#
-LocalConfigurationManager
-    {
-        ConfigurationModeFrequencyMins = 45
-        ConfigurationMode = 'ApplyAndMonitor' # or ApplyOnly, ApplyAndAutoCorrect
-        RefreshMode = 'Push' # or Disabled / Push / Pull
-        RebootNodeIfNeeded = $false
-        #CertificateId = $Node.Thumbprint
-        #ConfigurationID = $Node.NodeGuid
-        #DownloadManagerName = 'WebDownloadManager'
-        #RefreshFrequencyMins = 90
-
-        ### Note that the URL used to be configured differently, and contained an additional subfolder in the path
-        ### prior to v3.0.3.4 of xPSDesiredStateConfiguration. This was the old style.
-        #DownloadManagerCustomData      = @{
-        #    ServerUrl               = "https://dscpull-1.mikelab.local:8080/PSDSCPullServer/PSDSCPullServer.svc";
-        #    AllowUnsecureConnection = "TRUE"}
-    }
-#>
-<#
-[DSCLocalConfigurationManager()]
-configuration LCMConfig
-{
-    Node $AllNodes.NodeName
-    {
-        Settings
-        {
-            #ConfigurationModeFrequencyMins = 45
-            #ConfigurationMode = 'ApplyAndMonitor' # or ApplyOnly, ApplyAndAutoCorrect
-            RefreshMode = 'Push' # or Disabled / Push / Pull
-            RebootNodeIfNeeded = $false
-            #CertificateId = $Node.Thumbprint
-            #ConfigurationID = $Node.NodeGuid
-            #DownloadManagerName = 'WebDownloadManager'
-            #RefreshFrequencyMins = 90
-    
-            ### Note that the URL used to be configured differently, and contained an additional subfolder in the path
-            ### prior to v3.0.3.4 of xPSDesiredStateConfiguration. This was the old style.
-            #DownloadManagerCustomData      = @{
-            #    ServerUrl               = "https://dscpull-1.mikelab.local:8080/PSDSCPullServer/PSDSCPullServer.svc";
-            #    AllowUnsecureConnection = "TRUE"}
-        }
-    }
-}
-
-################################################################################
-##################     Files & Directories
-################################################################################
-#region Files and Directories
-
-File RealVNC-Copy {
-    SourcePath = "$artifacts" + "RealVNC/VNC-Server-5.3.2-Windows-en-64bit.msi" + "$artifactsSasToken"
-    #DestinationPath = "${env:ProgramFiles(x86)}\StationPlaylist\Data"
-    DestinationPath = "$BuildData\RealVNC"
-    Ensure = 'Present'
-    Type = 'Directory'
-    Recurse = $true
-    #DependsOn = "[Script]StationPlaylistInstall"
-  }
-
-xRemoteFile RealVNCCopy # Get-DscResource -Name 'xRemoteFile' -Syntax
-{
-    DestinationPath = "$BuildData\RealVNC"
-    Uri = "$artifacts" + "RealVNC/VNC-Server-5.3.2-Windows-en-64bit.msi" + "$artifactsSasToken"
-    #Credential = [PSCredential]]
-    #[DependsOn = [string[]]]
-    #[Headers = [HashTable]]
-    #[MatchSource = [bool]]
-    #[Proxy = [string]]
-    #[ProxyCredential = [PSCredential]]
-    #[PsDscRunAsCredential = [PSCredential]]
-    #[TimeoutSec = [UInt32]]
-    #[UserAgent = [string]]
-}
-#>
-    File BuildData 
+    File BuildData
     {
         DestinationPath = $BuildData
         Ensure = 'Present'
         Type = 'Directory'
     }
-#endregion
-<#
-################################################################################
-##################     Packages
-################################################################################
 
-File RealVNCCopy
-{            	
-    Ensure = "Present"              	
-    Type = "File"             	
-    SourcePath = "$artifacts" + "RealVNC/VNC-Server-5.3.2-Windows-en-64bit.msi" + "$artifactsSasToken"            	
-    DestinationPath = "$BuildData\RealVNC"
-    #Recurse = $true
-    #Credential = $Storagecredential
-    Force =  $true
-}
-#>
 ################################################################################
 ##################     Packages
 ################################################################################
