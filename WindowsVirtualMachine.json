@@ -12,17 +12,11 @@
     },
     "adminPassword": {
       "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Admin password pulled as a secret from Azure's Key Vault"
-      }
+      "defaultValue": ""
     },
     "VNCKey": {
       "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "VNC Key pulled as a secret from Azure's Key Vault"
-      }
+      "defaultValue": ""
     },
     "timeZone": {
       "type": "string",
