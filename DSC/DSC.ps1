@@ -120,7 +120,7 @@ Node $env:COMPUTERNAME
         }
         SetScript = {
             $process = "$env:ProgramFiles\RealVNC\VNC Server\vnclicense.exe"
-			$arguments = "-add $using:VNCKey"
+			$arguments = "-add $($using:VNCkey)"
 			start-process $process -ArgumentList $arguments -Wait
 
 			New-ItemProperty -Path 'HKLM:\Software\RealVNC\vncserver' -Name 'Authentication' -Value 'VncAuth' -Force
