@@ -145,6 +145,9 @@
       "apiVersion": "2018-05-01",
       "location": "[resourceGroup().location]",
       "name": "[parameters('NestedResourceGroupName')]",
+      "tags": {
+        "displayName": "ResourceGroup"
+      },
       "properties": {}
     },
     {
@@ -306,6 +309,9 @@
                   "type": "Microsoft.Network/virtualNetworks",
                   "name": "[variables('virtualNetworkName')]",
                   "location": "[resourceGroup().location]",
+                  "dependsOn": [
+                    "[concat('Microsoft.Resources/resourceGroups', parameters('NestedResourceGroupName'))]"
+                  ],
                   "tags": {
                     "displayName": "virtualNetwork"
                   },
