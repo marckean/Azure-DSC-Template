@@ -862,7 +862,8 @@
                   "vhd": {
                       "uri": "[concat('https://', variables('storageAccountName'), '.blob.core.windows.net/', 'vhds/', variables('vmName'), uniqueString(resourceGroup().id), '.vhd')]"
                   },
-                  "name": "[variables('vmName')]"
+                  "name": "[variables('vmName')]",
+                  "diskSizeGB": 127
                 },
                 "copy": [
                   {
