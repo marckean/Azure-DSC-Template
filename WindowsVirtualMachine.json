@@ -151,8 +151,7 @@
       "name": "[parameters('NestedResourceGroupName')]",
       "tags": {
         "displayName": "ResourceGroup"
-      },
-      "properties": {}
+      }
     },
     {
       "apiVersion": "2016-03-30",
