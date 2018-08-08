@@ -374,8 +374,11 @@
       "condition": "[equals(parameters('DisksType'),'Managed')]",
       "apiVersion": "2016-04-30-preview",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(variables('vmName'),'Managed')]",
+      "name": "[concat(variables('vmName'))]",
       "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "VM Managed Disks"
+      },
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts/', variables('StorageAccountName'))]",
         "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
@@ -818,8 +821,11 @@
             "condition": "[equals(parameters('DisksType'),'Un-Managed')]",
             "apiVersion": "2016-04-30-preview",
             "type": "Microsoft.Compute/virtualMachines",
-            "name": "[concat(variables('vmName'),'Un-Managed')]",
+            "name": "[concat(variables('vmName'))]",
             "location": "[resourceGroup().location]",
+            "tags": {
+              "displayName": "VM Un-Managed Disks"
+            },
             "dependsOn": [
               "[resourceId('Microsoft.Storage/storageAccounts/', variables('StorageAccountName'))]",
               "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
