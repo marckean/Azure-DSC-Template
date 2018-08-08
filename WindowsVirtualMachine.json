@@ -21,6 +21,10 @@
           "description": "User name for the Virtual Machine."
       }
     },
+    "resourceGroupLocation": {
+      "type": "string",
+      "defaultValue": "australiaeast"
+    },
     "NestedResourceGroupName": {
       "type": "string",
       "defaultValue": "SharedResourceGroup"
@@ -143,7 +147,7 @@
     {
       "type": "Microsoft.Resources/resourceGroups",
       "apiVersion": "2018-05-01",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('resourceGroupLocation')]",
       "name": "[parameters('NestedResourceGroupName')]",
       "tags": {
         "displayName": "ResourceGroup"
