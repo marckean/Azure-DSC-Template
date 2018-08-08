@@ -145,8 +145,8 @@
   },
   "resources": [
     {
-      "type": "Microsoft.Resources/resourceGroups",
       "apiVersion": "2018-05-01",
+      "type": "Microsoft.Resources/resourceGroups",
       "location": "[parameters('resourceGroupLocation')]",
       "name": "[parameters('NestedResourceGroupName')]",
       "tags": {
