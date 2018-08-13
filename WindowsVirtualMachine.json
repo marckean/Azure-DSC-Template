@@ -379,7 +379,6 @@
       ]
     },
     {
-//When we use managed disk make sure you use the latest API version for the VM resource as of this writing its ( �apiVersion�: �2016-04-30-preview�)
       "condition": "[equals(parameters('DisksType'),'Managed')]",
       "apiVersion": "2016-04-30-preview",
       "type": "Microsoft.Compute/virtualMachines",
