@@ -39,7 +39,7 @@
       }
     },
     {
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2015-01-01",
       "name": "sharedDeployment",
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "[parameters('RG_Name')]",
