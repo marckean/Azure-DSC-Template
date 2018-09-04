@@ -34,9 +34,7 @@
       "name": "sharedDeployment",
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "[parameters('RG_Name')]",
-      "dependsOn": [
-        "[parameters('RG_Name')]"
-      ],
+      "dependsOn": [],
       "properties": {
         "mode": "Incremental",
         "template": {
