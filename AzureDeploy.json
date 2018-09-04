@@ -1,0 +1,178 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "adminUsername": {
+      "type": "string",
+      "defaultValue": "marc.kean",
+      "minLength": 1,
+      "metadata": {
+        "description": "Username for the Virtual Machine."
+      }
+    },
+    "DisksType": {
+      "type": "string",
+      "defaultValue": "Un-Managed",
+      "allowedValues": [
+        "Managed",
+        "Un-Managed"
+      ],
+      "metadata": {
+        "description": "User name for the Virtual Machine."
+      }
+    },
+    "RG_Location": {
+      "type": "string",
+      "defaultValue": "australiaeast"
+    },
+    "RG_Name": {
+      "type": "string",
+      "defaultValue": "DSCTestTemplate",
+      "metadata": {
+        "description": "Name of the Cross Resource Deployment Resource Group"
+      }
+    },
+    "Shared_RG_Name": {
+      "type": "string",
+      "defaultValue": "SharedResources",
+      "metadata": {
+        "description": "Name of the Cross Resource Deployment Resource Group"
+      }
+    },
+    "adminPassword": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "VNCKey": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "timeZone": {
+      "type": "string",
+      "defaultValue": "AUS Eastern Standard Time",
+      "metadata": {
+        "description": "TimeZone for the VM deployment"
+      }
+    },
+    "dataDiskCount": {
+      "type": "int",
+      "allowedvalues": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "metadata": {
+        "description": "number of data disks."
+      }
+    },
+    "JukeboxID": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "Unique number for eJukebox machine"
+      }
+    },
+    "windowsOSVersion": {
+      "type": "string",
+      "defaultValue": "2016-Datacenter",
+      "allowedValues": [
+        "2008-R2-SP1",
+        "2012-Datacenter",
+        "2012-R2-Datacenter",
+        "2016-Datacenter"
+      ],
+      "metadata": {
+        "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version. Allowed values: 2008-R2-SP1, 2012-Datacenter, 2012-R2-Datacenter."
+      }
+    },
+    "vaultResourceID": {
+      "type": "string",
+      "defaultValue": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault",
+      "metadata": {
+        "description": "Resource Group of Key Vault that has a secret"
+      }
+    },
+    "secretUrlWithVersion1": {
+      "type": "string",
+      "defaultValue": "https://msmarcvault.vault.azure.net/secrets/eJukebox-net-PK/73045146013f4a998ce13417598ec208",
+      "metadata": {
+        "description": "Url of the certificate in Key Vault"
+      }
+    },
+    "_artifactsLocation": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "_artifactsLocationSasToken": {
+      "type": "securestring",
+      "defaultValue": ""
+    }
+  },
+  "variables": {
+    "ResourceGroupID": "[concat(subscription().id, '/resourceGroups/', parameters('RG_Name'))]",
+    "SharedResourceGroupID": "[concat(subscription().id, '/resourceGroups/', parameters('Shared_RG_Name'))]",
+    "virtualNetworkName": "eJukeNetwork",
+    "addressPrefix": "192.168.0.0/16",
+    "subnet1Prefix": "192.168.111.0/24",
+    "subnet1Name": "First",
+    "subnet2Prefix": "192.168.112.0/24",
+    "subnet2Name": "Second",
+    "vmName": "[concat('eJukebox', parameters('JukeboxID'))]",
+    "OSDiskName": "[concat('OsDisk', variables('vmName'))]",
+    "imagePublisher": "MicrosoftWindowsServer",
+    "imageOffer": "WindowsServer",
+    "nicName": "[concat('eJukebox', parameters('JukeboxID'), '_NIC')]",
+    "dnsNameForPublicIP": "[concat('prefix', uniqueString(subscription().id))]",
+    "publicIPAddressName": "[concat('eJukebox', parameters('JukeboxID'), '_PIP')]",
+    "publicIPAddressType": "Dynamic",
+    "vmSize": "Standard_B2s",
+    "NetworkSecurityGroupName": "[concat('eJukebox', parameters('JukeboxID'), '_NSG')]",
+    "StorageAccountName": "[concat('diagstg', uniqueString(subscription().id))]",
+    "CustomScriptScriptFolder": "CustomScripts",
+    "CustomScriptScriptFileName": "CustomScript.ps1",
+    "FileToBeCopied": "UserLogonScript.ps1",
+    "dscArchiveFolder": "DSC",
+    "dscFileName": "DSC.ps1",
+    "dscArchiveFileName": "DSC.zip",
+    "CustomScriptParameters": "[concat('-artifactsLocation ', parameters('_artifactsLocation'), ' -artifactsLocationSasToken \"', parameters('_artifactsLocationSasToken'), '\" -folderName ', variables('CustomScriptScriptFolder'), ' -fileToInstall ', variables('fileToBeCopied'))]",
+    "wadlogs": "<WadCfg> <DiagnosticMonitorConfiguration overallQuotaInMB=\"4096\" xmlns=\"http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration\"> <DiagnosticInfrastructureLogs scheduledTransferLogLevelFilter=\"Error\"/> <WindowsEventLog scheduledTransferPeriod=\"PT1M\" > <DataSource name=\"Application!*[System[(Level = 1 or Level = 2)]]\" /> <DataSource name=\"Security!*[System[(Level = 1 or Level = 2)]]\" /> <DataSource name=\"System!*[System[(Level = 1 or Level = 2)]]\" /></WindowsEventLog>",
+    "wadperfcounters1": "<PerformanceCounters scheduledTransferPeriod=\"PT1M\"><PerformanceCounterConfiguration counterSpecifier=\"\\Processor(_Total)\\% Processor Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU utilization\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor(_Total)\\% Privileged Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU privileged time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor(_Total)\\% User Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU user time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor Information(_Total)\\Processor Frequency\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"CPU frequency\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\System\\Processes\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"Processes\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Process(_Total)\\Thread Count\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"Threads\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Process(_Total)\\Handle Count\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"Handles\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\% Committed Bytes In Use\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Memory usage\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\Available Bytes\" sampleRate=\"PT15S\" unit=\"Bytes\"><annotation displayName=\"Memory available\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\Committed Bytes\" sampleRate=\"PT15S\" unit=\"Bytes\"><annotation displayName=\"Memory committed\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\Commit Limit\" sampleRate=\"PT15S\" unit=\"Bytes\"><annotation displayName=\"Memory commit limit\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\% Disk Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Disk active time\" locale=\"en-us\"/></PerformanceCounterConfiguration>",
+    "wadperfcounters2": "<PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\% Disk Read Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Disk active read time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\% Disk Write Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Disk active write time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Transfers/sec\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk operations\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Reads/sec\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk read operations\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Writes/sec\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk write operations\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Bytes/sec\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk speed\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Read Bytes/sec\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk read speed\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Write Bytes/sec\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk write speed\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\LogicalDisk(_Total)\\% Free Space\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Disk free space (percentage)\" locale=\"en-us\"/></PerformanceCounterConfiguration></PerformanceCounters>",
+    "wadcfgxstart": "[concat(variables('wadlogs'), variables('wadperfcounters1'), variables('wadperfcounters2'), '<Metrics resourceId=\"')]",
+    "wadmetricsresourceid": "[concat('/subscriptions/', subscription().Id, '/resourceGroups/', parameters('RG_Name'), '/providers/', 'Microsoft.Compute/virtualMachines/')]",
+    "wadcfgxend": "\"><MetricAggregation scheduledTransferPeriod=\"PT1H\"/><MetricAggregation scheduledTransferPeriod=\"PT1M\"/></Metrics></DiagnosticMonitorConfiguration></WadCfg>"
+  },
+  "resources": [
+      {
+      "apiVersion": "2018-05-01",
+      "type": "Microsoft.Resources/resourceGroups",
+      "location": "[parameters('RG_Location')]",
+      "name": "[parameters('Shared_RG_Name')]",
+      "tags": {
+        "displayName": "Shared_ResourceGroup"
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "sharedDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[parameters('Shared_RG_Name')]",
+      "dependsOn": [
+        "[parameters('Shared_RG_Name')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(deployment().properties.templateLink.uri, 'public-ip.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "publicIPAddresses_name": {
+            "value": "[parameters('publicIPAddresses_name')]"
+          }
+        }
+      }
+    }
+  ]
+}

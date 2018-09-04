@@ -1,0 +1,65 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {},
+  "variables": {},
+  "resources": [
+    {
+      "apiVersion": "2018-05-01",
+      "type": "Microsoft.Resources/resourceGroups",
+      "location": "[parameters('RG_Location')]",
+      "name": "[parameters('Shared_RG_Name')]",
+      "tags": {
+        "displayName": "Shared_ResourceGroup"
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "sharedDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[parameters('Shared_RG_Name')]",
+      "dependsOn": [
+        "[parameters('Shared_RG_Name')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "resources": [
+            {
+              "apiVersion": "2016-03-30",
+              "type": "Microsoft.Network/virtualNetworks",
+              "name": "[variables('virtualNetworkName')]",
+              "location": "[parameters('RG_Location')]",
+              "tags": {
+                "displayName": "virtualNetwork"
+              },
+              "properties": {
+                "addressSpace": {
+                  "addressPrefixes": [
+                    "[variables('addressPrefix')]"
+                  ]
+                },
+                "subnets": [
+                  {
+                    "name": "[variables('subnet1Name')]",
+                    "properties": {
+                      "addressPrefix": "[variables('subnet1Prefix')]"
+                    }
+                  },
+                  {
+                    "name": "[variables('subnet2Name')]",
+                    "properties": {
+                      "addressPrefix": "[variables('subnet2Prefix')]"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
