@@ -164,12 +164,33 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(deployment().properties.templateLink.uri, 'public-ip.json')]",
+          "uri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/SharedResources.json",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "publicIPAddresses_name": {
-            "value": "[parameters('publicIPAddresses_name')]"
+          "RG_Location": {
+            "value": "[parameters('RG_Location')]"
+          },
+          "RG_Name": {
+            "value": "[parameters('Shared_RG_Name')]"
+          },
+          "virtualNetworkName": {
+            "value": "[variables('virtualNetworkName')]"
+          },
+          "addressPrefix": {
+            "value": "[variables('addressPrefix')]"
+          },
+          "subnet1Name": {
+            "value": "[variables('subnet1Name')]"
+          },
+          "subnet1Prefix": {
+            "value": "[variables('subnet1Prefix')]"
+          },
+          "subnet2Name": {
+            "value": "[variables('subnet2Name')]"
+          },
+          "subnet2Prefix": {
+            "value": "[variables('subnet2Prefix')]"
           }
         }
       }
