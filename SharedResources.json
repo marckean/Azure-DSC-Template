@@ -42,9 +42,9 @@
       "apiVersion": "2017-05-10",
       "name": "sharedDeployment",
       "type": "Microsoft.Resources/deployments",
-      "resourceGroup": "[parameters('Shared_RG_Name')]",
+      "resourceGroup": "[parameters('RG_Name')]",
       "dependsOn": [
-        "[parameters('Shared_RG_Name')]"
+        "[parameters('RG_Name')]"
       ],
       "properties": {
         "mode": "Incremental",
