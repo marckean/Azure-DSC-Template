@@ -30,16 +30,7 @@
   "variables": {},
   "resources": [
     {
-      "apiVersion": "2018-05-01",
-      "type": "Microsoft.Resources/resourceGroups",
-      "location": "[parameters('RG_Location')]",
-      "name": "[parameters('RG_Name')]",
-      "tags": {
-        "displayName": "Shared_ResourceGroup"
-      }
-    },
-    {
-      "apiVersion": "2015-01-01",
+      "apiVersion": "2017-05-10",
       "name": "sharedDeployment",
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "[parameters('RG_Name')]",
