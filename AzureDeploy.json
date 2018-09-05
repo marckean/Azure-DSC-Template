@@ -77,6 +77,7 @@
   },
   "variables": {
     "sharedResourcesUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/SharedResources.json",
+    "storageResourcesUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/StorageResources.json",
     "ResourceGroupID": "[concat(subscription().id, '/resourceGroups/', parameters('ARMstuff').RG_Name)]",
     "SharedResourceGroupID": "[concat(subscription().id, '/resourceGroups/', parameters('ARMstuff').Shared_RG_Name)]",
     "virtualNetworkName": "eJukeNetwork",
@@ -166,11 +167,11 @@
     },
     {
       "apiVersion": "2017-05-10",
-      "name": "sharedDeployment",
+      "name": "storageDeployment",
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "[parameters('ARMstuff').Shared_RG_Name]",
       "dependsOn": [
-        "[parameters('ARMstuff').Shared_RG_Name]"
+        "sharedDeployment"
       ],
       "properties": {
         "mode": "Incremental",
