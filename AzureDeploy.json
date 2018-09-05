@@ -76,7 +76,7 @@
     }
   },
   "variables": {
-    "sharedResourcesUri": "[uri(deployment().properties.templateLink.uri, 'Azure-DSC-Template/SharedResource.json')]",
+    "sharedResourcesUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/SharedResources.json",
     "ResourceGroupID": "[concat(subscription().id, '/resourceGroups/', parameters('ARMstuff').RG_Name)]",
     "SharedResourceGroupID": "[concat(subscription().id, '/resourceGroups/', parameters('ARMstuff').Shared_RG_Name)]",
     "virtualNetworkName": "eJukeNetwork",
