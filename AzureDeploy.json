@@ -189,7 +189,7 @@
             "value": "[parameters('ARMstuff').RG_Location]"
           },
           "RG_Name": {
-            "value": "[parameters('ARMstuff').Shared_RG_Name]"
+            "value": "[parameters('ARMstuff').RG_Name]"
           },
           "StorageAccountName": {
             "value": "[variables('StorageAccountName')]"
