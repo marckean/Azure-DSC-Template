@@ -124,6 +124,15 @@
       }
     },
     {
+      "apiVersion": "2018-05-01",
+      "type": "Microsoft.Resources/resourceGroups",
+      "location": "[parameters('ARMstuff').RG_Location]",
+      "name": "[parameters('ARMstuff').RG_Name]",
+      "tags": {
+        "displayName": "ResourceGroup"
+      }
+    },
+    {
       "apiVersion": "2017-05-10",
       "name": "sharedDeployment",
       "type": "Microsoft.Resources/deployments",
@@ -138,7 +147,7 @@
             "value": "[parameters('ARMstuff').RG_Location]"
           },
           "RG_Name": {
-            "value": "[parameters('ARMstuff').Shared_RG_Name]"
+            "value": "[parameters('ARMstuff').RG_Name]"
           },
           "virtualNetworkName": {
             "value": "[variables('virtualNetworkName')]"
