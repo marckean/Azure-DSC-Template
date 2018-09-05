@@ -163,6 +163,33 @@
           "contentVersion": "1.0.0.0"
         }
       }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "sharedDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[parameters('ARMstuff').Shared_RG_Name]",
+      "dependsOn": [
+        "[parameters('ARMstuff').Shared_RG_Name]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "parameters": {
+          "RG_Location": {
+            "value": "[parameters('ARMstuff').RG_Location]"
+          },
+          "RG_Name": {
+            "value": "[parameters('ARMstuff').Shared_RG_Name]"
+          },
+          "StorageAccountName": {
+            "value": "[variables('StorageAccountName')]"
+          }
+        },
+        "templateLink": {
+          "uri": "[variables('storageResourcesUri')]",
+          "contentVersion": "1.0.0.0"
+        }
+      }
     }
   ]
 }

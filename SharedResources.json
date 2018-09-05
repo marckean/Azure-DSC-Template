@@ -31,7 +31,7 @@
   "resources": [
     {
       "apiVersion": "2017-05-10",
-      "name": "vNetDeployment",
+      "name": "vNetSingleDeployment",
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "[parameters('RG_Name')]",
       "dependsOn": [],

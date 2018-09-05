@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "RG_Location": {
+      "type": "string"
+    },
+    "RG_Name": {
+      "type": "string"
+    },
+    "StorageAccountName": {
+      "type": "string"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "apiVersion": "2017-05-10",
+      "name": "storageSingleDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[parameters('RG_Name')]",
+      "dependsOn": [
+        "[parameters('RG_Name')]",
+        "Microsoft.Resources/deployments/sharedDeployment"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "resources": [
+            {
+              "name": "[parameters('StorageAccountName')]",
+              "type": "Microsoft.Storage/storageAccounts",
+              "location": "[parameters('RG_Location')]",
+              "apiVersion": "2017-10-01",
+              "kind": "StorageV2",
+              "sku": {
+                "name": "Standard_LRS"
+              },
+              "dependsOn": [],
+              "tags": {
+                "displayName": "storageDeployment",
+                "createdBy": "Marc Kean"
+              }
+            }  
+          ]
+        }
+      }
+    }
+  ]
+}
