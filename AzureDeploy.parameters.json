@@ -2,30 +2,30 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0" ,
   "parameters": {
-    "adminUsername": {
-      "value": "marc.kean"
-    },
+    "VMstuff": {
+      "value": {
+        "JukeboxID": "1603",
+        "adminUsername": "marc.kean",
+        "adminPassword": {
+          "reference": {
+            "keyVault": {
+              "id": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
+            },
+            "secretName": "VMTestAdminPassword"
+          }
+        },
+        "VNCKey": {
+          "reference": {
+            "keyVault": {
+              "id": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
+            },
+            "secretName": "VNCKey"
+          }
+        }
+      }
+  },
     "dataDiskCount": {
       "value": 1
-    },
-    "JukeboxID": {
-      "value": "1603"
-    },
-    "adminPassword": {
-      "reference": {
-        "keyVault": {
-          "id": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
-        },
-        "secretName": "VMTestAdminPassword"
-      }
-    },
-    "VNCKey": {
-      "reference": {
-        "keyVault": {
-          "id": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
-        },
-        "secretName": "VNCKey"
-      }
     }
   }
 }
