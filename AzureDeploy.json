@@ -236,6 +236,33 @@
           "contentVersion": "1.0.0.0"
         }
       }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "nsgDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[parameters('ARMstuff').RG_Name]",
+      "dependsOn": [
+        "pipDeployment"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "parameters": {
+          "RG_Location": {
+            "value": "[parameters('ARMstuff').RG_Location]"
+          },
+          "RG_Name": {
+            "value": "[parameters('ARMstuff').RG_Name]"
+          },
+          "NetworkSecurityGroupName": {
+            "value": "[variables('NetworkSecurityGroupName')]"
+          }
+        },
+        "templateLink": {
+          "uri": "[variables('nsgResourceUri')]",
+          "contentVersion": "1.0.0.0"
+        }
+      }
     }
   ]
 }
