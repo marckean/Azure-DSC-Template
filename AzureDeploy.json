@@ -225,10 +225,10 @@
             "value": "[variables('publicIPAddressName')]"
           },
           "publicIPAddressType": {
-            "value": "[variables('publicIPAddressName')]"
+            "value": "[variables('publicIPAddressType')]"
           },
           "dnsNameForPublicIP": {
-            "value": "[variables('publicIPAddressName')]"
+            "value": "[variables('dnsNameForPublicIP')]"
           }
         },
         "templateLink": {
