@@ -77,7 +77,10 @@
   },
   "variables": {
     "sharedResourcesUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/SharedResources.json",
-    "storageResourcesUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/StorageResources.json",
+    "storageResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/StorageResource.json",
+    "pipResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/pipResource.json",
+    "nsgResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/nsgResource.json",
+    "nicResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/nicResource.json",
     "ResourceGroupID": "[concat(subscription().id, '/resourceGroups/', parameters('ARMstuff').RG_Name)]",
     "SharedResourceGroupID": "[concat(subscription().id, '/resourceGroups/', parameters('ARMstuff').Shared_RG_Name)]",
     "virtualNetworkName": "eJukeNetwork",
@@ -178,7 +181,7 @@
       "apiVersion": "2017-05-10",
       "name": "storageDeployment",
       "type": "Microsoft.Resources/deployments",
-      "resourceGroup": "[parameters('ARMstuff').Shared_RG_Name]",
+      "resourceGroup": "[parameters('ARMstuff').RG_Name]",
       "dependsOn": [
         "sharedDeployment"
       ],
@@ -196,7 +199,40 @@
           }
         },
         "templateLink": {
-          "uri": "[variables('storageResourcesUri')]",
+          "uri": "[variables('storageResourceUri')]",
+          "contentVersion": "1.0.0.0"
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "pipDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[parameters('ARMstuff').RG_Name]",
+      "dependsOn": [
+        "storageDeployment"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "parameters": {
+          "RG_Location": {
+            "value": "[parameters('ARMstuff').RG_Location]"
+          },
+          "RG_Name": {
+            "value": "[parameters('ARMstuff').RG_Name]"
+          },
+          "publicIPAddressName": {
+            "value": "[variables('publicIPAddressName')]"
+          },
+          "publicIPAddressType": {
+            "value": "[variables('publicIPAddressName')]"
+          },
+          "dnsNameForPublicIP": {
+            "value": "[variables('publicIPAddressName')]"
+          }
+        },
+        "templateLink": {
+          "uri": "[variables('storageResourceUri')]",
           "contentVersion": "1.0.0.0"
         }
       }

@@ -8,7 +8,13 @@
     "RG_Name": {
       "type": "string"
     },
-    "StorageAccountName": {
+    "publicIPAddressName": {
+      "type": "string"
+    },
+    "publicIPAddressType": {
+      "type": "string"
+    },
+    "dnsNameForPublicIP": {
       "type": "string"
     }
   },
@@ -16,10 +22,11 @@
   "resources": [
     {
       "apiVersion": "2017-05-10",
-      "name": "storageSingleDeployment",
+      "name": "pipDeployment",
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "[parameters('RG_Name')]",
-      "dependsOn": [],
+      "dependsOn": [
+      ],
       "properties": {
         "mode": "Incremental",
         "template": {
@@ -27,18 +34,22 @@
           "contentVersion": "1.0.0.0",
           "resources": [
             {
-              "name": "[parameters('StorageAccountName')]",
-              "type": "Microsoft.Storage/storageAccounts",
+              "type": "Microsoft.Network/publicIPAddresses",
+              "name": "[parameters('publicIPAddressName')]",
               "location": "[parameters('RG_Location')]",
-              "apiVersion": "2017-10-01",
-              "kind": "StorageV2",
-              "sku": {
-                "name": "Standard_LRS"
-              },
-              "dependsOn": [],
+              "apiVersion": "2017-06-01",
+              "dependsOn": [
+              ],
               "tags": {
-                "displayName": "storageDeployment",
-                "createdBy": "Marc Kean"
+                "displayName": "PublicIPAddress",
+                "createdBy": "Marc Kean",
+                "Application": "eJukebox"
+              },
+              "properties": {
+                "publicIPAllocationMethod": "[parameters('publicIPAddressType')]",
+                "dnsSettings": {
+                  "domainNameLabel": "[parameters('dnsNameForPublicIP')]"
+                }
               }
             }  
           ]
