@@ -22,7 +22,7 @@
   "resources": [
     {
       "apiVersion": "2017-05-10",
-      "name": "pipDeployment",
+      "name": "pipSingleDeployment",
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "[parameters('RG_Name')]",
       "dependsOn": [
