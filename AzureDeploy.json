@@ -282,16 +282,16 @@
             "value": "[parameters('ARMstuff').RG_Name]"
           },
           "nicName": {
-            "value": "[variables('NetworkSecurityGroupName')]"
+            "value": "[variables('nicName')]"
           },
           "publicIPAddressName": {
-            "value": "[variables('NetworkSecurityGroupName')]"
+            "value": "[variables('publicIPAddressName')]"
           },
           "virtualNetworkName": {
-            "value": "[variables('NetworkSecurityGroupName')]"
+            "value": "[variables('virtualNetworkName')]"
           },
           "subnet1Name": {
-            "value": "[variables('NetworkSecurityGroupName')]"
+            "value": "[variables('subnet1Name')]"
           },
           "NetworkSecurityGroupName": {
             "value": "[variables('NetworkSecurityGroupName')]"
