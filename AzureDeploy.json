@@ -263,6 +263,45 @@
           "contentVersion": "1.0.0.0"
         }
       }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "nicDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[parameters('ARMstuff').RG_Name]",
+      "dependsOn": [
+        "nsgDeployment"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "parameters": {
+          "RG_Location": {
+            "value": "[parameters('ARMstuff').RG_Location]"
+          },
+          "RG_Name": {
+            "value": "[parameters('ARMstuff').RG_Name]"
+          },
+          "nicName": {
+            "value": "[variables('NetworkSecurityGroupName')]"
+          },
+          "publicIPAddressName": {
+            "value": "[variables('NetworkSecurityGroupName')]"
+          },
+          "virtualNetworkName": {
+            "value": "[variables('NetworkSecurityGroupName')]"
+          },
+          "subnet1Name": {
+            "value": "[variables('NetworkSecurityGroupName')]"
+          },
+          "NetworkSecurityGroupName": {
+            "value": "[variables('NetworkSecurityGroupName')]"
+          }
+        },
+        "templateLink": {
+          "uri": "[variables('nicResourceUri')]",
+          "contentVersion": "1.0.0.0"
+        }
+      }
     }
   ]
 }
