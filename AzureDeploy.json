@@ -232,7 +232,7 @@
           }
         },
         "templateLink": {
-          "uri": "[variables('storageResourceUri')]",
+          "uri": "[variables('pipResourceUri')]",
           "contentVersion": "1.0.0.0"
         }
       }
