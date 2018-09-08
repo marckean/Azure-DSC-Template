@@ -14,19 +14,49 @@
     "adminPassword": {
       "type": "string"
     },
+    "JukeboxID": {
+      "type": "string"
+    },
+    "windowsOSVersion": {
+      "type": "string"
+    },
     "vmName": {
       "type": "string"
     },
     "vmSize": {
       "type": "string"
     },
+    "dataDiskCount": {
+      "type": "string"
+    },
+    "DisksType": {
+      "type": "string"
+    },
     "timeZone": {
+      "type": "string"
+    },
+    "StorageAccountName": {
+      "type": "string"
+    },
+    "nicName": {
+      "type": "string"
+    },
+    "VNCKey": {
       "type": "string"
     },
     "vaultResourceID": {
       "type": "string"
     },
     "secretUrlWithVersion1": {
+      "type": "string"
+    },
+    "wadcfgxstart": {
+      "type": "string"
+    },
+    "wadmetricsresourceid": {
+      "type": "string"
+    },
+    "wadcfgxend": {
       "type": "string"
     },
     "_artifactsLocation": {
@@ -67,7 +97,7 @@
             {
               "apiVersion": "2016-04-30-preview",
               "type": "Microsoft.Compute/virtualMachines",
-              "name": "[concat(variables('vmName'),'Managed')]",
+              "name": "[concat(parameters('vmName'),'Managed')]",
               "location": "[parameters('RG_Location')]",
               "tags": {
                 "displayName": "VM Managed Disks",
@@ -82,7 +112,7 @@
                   "vmSize": "[variables('vmSize')]"
                 },
                 "osProfile": {
-                  "computerName": "[variables('vmName')]",
+                  "computerName": "[parameters('vmName')]",
                   "adminUsername": "[parameters('adminUsername')]",
                   "adminPassword": "[parameters('adminPassword')]",
                   "windowsConfiguration": {
@@ -130,14 +160,14 @@
                 "networkProfile": {
                   "networkInterfaces": [
                     {
-                      "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+                      "id": "[resourceId('Microsoft.Network/networkInterfaces',parameters('nicName'))]"
                     }
                   ]
                 },
                 "diagnosticsProfile": {
                   "bootDiagnostics": {
                     "enabled": true,
-                    "storageUri": "[concat('http://',variables('storageAccountName'),'.blob.core.windows.net')]"
+                    "storageUri": "[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net')]"
                   }
                 }
               },
@@ -151,7 +181,7 @@
                     "displayName": "AzureDiagnostics"
                   },
                   "dependsOn": [
-                    "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), 'Managed')]"
+                    "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'), 'Managed')]"
                   ],
                   "properties": {
                     "publisher": "Microsoft.Azure.Diagnostics",
@@ -416,7 +446,7 @@
                             ]
                           },
                           "Metrics": {
-                            "resourceId": "[variables('wadmetricsresourceid')]",
+                            "resourceId": "[parameters('wadmetricsresourceid')]",
                             "MetricAggregation": [
                               {
                                 "scheduledTransferPeriod": "PT1H"
@@ -430,8 +460,9 @@
                       }
                     },
                     "protectedSettings": {
-                    "storageAccountName": "[variables('StorageAccountName')]",
-                    "storageAccountKey": "[listkeys(concat(variables('ResourceGroupID'), '/providers/Microsoft.Storage/storageAccounts/', variables('StorageAccountName')), '2016-01-01').keys[0].value]"
+                    "storageAccountName": "[parameters('StorageAccountName')]",
+                    "storageAccountKey": "[listkeys(resourceId('Microsoft.Storage/storageAccounts', parameters('StorageAccountName')), '2018-02-01').keys[0].value]"
+
                   }
                   }
                 },
@@ -441,7 +472,7 @@
                   "location": "[parameters('RG_Location')]",
                   "apiVersion": "2016-04-30-preview",
                   "dependsOn": [
-                    "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), 'Managed')]"
+                    "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'), 'Managed')]"
                   ],
                   "tags": {
                     "displayName": "DSC"
@@ -459,7 +490,7 @@
                       },
                       "configurationArguments": {
                         "JukeboxID": "[parameters('JukeboxID')]",
-                        "nodeName": "[variables('vmName')]",
+                        "nodeName": "[parameters('vmName')]",
                         "artifacts": "[parameters('_artifactsLocation')]",
                         "artifactsSasToken": "[parameters('_artifactsLocationSasToken')]",
                         "VNCKey": "[parameters('VNCKey')]"
@@ -491,7 +522,7 @@
                   "location": "[parameters('RG_Location')]",
                   "apiVersion": "2016-04-30-preview",
                   "dependsOn": [
-                    "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), 'Managed')]"
+                    "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'), 'Managed')]"
                   ],
                   "tags": {
                     "displayName": "CustomScript"
@@ -532,7 +563,7 @@
             {
               "apiVersion": "2016-04-30-preview",
               "type": "Microsoft.Compute/virtualMachines",
-              "name": "[concat(variables('vmName'),'Un-Managed')]",
+              "name": "[concat(parameters('vmName'),'Un-Managed')]",
               "location": "[parameters('RG_Location')]",
               "tags": {
                 "displayName": "VM Un-Managed Disks",
@@ -547,7 +578,7 @@
                   "vmSize": "[variables('vmSize')]"
                 },
                 "osProfile": {
-                  "computerName": "[variables('vmName')]",
+                  "computerName": "[parameters('vmName')]",
                   "adminUsername": "[parameters('adminUsername')]",
                   "adminPassword": "[parameters('adminPassword')]",
                   "windowsConfiguration": {
@@ -578,9 +609,9 @@
                   "osDisk": {
                     "createOption": "FromImage",
                     "vhd": {
-                      "uri": "[concat('https://', variables('storageAccountName'), '.blob.core.windows.net/', 'vhds/', variables('vmName'), uniqueString(subscription().id), '.vhd')]"
+                      "uri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net/', 'vhds/', parameters('vmName'), uniqueString(subscription().id), '.vhd')]"
                     },
-                    "name": "[variables('vmName')]",
+                    "name": "[parameters('vmName')]",
                     "diskSizeGB": 127
                   },
                   "copy": [
@@ -592,7 +623,7 @@
                         "lun": "[copyIndex('dataDisks')]",
                         "name": "[concat(uniqueString(subscription().id), copyIndex('dataDisks'))]",
                         "vhd": {
-                          "uri": "[concat('https://', variables('storageAccountName'), '.blob.core.windows.net', '/vhds/', uniqueString(subscription().id), copyIndex('dataDisks'), '.vhd')]"
+                          "uri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net', '/vhds/', uniqueString(subscription().id), copyIndex('dataDisks'), '.vhd')]"
                         },
                         "createOption": "Empty"
                       }
@@ -602,14 +633,14 @@
                 "networkProfile": {
                   "networkInterfaces": [
                     {
-                      "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+                      "id": "[resourceId('Microsoft.Network/networkInterfaces',parameters('nicName'))]"
                     }
                   ]
                 },
                 "diagnosticsProfile": {
                   "bootDiagnostics": {
                     "enabled": true,
-                    "storageUri": "[concat('https://',variables('storageAccountName'),'.blob.core.windows.net')]"
+                    "storageUri": "[concat('https://',parameters('storageAccountName'),'.blob.core.windows.net')]"
                   }
                 }
               },
@@ -620,7 +651,7 @@
                   "location": "[parameters('RG_Location')]",
                   "apiVersion": "2015-06-15",
                   "dependsOn": [
-                      "[concat(variables('ResourceGroupID'), '/providers/Microsoft.Compute/virtualMachines/', variables('vmName'), 'Un-Managed')]"
+                    "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'), 'Un-Managed')]"
                   ],
                   "tags": {
                       "displayName": "AzureDiagnostics"
@@ -631,23 +662,23 @@
                       "typeHandlerVersion": "1.5",
                       "autoUpgradeMinorVersion": true,
                       "settings": {
-                          "xmlCfg": "[base64(concat(variables('wadcfgxstart'), variables('wadmetricsresourceid'), variables('vmName'), variables('wadcfgxend')))]",
-                          "storageAccount": "[variables('StorageAccountName')]"
+                          "xmlCfg": "[base64(concat(parameters('wadcfgxstart'), parameters('wadmetricsresourceid'), parameters('vmName'), parameters('wadcfgxend')))]",
+                          "storageAccount": "[parameters('StorageAccountName')]"
                       },
                       "protectedSettings": {
-                        "storageAccountName": "[variables('StorageAccountName')]",
-                        "storageAccountKey": "[listkeys(concat(variables('ResourceGroupID'), '/providers/Microsoft.Storage/storageAccounts/', variables('StorageAccountName')), '2016-01-01').keys[0].value]",
+                        "storageAccountName": "[parameters('StorageAccountName')]",
+                        "storageAccountKey": "[listkeys(resourceId('Microsoft.Storage/storageAccounts', parameters('StorageAccountName')), '2018-02-01').keys[0].value]",
                         "storageAccountEndPoint": "https://core.windows.net"
                       }
                   }
               },
                 { //Extension schema https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/dsc-windows
-                  "name": "[concat(variables('vmName'), 'Un-Managed', 'DSC')]",
+                  "name": "[concat(parameters('vmName'), 'Un-Managed', 'DSC')]",
                   "type": "extensions/Microsoft.Powershell.DSC",
                   "location": "[parameters('RG_Location')]",
                   "apiVersion": "2016-04-30-preview",
                   "dependsOn": [
-                    "[concat(variables('ResourceGroupID'), '/providers/Microsoft.Compute/virtualMachines/', variables('vmName'), 'Un-Managed')]"
+                    "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'), 'Un-Managed')]"
                   ],
                   "tags": {
                     "displayName": "DSC"
@@ -665,7 +696,7 @@
                       },
                       "configurationArguments": {
                         "JukeboxID": "[parameters('JukeboxID')]",
-                        "nodeName": "[variables('vmName')]",
+                        "nodeName": "[parameters('vmName')]",
                         "artifacts": "[parameters('_artifactsLocation')]",
                         "artifactsSasToken": "[parameters('_artifactsLocationSasToken')]",
                         "VNCKey": "[parameters('VNCKey')]"
@@ -697,7 +728,7 @@
                   "location": "[parameters('RG_Location')]",
                   "apiVersion": "2016-04-30-preview",
                   "dependsOn": [
-                    "[concat(variables('ResourceGroupID'), '/providers/Microsoft.Compute/virtualMachines/', variables('vmName'), 'Un-Managed')]"
+                    "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'), 'Un-Managed')]"
                   ],
                   "tags": {
                     "displayName": "CustomScript"

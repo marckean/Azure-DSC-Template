@@ -7,6 +7,42 @@
       "defaultValue": {
         "adminUsername": "marc.kean",
         "adminPassword": "",
+        "DisksType": {
+          "type": "string",
+          "defaultValue": "Un-Managed",
+          "allowedValues": [
+            "Managed",
+            "Un-Managed"
+          ],
+          "metadata": {
+            "description": "User name for the Virtual Machine."
+          }
+        },
+        "dataDiskCount": {
+          "type": "int",
+          "allowedvalues": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "metadata": {
+            "description": "number of data disks."
+          }
+        },
+        "windowsOSVersion": {
+          "type": "string",
+          "defaultValue": "2016-Datacenter",
+          "allowedValues": [
+            "2008-R2-SP1",
+            "2012-Datacenter",
+            "2012-R2-Datacenter",
+            "2016-Datacenter"
+          ],
+          "metadata": {
+            "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version. Allowed values: 2008-R2-SP1, 2012-Datacenter, 2012-R2-Datacenter."
+          }
+        },
         "VNCKey": "",
         "timeZone": "AUS Eastern Standard Time",
         "JukeboxID": "",
@@ -30,17 +66,6 @@
         "description": "Hub object.  See defaultValue for example. The gatewaySku string is any of Basic|VpnGw1|VpnGw2|VpnGw3"
       }
     },
-    "DisksType": {
-      "type": "string",
-      "defaultValue": "Un-Managed",
-      "allowedValues": [
-        "Managed",
-        "Un-Managed"
-      ],
-      "metadata": {
-        "description": "User name for the Virtual Machine."
-      }
-    },
     "_artifactsLocation": {
       "type": "string",
       "defaultValue": ""
@@ -48,31 +73,6 @@
     "_artifactsLocationSasToken": {
       "type": "string",
       "defaultValue": ""
-    },
-    "dataDiskCount": {
-      "type": "int",
-      "allowedvalues": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "metadata": {
-        "description": "number of data disks."
-      }
-    },
-    "windowsOSVersion": {
-      "type": "string",
-      "defaultValue": "2016-Datacenter",
-      "allowedValues": [
-        "2008-R2-SP1",
-        "2012-Datacenter",
-        "2012-R2-Datacenter",
-        "2016-Datacenter"
-      ],
-      "metadata": {
-        "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version. Allowed values: 2008-R2-SP1, 2012-Datacenter, 2012-R2-Datacenter."
-      }
     }
   },
   "variables": {
@@ -81,26 +81,27 @@
     "pipResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/pipResource.json",
     "nsgResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/nsgResource.json",
     "nicResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/nicResource.json",
+    "vmResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/vmResource.json",
     "ResourceGroupID": "[concat(subscription().id, '/resourceGroups/', parameters('ARMstuff').RG_Name)]",
     "SharedResourceGroupID": "[concat(subscription().id, '/resourceGroups/', parameters('ARMstuff').Shared_RG_Name)]",
+    "StorageAccountName": "[concat('diagstg', uniqueString(subscription().id))]",
+    "nicName": "[concat('eJukebox', parameters('JukeboxID'), '_NIC')]",
     "virtualNetworkName": "eJukeNetwork",
     "addressPrefix": "192.168.0.0/16",
     "subnet1Prefix": "192.168.111.0/24",
     "subnet1Name": "First",
     "subnet2Prefix": "192.168.112.0/24",
     "subnet2Name": "Second",
-
-    "vmName": "[concat('eJukebox', parameters('VMstuff').JukeboxID)]",
-    
-
+    "VMstuff": {
+      "vmName": "[concat('eJukebox', parameters('VMstuff').JukeboxID)]",
+      "vmSize": "Standard_B2s"
+    },
     "nicName": "[concat('eJukebox', parameters('VMstuff').JukeboxID, '_NIC')]",
     "dnsNameForPublicIP": "[concat('prefix', uniqueString(subscription().id))]",
     "publicIPAddressName": "[concat('eJukebox', parameters('VMstuff').JukeboxID, '_PIP')]",
     "publicIPAddressType": "Dynamic",
-    
     "NetworkSecurityGroupName": "[concat('eJukebox', parameters('VMstuff').JukeboxID, '_NSG')]",
     "StorageAccountName": "[concat('diagstg', uniqueString(subscription().id))]",
-    
     "diagnosticsExtentions": {
       "wadlogs": "<WadCfg> <DiagnosticMonitorConfiguration overallQuotaInMB=\"4096\" xmlns=\"http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration\"> <DiagnosticInfrastructureLogs scheduledTransferLogLevelFilter=\"Error\"/> <WindowsEventLog scheduledTransferPeriod=\"PT1M\" > <DataSource name=\"Application!*[System[(Level = 1 or Level = 2)]]\" /> <DataSource name=\"Security!*[System[(Level = 1 or Level = 2)]]\" /> <DataSource name=\"System!*[System[(Level = 1 or Level = 2)]]\" /></WindowsEventLog>",
       "wadperfcounters1": "<PerformanceCounters scheduledTransferPeriod=\"PT1M\"><PerformanceCounterConfiguration counterSpecifier=\"\\Processor(_Total)\\% Processor Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU utilization\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor(_Total)\\% Privileged Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU privileged time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor(_Total)\\% User Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU user time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor Information(_Total)\\Processor Frequency\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"CPU frequency\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\System\\Processes\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"Processes\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Process(_Total)\\Thread Count\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"Threads\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Process(_Total)\\Handle Count\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"Handles\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\% Committed Bytes In Use\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Memory usage\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\Available Bytes\" sampleRate=\"PT15S\" unit=\"Bytes\"><annotation displayName=\"Memory available\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\Committed Bytes\" sampleRate=\"PT15S\" unit=\"Bytes\"><annotation displayName=\"Memory committed\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\Commit Limit\" sampleRate=\"PT15S\" unit=\"Bytes\"><annotation displayName=\"Memory commit limit\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\% Disk Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Disk active time\" locale=\"en-us\"/></PerformanceCounterConfiguration>",
@@ -108,7 +109,7 @@
       "wadmetricsresourceid": "[concat('/subscriptions/', subscription().Id, '/resourceGroups/', parameters('ARMstuff').RG_Name, '/providers/', 'Microsoft.Compute/virtualMachines/')]",
       "wadcfgxend": "\"><MetricAggregation scheduledTransferPeriod=\"PT1H\"/><MetricAggregation scheduledTransferPeriod=\"PT1M\"/></Metrics></DiagnosticMonitorConfiguration></WadCfg>"
     },
-    "wadcfgxstart": "[concat(variables('diagnosticsExtentions').wadlogs, variables('diagnosticsExtentions').wadperfcounters1, variables('diagnosticsExtentions').wadperfcounters2, '<Metrics resourceId=\"')]",
+    "wadcfgxstart": "[concat(variables('diagnosticsExtentions').wadlogs, variables('diagnosticsExtentions').wadperfcounters1, variables('diagnosticsExtentions').wadperfcounters2, '<Metrics resourceId=\"')]"
   },
   "resources": [
     {
@@ -315,95 +316,61 @@
             "value": "[parameters('ARMstuff').RG_Name]"
           },
           "adminUsername": {
-            "type": "string",
-            "defaultValue": "marc.kean",
-            "minLength": 1,
-            "metadata": {
-              "description": "Username for the Virtual Machine."
-            }
+            "value": "[parameters('VMstuff').adminUsername]"
           },
           "adminPassword": {
-            "type": "string",
-            "defaultValue": ""
+            "value": "[parameters('VMstuff').adminUsername]"
+          },
+          "JukeboxID": {
+            "value": "[parameters('VMstuff').JukeboxID]"
+          },
+          "windowsOSVersion": {
+            "value": "[parameters('VMstuff').windowsOSVersion]"
+          },
+          "vmName": {
+            "value": "[variables('VMstuff').vmName]"
+          },
+          "vmSize": {
+            "value": "[variables('VMstuff').vmSize]"
+          },
+          "dataDiskCount": {
+            "value": "[parameters('VMstuff').dataDiskCount]"
           },
           "DisksType": {
-            "type": "string",
-            "defaultValue": "Un-Managed",
-            "allowedValues": [
-              "Managed",
-              "Un-Managed"
-            ],
-            "metadata": {
-              "description": "User name for the Virtual Machine."
-            }
+            "value": "[parameters('VMstuff').DisksType]"
+          },
+          "timeZone": {
+            "value": "[parameters('VMstuff').timeZone]"
+          },
+          "StorageAccountName": {
+            "value": "[variables('StorageAccountName')]"
           },
           "nicName": {
             "value": "[variables('nicName')]"
           },
           "VNCKey": {
-            "type": "string",
-            "defaultValue": ""
-          },
-          "timeZone": {
-            "type": "string",
-            "defaultValue": "AUS Eastern Standard Time",
-            "metadata": {
-              "description": "TimeZone for the VM deployment"
-            }
-          },
-          "dataDiskCount": {
-            "type": "int",
-            "allowedvalues": [
-              1,
-              2,
-              3,
-              4
-            ],
-            "metadata": {
-              "description": "number of data disks."
-            }
-          },
-          "JukeboxID": {
-            "type": "string",
-            "minLength": 1,
-            "metadata": {
-              "description": "Unique number for eJukebox machine"
-            }
-          },
-          "windowsOSVersion": {
-            "type": "string",
-            "defaultValue": "2016-Datacenter",
-            "allowedValues": [
-              "2008-R2-SP1",
-              "2012-Datacenter",
-              "2012-R2-Datacenter",
-              "2016-Datacenter"
-            ],
-            "metadata": {
-              "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version. Allowed values: 2008-R2-SP1, 2012-Datacenter, 2012-R2-Datacenter."
-            }
+            "value": "[parameters('VMstuff').VNCKey]"
           },
           "vaultResourceID": {
-            "type": "string",
-            "defaultValue": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault",
-            "metadata": {
-              "description": "Resource Group of Key Vault that has a secret"
-            }
+            "value": "[parameters('VMstuff').vaultResourceID]"
           },
           "secretUrlWithVersion1": {
-            "type": "string",
-            "defaultValue": "https://msmarcvault.vault.azure.net/secrets/eJukebox-net-PK/73045146013f4a998ce13417598ec208",
-            "metadata": {
-              "description": "Url of the certificate in Key Vault"
-            }
+            "value": "[parameters('VMstuff').secretUrlWithVersion1]"
+          },
+          "wadcfgxstart": {
+            "value": "[variables('wadcfgxstart')]"
+          },
+          "wadmetricsresourceid": {
+            "value": "[variables('diagnosticsExtentions').wadmetricsresourceid]"
+          },
+          "wadcfgxend": {
+            "value": "[variables('diagnosticsExtentions').wadcfgxend]"
           },
           "_artifactsLocation": {
-            "type": "string",
-            "defaultValue": ""
+            "value": "[parameters('_artifactsLocation')]"
           },
           "_artifactsLocationSasToken": {
-            "type": "securestring",
-            "defaultValue": ""
+            "value": "[parameters('_artifactsLocationSasToken')]"
           }
         },
         "templateLink": {
