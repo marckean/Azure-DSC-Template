@@ -21,11 +21,11 @@
             },
             "secretName": "VNCKey"
           }
+        },
+        "dataDiskCount": {
+          "value": 1
         }
       }
-  },
-    "dataDiskCount": {
-      "value": 1
-    }
+  }
   }
 }
