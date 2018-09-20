@@ -80,7 +80,6 @@
     "nsgResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/nsgResource.json",
     "nicResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/nicResource.json",
     "vmResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/vmResource.json",
-    "SharedResourceGroupID": "[concat(subscription().id, '/resourceGroups/', parameters('ARMstuff').Shared_RG_Name)]",
     "StorageAccountName": "[concat('diagstg', uniqueString(subscription().id))]",
     "nicName": "[concat('eJukebox', parameters('ARMstuff').JukeboxID, '_NIC')]",
     "virtualNetworkName": "eJukeNetwork",
