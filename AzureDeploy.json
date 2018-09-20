@@ -45,7 +45,6 @@
         },
         "VNCKey": "",
         "timeZone": "AUS Eastern Standard Time",
-        "JukeboxID": "",
         "vaultResourceID": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault",
         "secretUrlWithVersion1": "https://msmarcvault.vault.azure.net/secrets/eJukebox-net-PK/73045146013f4a998ce13417598ec208"
       },
@@ -59,7 +58,6 @@
         "RG_Location": "australiaeast",
         "RG_Name": "DSCTestTemplate",
         "Shared_RG_Name": "SharedResources",
-        "timeZone": "AUS Eastern Standard Time",
         "JukeboxID": ""
       },
       "metadata": {
@@ -85,7 +83,7 @@
     "ResourceGroupID": "[concat(subscription().id, '/resourceGroups/', parameters('ARMstuff').RG_Name)]",
     "SharedResourceGroupID": "[concat(subscription().id, '/resourceGroups/', parameters('ARMstuff').Shared_RG_Name)]",
     "StorageAccountName": "[concat('diagstg', uniqueString(subscription().id))]",
-    "nicName": "[concat('eJukebox', parameters('JukeboxID'), '_NIC')]",
+    "nicName": "[concat('eJukebox', parameters('ARMstuff').JukeboxID, '_NIC')]",
     "virtualNetworkName": "eJukeNetwork",
     "addressPrefix": "192.168.0.0/16",
     "subnet1Prefix": "192.168.111.0/24",
@@ -93,14 +91,14 @@
     "subnet2Prefix": "192.168.112.0/24",
     "subnet2Name": "Second",
     "VMstuff": {
-      "vmName": "[concat('eJukebox', parameters('VMstuff').JukeboxID)]",
+      "vmName": "[concat('eJukebox', parameters('ARMstuff').JukeboxID)]",
       "vmSize": "Standard_B2s"
     },
-    "nicName": "[concat('eJukebox', parameters('VMstuff').JukeboxID, '_NIC')]",
+    "nicName": "[concat('eJukebox', parameters('ARMstuff').JukeboxID, '_NIC')]",
     "dnsNameForPublicIP": "[concat('prefix', uniqueString(subscription().id))]",
-    "publicIPAddressName": "[concat('eJukebox', parameters('VMstuff').JukeboxID, '_PIP')]",
+    "publicIPAddressName": "[concat('eJukebox', parameters('ARMstuff').JukeboxID, '_PIP')]",
     "publicIPAddressType": "Dynamic",
-    "NetworkSecurityGroupName": "[concat('eJukebox', parameters('VMstuff').JukeboxID, '_NSG')]",
+    "NetworkSecurityGroupName": "[concat('eJukebox', parameters('ARMstuff').JukeboxID, '_NSG')]",
     "StorageAccountName": "[concat('diagstg', uniqueString(subscription().id))]",
     "diagnosticsExtentions": {
       "wadlogs": "<WadCfg> <DiagnosticMonitorConfiguration overallQuotaInMB=\"4096\" xmlns=\"http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration\"> <DiagnosticInfrastructureLogs scheduledTransferLogLevelFilter=\"Error\"/> <WindowsEventLog scheduledTransferPeriod=\"PT1M\" > <DataSource name=\"Application!*[System[(Level = 1 or Level = 2)]]\" /> <DataSource name=\"Security!*[System[(Level = 1 or Level = 2)]]\" /> <DataSource name=\"System!*[System[(Level = 1 or Level = 2)]]\" /></WindowsEventLog>",
@@ -322,7 +320,7 @@
             "value": "[parameters('VMstuff').adminUsername]"
           },
           "JukeboxID": {
-            "value": "[parameters('VMstuff').JukeboxID]"
+            "value": "[parameters('ARMstuff').JukeboxID]"
           },
           "windowsOSVersion": {
             "value": "[parameters('VMstuff').windowsOSVersion]"
