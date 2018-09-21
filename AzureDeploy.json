@@ -16,17 +16,21 @@
         "description": "Hub object.  See defaultValue for example. The gatewaySku string is any of Basic|VpnGw1|VpnGw2|VpnGw3"
       }
     },
-    "ARMstuff": {
-      "type": "object",
-      "defaultValue": {
-        "RG_Location": "australiaeast",
-        "RG_Name": "DSCTestTemplate",
-        "Shared_RG_Name": "SharedResources",
-        "JukeboxID": ""
-      },
-      "metadata": {
-        "description": "Hub object.  See defaultValue for example. The gatewaySku string is any of Basic|VpnGw1|VpnGw2|VpnGw3"
-      }
+    "RG_Location": {
+      "type": "string",
+      "defaultValue": "australiaeast"
+    },
+    "RG_Name": {
+      "type": "string",
+      "defaultValue": "DSCTestTemplate"
+    },
+    "Shared_RG_Name": {
+      "type": "string",
+      "defaultValue": "SharedResources"
+    },
+    "JukeboxID": {
+      "type": "string",
+      "defaultValue": ""
     },
     "DisksType": {
       "type": "string",
@@ -74,7 +78,6 @@
     }
   },
   "variables": {
-    "RG_Name": "parameters('ARMstuff').RG_Name",
     "sharedResourcesUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/SharedResources.json",
     "storageResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/StorageResource.json",
     "pipResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/pipResource.json",
@@ -82,24 +85,24 @@
     "nicResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/nicResource.json",
     "vmResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/vmResource.json",
     "StorageAccountName": "[concat('diagstg', uniqueString(subscription().id))]",
-    "nicName": "[concat('eJukebox', parameters('ARMstuff').JukeboxID, '_NIC')]",
+    "nicName": "[concat('eJukebox', parameters('JukeboxID'), '_NIC')]",
     "virtualNetworkName": "eJukeNetwork",
     "addressPrefix": "192.168.0.0/16",
     "subnet1Prefix": "192.168.111.0/24",
     "subnet1Name": "First",
     "subnet2Prefix": "192.168.112.0/24",
     "subnet2Name": "Second",
-    "vmName": "[concat('eJukebox', parameters('ARMstuff').JukeboxID)]",
+    "vmName": "[concat('eJukebox', parameters('JukeboxID'))]",
     "vmSize": "Standard_B2s",
-    "nicName": "[concat('eJukebox', parameters('ARMstuff').JukeboxID, '_NIC')]",
+    "nicName": "[concat('eJukebox', parameters('JukeboxID'), '_NIC')]",
     "dnsNameForPublicIP": "[concat('prefix', uniqueString(subscription().id))]",
-    "publicIPAddressName": "[concat('eJukebox', parameters('ARMstuff').JukeboxID, '_PIP')]",
+    "publicIPAddressName": "[concat('eJukebox', parameters('JukeboxID'), '_PIP')]",
     "publicIPAddressType": "Dynamic",
-    "NetworkSecurityGroupName": "[concat('eJukebox', parameters('ARMstuff').JukeboxID, '_NSG')]",
+    "NetworkSecurityGroupName": "[concat('eJukebox', parameters('JukeboxID'), '_NSG')]",
     "wadlogs": "<WadCfg> <DiagnosticMonitorConfiguration overallQuotaInMB=\"4096\" xmlns=\"http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration\"> <DiagnosticInfrastructureLogs scheduledTransferLogLevelFilter=\"Error\"/> <WindowsEventLog scheduledTransferPeriod=\"PT1M\" > <DataSource name=\"Application!*[System[(Level = 1 or Level = 2)]]\" /> <DataSource name=\"Security!*[System[(Level = 1 or Level = 2)]]\" /> <DataSource name=\"System!*[System[(Level = 1 or Level = 2)]]\" /></WindowsEventLog>",
     "wadperfcounters1": "<PerformanceCounters scheduledTransferPeriod=\"PT1M\"><PerformanceCounterConfiguration counterSpecifier=\"\\Processor(_Total)\\% Processor Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU utilization\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor(_Total)\\% Privileged Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU privileged time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor(_Total)\\% User Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU user time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor Information(_Total)\\Processor Frequency\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"CPU frequency\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\System\\Processes\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"Processes\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Process(_Total)\\Thread Count\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"Threads\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Process(_Total)\\Handle Count\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"Handles\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\% Committed Bytes In Use\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Memory usage\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\Available Bytes\" sampleRate=\"PT15S\" unit=\"Bytes\"><annotation displayName=\"Memory available\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\Committed Bytes\" sampleRate=\"PT15S\" unit=\"Bytes\"><annotation displayName=\"Memory committed\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\Commit Limit\" sampleRate=\"PT15S\" unit=\"Bytes\"><annotation displayName=\"Memory commit limit\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\% Disk Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Disk active time\" locale=\"en-us\"/></PerformanceCounterConfiguration>",
     "wadperfcounters2": "<PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\% Disk Read Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Disk active read time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\% Disk Write Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Disk active write time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Transfers/sec\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk operations\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Reads/sec\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk read operations\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Writes/sec\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk write operations\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Bytes/sec\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk speed\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Read Bytes/sec\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk read speed\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Write Bytes/sec\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk write speed\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\LogicalDisk(_Total)\\% Free Space\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Disk free space (percentage)\" locale=\"en-us\"/></PerformanceCounterConfiguration></PerformanceCounters>",
-    "wadmetricsresourceid": "[concat('/subscriptions/', subscription().Id, '/resourceGroups/', variables('RG_Name'), '/providers/', 'Microsoft.Compute/virtualMachines/')]",
+    "wadmetricsresourceid": "[concat('/subscriptions/', subscription().Id, '/resourceGroups/', parameters('RG_Name'), '/providers/', 'Microsoft.Compute/virtualMachines/')]",
     "wadcfgxend": "\"><MetricAggregation scheduledTransferPeriod=\"PT1H\"/><MetricAggregation scheduledTransferPeriod=\"PT1M\"/></Metrics></DiagnosticMonitorConfiguration></WadCfg>",
     "wadcfgxstart": "[concat(variables('wadlogs'), variables('wadperfcounters1'), variables('wadperfcounters2'), '<Metrics resourceId=\"')]"
   },
@@ -107,8 +110,8 @@
     {
       "apiVersion": "2018-05-01",
       "type": "Microsoft.Resources/resourceGroups",
-      "location": "[parameters('ARMstuff').RG_Location]",
-      "name": "[parameters('ARMstuff').Shared_RG_Name]",
+      "location": "[parameters('RG_Location')]",
+      "name": "[parameters('Shared_RG_Name')]",
       "tags": {
         "displayName": "Shared_ResourceGroup"
       }
@@ -116,8 +119,8 @@
     {
       "apiVersion": "2018-05-01",
       "type": "Microsoft.Resources/resourceGroups",
-      "location": "[parameters('ARMstuff').RG_Location]",
-      "name": "[parameters('ARMstuff').RG_Name]",
+      "location": "[parameters('RG_Location')]",
+      "name": "[parameters('RG_Name')]",
       "tags": {
         "displayName": "ResourceGroup"
       }
@@ -126,18 +129,18 @@
       "apiVersion": "2017-05-10",
       "name": "sharedDeployment",
       "type": "Microsoft.Resources/deployments",
-      "resourceGroup": "[parameters('ARMstuff').Shared_RG_Name]",
+      "resourceGroup": "[parameters('Shared_RG_Name')]",
       "dependsOn": [
-        "[parameters('ARMstuff').Shared_RG_Name]"
+        "[parameters('Shared_RG_Name')]"
       ],
       "properties": {
         "mode": "Incremental",
         "parameters": {
           "RG_Location": {
-            "value": "[parameters('ARMstuff').RG_Location]"
+            "value": "[parameters('RG_Location')]"
           },
           "RG_Name": {
-            "value": "[parameters('ARMstuff').RG_Name]"
+            "value": "[parameters('RG_Name')]"
           },
           "virtualNetworkName": {
             "value": "[variables('virtualNetworkName')]"
@@ -168,7 +171,7 @@
       "apiVersion": "2017-05-10",
       "name": "storageDeployment",
       "type": "Microsoft.Resources/deployments",
-      "resourceGroup": "[parameters('ARMstuff').RG_Name]",
+      "resourceGroup": "[parameters('RG_Name')]",
       "dependsOn": [
         "sharedDeployment"
       ],
@@ -176,10 +179,10 @@
         "mode": "Incremental",
         "parameters": {
           "RG_Location": {
-            "value": "[parameters('ARMstuff').RG_Location]"
+            "value": "[parameters('RG_Location')]"
           },
           "RG_Name": {
-            "value": "[parameters('ARMstuff').RG_Name]"
+            "value": "[parameters('RG_Name')]"
           },
           "StorageAccountName": {
             "value": "[variables('StorageAccountName')]"
@@ -195,7 +198,7 @@
       "apiVersion": "2017-05-10",
       "name": "pipDeployment",
       "type": "Microsoft.Resources/deployments",
-      "resourceGroup": "[parameters('ARMstuff').RG_Name]",
+      "resourceGroup": "[parameters('RG_Name')]",
       "dependsOn": [
         "storageDeployment"
       ],
@@ -203,10 +206,10 @@
         "mode": "Incremental",
         "parameters": {
           "RG_Location": {
-            "value": "[parameters('ARMstuff').RG_Location]"
+            "value": "[parameters('RG_Location')]"
           },
           "RG_Name": {
-            "value": "[parameters('ARMstuff').RG_Name]"
+            "value": "[parameters('RG_Name')]"
           },
           "publicIPAddressName": {
             "value": "[variables('publicIPAddressName')]"
@@ -228,7 +231,7 @@
       "apiVersion": "2017-05-10",
       "name": "nsgDeployment",
       "type": "Microsoft.Resources/deployments",
-      "resourceGroup": "[parameters('ARMstuff').RG_Name]",
+      "resourceGroup": "[parameters('RG_Name')]",
       "dependsOn": [
         "pipDeployment"
       ],
@@ -236,10 +239,10 @@
         "mode": "Incremental",
         "parameters": {
           "RG_Location": {
-            "value": "[parameters('ARMstuff').RG_Location]"
+            "value": "[parameters('RG_Location')]"
           },
           "RG_Name": {
-            "value": "[parameters('ARMstuff').RG_Name]"
+            "value": "[parameters('RG_Name')]"
           },
           "NetworkSecurityGroupName": {
             "value": "[variables('NetworkSecurityGroupName')]"
@@ -255,7 +258,7 @@
       "apiVersion": "2017-05-10",
       "name": "nicDeployment",
       "type": "Microsoft.Resources/deployments",
-      "resourceGroup": "[parameters('ARMstuff').RG_Name]",
+      "resourceGroup": "[parameters('RG_Name')]",
       "dependsOn": [
         "nsgDeployment"
       ],
@@ -263,10 +266,10 @@
         "mode": "Incremental",
         "parameters": {
           "RG_Location": {
-            "value": "[parameters('ARMstuff').RG_Location]"
+            "value": "[parameters('RG_Location')]"
           },
           "RG_Name": {
-            "value": "[parameters('ARMstuff').RG_Name]"
+            "value": "[parameters('RG_Name')]"
           },
           "nicName": {
             "value": "[variables('nicName')]"
@@ -294,7 +297,7 @@
       "apiVersion": "2017-05-10",
       "name": "vmDeployment",
       "type": "Microsoft.Resources/deployments",
-      "resourceGroup": "[parameters('ARMstuff').RG_Name]",
+      "resourceGroup": "[parameters('RG_Name')]",
       "dependsOn": [
         "nicDeployment"
       ],
@@ -302,10 +305,10 @@
         "mode": "Incremental",
         "parameters": {
           "RG_Location": {
-            "value": "[parameters('ARMstuff').RG_Location]"
+            "value": "[parameters('RG_Location')]"
           },
           "RG_Name": {
-            "value": "[parameters('ARMstuff').RG_Name]"
+            "value": "[parameters('RG_Name')]"
           },
           "adminUsername": {
             "value": "[parameters('VMstuff').adminUsername]"
@@ -314,7 +317,7 @@
             "value": "[parameters('VMstuff').adminUsername]"
           },
           "JukeboxID": {
-            "value": "[parameters('ARMstuff').JukeboxID]"
+            "value": "[parameters('JukeboxID')]"
           },
           "windowsOSVersion": {
             "value": "[parameters('WindowsOSVersion')]"

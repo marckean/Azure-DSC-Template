@@ -23,10 +23,8 @@
         }
       }
     },
-    "ARMstuff": {
-      "value": {
-        "JukeboxID": "1603"
-      }
+    "JukeboxID": {
+      "value": "1603"
     },
     "dataDiskCount": {
       "value": 1
