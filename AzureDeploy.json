@@ -2,19 +2,29 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "VMstuff": {
-      "type": "object",
-      "defaultValue": {
-        "adminUsername": "marc.kean",
-        "adminPassword": "",
-        "VNCKey": "",
-        "timeZone": "AUS Eastern Standard Time",
-        "vaultResourceID": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault",
-        "secretUrlWithVersion1": "https://msmarcvault.vault.azure.net/secrets/eJukebox-net-PK/73045146013f4a998ce13417598ec208"
-      },
-      "metadata": {
-        "description": "Hub object.  See defaultValue for example. The gatewaySku string is any of Basic|VpnGw1|VpnGw2|VpnGw3"
-      }
+    "adminUsername": {
+      "type": "string",
+      "defaultValue": "marc.kean"
+    },
+    "adminPassword": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "VNCKey": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "timeZone": {
+      "type": "string",
+      "defaultValue": "AUS Eastern Standard Time"
+    },
+    "vaultResourceID": {
+      "type": "string",
+      "defaultValue": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
+    },
+    "secretUrlWithVersion1": {
+      "type": "string",
+      "defaultValue": "https://msmarcvault.vault.azure.net/secrets/eJukebox-net-PK/73045146013f4a998ce13417598ec208"
     },
     "RG_Location": {
       "type": "string",
@@ -311,10 +321,10 @@
             "value": "[parameters('RG_Name')]"
           },
           "adminUsername": {
-            "value": "[parameters('VMstuff').adminUsername]"
+            "value": "parameters('adminUsername')"
           },
           "adminPassword": {
-            "value": "[parameters('VMstuff').adminUsername]"
+            "value": "parameters('adminUsername')"
           },
           "JukeboxID": {
             "value": "[parameters('JukeboxID')]"
@@ -335,7 +345,7 @@
             "value": "[parameters('DisksType')]"
           },
           "timeZone": {
-            "value": "[parameters('VMstuff').timeZone]"
+            "value": "parameters('timeZone')"
           },
           "StorageAccountName": {
             "value": "[variables('StorageAccountName')]"
@@ -344,13 +354,13 @@
             "value": "[variables('nicName')]"
           },
           "VNCKey": {
-            "value": "[parameters('VMstuff').VNCKey]"
+            "value": "parameters('VNCKey')"
           },
           "vaultResourceID": {
-            "value": "[parameters('VMstuff').vaultResourceID]"
+            "value": "parameters('vaultResourceID')"
           },
           "secretUrlWithVersion1": {
-            "value": "[parameters('VMstuff').secretUrlWithVersion1]"
+            "value": "parameters('secretUrlWithVersion1')"
           },
           "wadcfgxstart": {
             "value": "[variables('wadcfgxstart')]"
