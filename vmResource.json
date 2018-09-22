@@ -27,7 +27,7 @@
       "type": "string"
     },
     "dataDiskCount": {
-      "type": "string"
+      "type": "int"
     },
     "DisksType": {
       "type": "string"
