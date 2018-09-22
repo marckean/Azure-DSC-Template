@@ -67,7 +67,7 @@
     }
   },
   "variables": {
-    "OSDiskName": "[concat('OsDisk', variables('vmName'))]",
+    "OSDiskName": "[concat('OsDisk', parameters('vmName'))]",
     "imagePublisher": "MicrosoftWindowsServer",
     "imageOffer": "WindowsServer",
     "vmSize": "Standard_B2s",
