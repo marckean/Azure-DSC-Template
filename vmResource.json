@@ -673,8 +673,8 @@
                   }
               },
                 { //Extension schema https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/dsc-windows
-                  "name": "[concat(parameters('vmName'), 'Un-Managed', 'DSC')]",
-                  "type": "extensions/Microsoft.Powershell.DSC",
+                  "name": "DSC",
+                  "type": "extensions",
                   "location": "[parameters('RG_Location')]",
                   "apiVersion": "2016-04-30-preview",
                   "dependsOn": [
