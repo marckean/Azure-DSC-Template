@@ -300,7 +300,7 @@
             "value": "[parameters('RG_Name')]"
           },
           "Shared_RG_Name": {
-            "type": "string"
+            "value": "[parameters('Shared_RG_Name')]"
           },
           "nicName": {
             "value": "[variables('nicName')]"
