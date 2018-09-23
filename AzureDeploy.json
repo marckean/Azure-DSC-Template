@@ -129,7 +129,7 @@
     "subnetPrefix": "192.168.111.0/24",
     "vmName": "[concat('eJukebox', parameters('JukeboxID'))]",
     "vmSize": "Standard_B2s",
-    "dnsNameForPublicIP": "[concat('prefix', uniqueString(subscription().id))]",
+    "dnsNameForPublicIP": "[concat('prefix', uniqueString('RG_Name'))]",
     "publicIPAddressName": "[concat('eJukebox', parameters('JukeboxID'), '_PIP')]",
     "publicIPAddressType": "Dynamic",
     "NetworkSecurityGroupName": "[concat('eJukebox', parameters('JukeboxID'), '_NSG')]",
@@ -174,8 +174,8 @@
           "RG_Location": {
             "value": "[parameters('RG_Location')]"
           },
-          "RG_Name": {
-            "value": "[parameters('RG_Name')]"
+          "Shared_RG_Name": {
+            "value": "[parameters('Shared_RG_Name')]"
           },
           "virtualNetworkName": {
             "value": "[parameters('virtualNetworkName')]"

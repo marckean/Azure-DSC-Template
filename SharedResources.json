@@ -5,7 +5,7 @@
     "RG_Location": {
       "type": "string"
     },
-    "RG_Name": {
+    "Shared_RG_Name": {
       "type": "string"
     },
     "virtualNetworkName": {
