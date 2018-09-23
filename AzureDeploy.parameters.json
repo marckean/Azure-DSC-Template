@@ -14,7 +14,16 @@
       }
     },
     "JukeboxID": {
-      "value": "1603"
+      "value": "1604"
+    },
+    "RG_Name": {
+      "value": "DSCTestTemplate"
+    },
+    "Shared_RG_Name": {
+      "value": "SharedResources"
+    },
+    "JukeboxID": {
+      "value": "1604"
     },
     "dataDiskCount": {
       "value": 1

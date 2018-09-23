@@ -17,7 +17,7 @@
     "virtualNetworkName": {
       "type": "string"
     },
-    "subnet1Name": {
+    "subnetName": {
       "type": "string"
     },
     "NetworkSecurityGroupName": {
@@ -59,7 +59,7 @@
                         "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddressName'))]"
                       },
                       "subnet": {
-                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnet1Name'))]"
+                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
                       }
                     }
                   }

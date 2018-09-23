@@ -32,25 +32,46 @@
     },
     "RG_Name": {
       "type": "string",
-      "defaultValue": "DSCTestTemplate"
+      "defaultValue": ""
     },
     "Shared_RG_Name": {
       "type": "string",
-      "defaultValue": "SharedResources"
+      "defaultValue": ""
     },
     "JukeboxID": {
       "type": "string",
-      "defaultValue": ""
+      "defaultValue": "",
+      "metadata": {
+        "description": "Suffix for Computer Name"
+      }
     },
     "DisksType": {
       "type": "string",
-      "defaultValue": "Un-Managed",
+      "defaultValue": "Managed",
       "allowedValues": [
         "Managed",
         "Un-Managed"
       ],
       "metadata": {
-        "description": "User name for the Virtual Machine."
+        "description": "Disk type, Managed or Un-Managed"
+      }
+    },
+    "Existing_vNet": {
+      "type": "string",
+      "defaultValue": "False",
+      "allowedValues": [
+        "True",
+        "False"
+      ],
+      "metadata": {
+        "description": "Deploy into an existing vNet or not"
+      }
+    },
+    "subnetName": {
+      "type": "string",
+      "defaultValue": "First",
+      "metadata": {
+        "description": "Subnet to deploy into, or to create if Existing_vNet is false"
       }
     },
     "dataDiskCount": {
@@ -99,9 +120,7 @@
     "virtualNetworkName": "eJukeNetwork",
     "addressPrefix": "192.168.0.0/16",
     "subnet1Prefix": "192.168.111.0/24",
-    "subnet1Name": "First",
-    "subnet2Prefix": "192.168.112.0/24",
-    "subnet2Name": "Second",
+    "subnet1Name": "parameters('subnetName')",
     "vmName": "[concat('eJukebox', parameters('JukeboxID'))]",
     "vmSize": "Standard_B2s",
     "nicName": "[concat('eJukebox', parameters('JukeboxID'), '_NIC')]",
@@ -137,6 +156,7 @@
     },
     {
       "apiVersion": "2017-05-10",
+      "condition": "[equals(parameters('Existing_vNet'),'False')]",
       "name": "sharedDeployment",
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "[parameters('Shared_RG_Name')]",
@@ -153,7 +173,7 @@
             "value": "[parameters('RG_Name')]"
           },
           "virtualNetworkName": {
-            "value": "[variables('virtualNetworkName')]"
+            "value": "[parameters('virtualNetworkName')]"
           },
           "addressPrefix": {
             "value": "[variables('addressPrefix')]"
@@ -163,12 +183,6 @@
           },
           "subnet1Prefix": {
             "value": "[variables('subnet1Prefix')]"
-          },
-          "subnet2Name": {
-            "value": "[variables('subnet2Name')]"
-          },
-          "subnet2Prefix": {
-            "value": "[variables('subnet2Prefix')]"
           }
         },
         "templateLink": {
@@ -288,10 +302,10 @@
             "value": "[variables('publicIPAddressName')]"
           },
           "virtualNetworkName": {
-            "value": "[variables('virtualNetworkName')]"
+            "value": "[parameters('virtualNetworkName')]"
           },
-          "subnet1Name": {
-            "value": "[variables('subnet1Name')]"
+          "subnetName": {
+            "value": "[parameters('subnetName')]"
           },
           "NetworkSecurityGroupName": {
             "value": "[variables('NetworkSecurityGroupName')]"
