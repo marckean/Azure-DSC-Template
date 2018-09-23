@@ -362,7 +362,7 @@
             "value": "parameters('VNCKey')"
           },
           "vaultResourceID": {
-            "value": "variables('vaultResourceID')"
+            "value": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
           },
           "secretUrlWithVersion1": {
             "value": "parameters('secretUrlWithVersion1')"
