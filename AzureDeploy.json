@@ -126,8 +126,7 @@
     "nicName": "[concat('eJukebox', parameters('JukeboxID'), '_NIC')]",
     "virtualNetworkName": "parameters('virtualNetworkName')",
     "addressPrefix": "192.168.0.0/16",
-    "subnet1Prefix": "192.168.111.0/24",
-    "subnet1Name": "parameters('subnetName')",
+    "subnetPrefix": "192.168.111.0/24",
     "vmName": "[concat('eJukebox', parameters('JukeboxID'))]",
     "vmSize": "Standard_B2s",
     "nicName": "[concat('eJukebox', parameters('JukeboxID'), '_NIC')]",
@@ -185,11 +184,11 @@
           "addressPrefix": {
             "value": "[variables('addressPrefix')]"
           },
-          "subnet1Name": {
-            "value": "[variables('subnet1Name')]"
+          "subnetName": {
+            "value": "[parameters('subnetName')]"
           },
-          "subnet1Prefix": {
-            "value": "[variables('subnet1Prefix')]"
+          "subnetPrefix": {
+            "value": "[variables('subnetPrefix')]"
           }
         },
         "templateLink": {
@@ -204,7 +203,6 @@
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "[parameters('RG_Name')]",
       "dependsOn": [
-        "sharedDeployment"
       ],
       "properties": {
         "mode": "Incremental",

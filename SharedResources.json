@@ -14,10 +14,10 @@
     "addressPrefix": {
       "type": "string"
     },
-    "subnet1Name": {
+    "subnetName": {
       "type": "string"
     },
-    "subnet1Prefix": {
+    "subnetPrefix": {
       "type": "string"
     }
   },
@@ -51,9 +51,9 @@
                 },
                 "subnets": [
                   {
-                    "name": "[parameters('subnet1Name')]",
+                    "name": "[parameters('subnetName')]",
                     "properties": {
-                      "addressPrefix": "[parameters('subnet1Prefix')]"
+                      "addressPrefix": "[parameters('subnetPrefix')]"
                     }
                   }
                 ]
