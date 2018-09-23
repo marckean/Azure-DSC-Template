@@ -15,12 +15,13 @@ Connect-AzureRmAccount -Credential $cred -ServicePrincipal -TenantId $TenantId
 Select-AzureRmSubscription -SubscriptionId $SubscriptionId
 
 $ArtifactStagingDirectory = '.'
+$TemplateParametersFile = $ArtifactStagingDirectory + '\AzureDeploy.parameters.json'
 $ResourceGroupLocation = 'australiaeast'
 $UploadArtifacts = 'true'
-$ResourceGroupName = 'DSCTestTemplate'
+# Pull RG_Name from parameters file
+$ResourceGroupName = (Get-Content $TemplateParametersFile -Raw | ConvertFrom-Json).parameters.RG_Name.Value
 $StorageContainerName = $ResourceGroupName.ToLowerInvariant() + '-stageartifacts'
 $TemplateFile = $ArtifactStagingDirectory + '\AzureDeploy.json'
-$TemplateParametersFile = $ArtifactStagingDirectory + '\AzureDeploy.parameters.json'
 $DSCSourceFolder = $ArtifactStagingDirectory + '\DSC'
 $DebugOptions = "None"
 $StorageAccountName = 'stage' + ((Get-AzureRmContext).Subscription.Id).Replace('-', '').substring(0, 19)
@@ -94,9 +95,6 @@ if ($UploadArtifacts) {
     # Add the Template file full URI including the SAS token as a TemplateFile Key to the $TemplateArgs hash table
     $TemplateArgs.Add('TemplateFile', $OptionalParameters[$ArtifactsLocationName] + (Get-ChildItem $TemplateFile).Name + $OptionalParameters[$ArtifactsLocationSasTokenName])
     
-    # Convert the SAS token to a secure string
-    $OptionalParameters[$ArtifactsLocationSasTokenName] = ConvertTo-SecureString $OptionalParameters[$ArtifactsLocationSasTokenName] -AsPlainText -Force
-
 }
 else {
 

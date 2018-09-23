@@ -129,7 +129,6 @@
     "subnetPrefix": "192.168.111.0/24",
     "vmName": "[concat('eJukebox', parameters('JukeboxID'))]",
     "vmSize": "Standard_B2s",
-    "nicName": "[concat('eJukebox', parameters('JukeboxID'), '_NIC')]",
     "dnsNameForPublicIP": "[concat('prefix', uniqueString(subscription().id))]",
     "publicIPAddressName": "[concat('eJukebox', parameters('JukeboxID'), '_PIP')]",
     "publicIPAddressType": "Dynamic",
