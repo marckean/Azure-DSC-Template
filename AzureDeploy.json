@@ -67,6 +67,13 @@
         "description": "Deploy into an existing vNet or not"
       }
     },
+    "virtualNetworkName": {
+      "type": "string",
+      "defaultValue": "eJukeNetwork",
+      "metadata": {
+        "description": "vNet to deploy into, or to create if Existing_vNet is false"
+      }
+    },
     "subnetName": {
       "type": "string",
       "defaultValue": "First",
@@ -117,7 +124,7 @@
     "vmResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/vmResource.json",
     "StorageAccountName": "[concat('diagstg', uniqueString(subscription().id))]",
     "nicName": "[concat('eJukebox', parameters('JukeboxID'), '_NIC')]",
-    "virtualNetworkName": "eJukeNetwork",
+    "virtualNetworkName": "parameters('virtualNetworkName')",
     "addressPrefix": "192.168.0.0/16",
     "subnet1Prefix": "192.168.111.0/24",
     "subnet1Name": "parameters('subnetName')",
