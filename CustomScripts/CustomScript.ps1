@@ -10,8 +10,6 @@ $dest = "C:"
 #New-Item -Path $dest -ItemType directory
 Invoke-WebRequest $source -OutFile "$dest\$fileToInstall"
 
-
-
 # The DSC configuration that will generate metaconfigurations
 [DscLocalConfigurationManager()]
 Configuration LCMConfig
