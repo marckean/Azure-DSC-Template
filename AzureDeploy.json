@@ -18,14 +18,6 @@
       "type": "string",
       "defaultValue": "AUS Eastern Standard Time"
     },
-    "vaultResourceGroup": {
-      "type": "string",
-      "defaultValue": "MSMarcVault"
-    },
-    "vaultName": {
-      "type": "string",
-      "defaultValue": "MSMarcVault"
-    },
     "vaultResourceID": {
       "type": "string",
       "defaultValue": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
@@ -110,7 +102,6 @@
     "subnet1Name": "First",
     "subnet2Prefix": "192.168.112.0/24",
     "subnet2Name": "Second",
-    "vaultResourceID": "[resourceId(parameters('vaultResourceGroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]",
     "vmName": "[concat('eJukebox', parameters('JukeboxID'))]",
     "vmSize": "Standard_B2s",
     "nicName": "[concat('eJukebox', parameters('JukeboxID'), '_NIC')]",
