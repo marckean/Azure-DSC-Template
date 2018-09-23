@@ -14,7 +14,7 @@
     "adminPassword": {
       "type": "string"
     },
-    "JukeboxID": {
+    "VM_Name_Suffix": {
       "type": "string"
     },
     "windowsOSVersion": {
@@ -222,7 +222,7 @@
                         "function": "Main" // Function to run in the DSC.ps1
                       },
                       "configurationArguments": {
-                        "JukeboxID": "[parameters('JukeboxID')]",
+                        "VM_Name_Suffix": "[parameters('VM_Name_Suffix')]",
                         "nodeName": "[parameters('vmName')]",
                         "artifacts": "[parameters('_artifactsLocation')]",
                         "artifactsSasToken": "[parameters('_artifactsLocationSasToken')]",
@@ -428,7 +428,7 @@
                         "function": "Main" // Function to run in the DSC.ps1
                       },
                       "configurationArguments": {
-                        "JukeboxID": "[parameters('JukeboxID')]",
+                        "VM_Name_Suffix": "[parameters('VM_Name_Suffix')]",
                         "nodeName": "[parameters('vmName')]",
                         "artifacts": "[parameters('_artifactsLocation')]",
                         "artifactsSasToken": "[parameters('_artifactsLocationSasToken')]",

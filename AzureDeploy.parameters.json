@@ -13,9 +13,6 @@
         "secretName": "VMTestAdminPassword"
       }
     },
-    "JukeboxID": {
-      "value": "1604"
-    },
     "RG_Name": {
       "value": "DSCTestTemplate3"
     },
@@ -25,7 +22,13 @@
         "description": "Name of the resource group where Shared Resources are deployed to, e.g. the Virtual Network (ignored if deployed into an existing vNet)"
       }
     },
-    "JukeboxID": {
+    "VM_Name_Prefix": {
+      "value": "eJukebox",
+      "metadata": {
+        "description": "Prefix for Computer Name"
+      }
+    },
+    "VM_Name_Suffix": {
       "value": "1605",
       "metadata": {
         "description": "Suffix for Computer Name"
