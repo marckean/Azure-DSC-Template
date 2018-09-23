@@ -18,9 +18,13 @@
       "type": "string",
       "defaultValue": "AUS Eastern Standard Time"
     },
-    "vaultResourceID": {
+    "vaultResourceGroup": {
       "type": "string",
-      "defaultValue": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
+      "defaultValue": "MSMarcVault"
+    },
+    "vaultName": {
+      "type": "string",
+      "defaultValue": "MSMarcVault"
     },
     "secretUrlWithVersion1": {
       "type": "string",
@@ -357,7 +361,7 @@
             "value": "parameters('VNCKey')"
           },
           "vaultResourceID": {
-            "value": "parameters('vaultResourceID')"
+            "value": "[resourceId(parameters('vaultResourceGroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
           },
           "secretUrlWithVersion1": {
             "value": "parameters('secretUrlWithVersion1')"
