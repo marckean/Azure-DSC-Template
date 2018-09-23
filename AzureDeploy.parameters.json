@@ -14,7 +14,7 @@
       }
     },
     "RG_Name": {
-      "value": "DSCTestTemplate3"
+      "value": "DSCTestTemplate4"
     },
     "Shared_RG_Name": {
       "value": "SharedResources",
@@ -29,7 +29,7 @@
       }
     },
     "VM_Name_Suffix": {
-      "value": "1605",
+      "value": "1606",
       "metadata": {
         "description": "Suffix for Computer Name"
       }
