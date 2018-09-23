@@ -26,6 +26,10 @@
       "type": "string",
       "defaultValue": "MSMarcVault"
     },
+    "vaultResourceID": {
+      "type": "string",
+      "defaultValue": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
+    },
     "secretUrlWithVersion1": {
       "type": "string",
       "defaultValue": "https://msmarcvault.vault.azure.net/secrets/eJukebox-net-PK/73045146013f4a998ce13417598ec208"
@@ -362,7 +366,7 @@
             "value": "parameters('VNCKey')"
           },
           "vaultResourceID": {
-            "value": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
+            "value": "parameters('vaultResourceID')"
           },
           "secretUrlWithVersion1": {
             "value": "parameters('secretUrlWithVersion1')"
