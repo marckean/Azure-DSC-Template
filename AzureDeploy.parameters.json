@@ -20,16 +20,10 @@
       "value": "DSCTestTemplate2"
     },
     "Shared_RG_Name": {
-      "value": "SharedResources",
-      "metadata": {
-        "description": "Name of the resource group where Shared Resources are deployed to, e.g. the Virtual Network (ignored if deployed into an existing vNet)"
-      }
+      "value": "SharedResources"
     },
     "JukeboxID": {
-      "value": "1604",
-      "metadata": {
-        "description": "Suffix for Computer Name"
-      }
+      "value": "1604"
     },
     "dataDiskCount": {
       "value": 1
