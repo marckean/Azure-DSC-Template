@@ -299,6 +299,9 @@
           "RG_Name": {
             "value": "[parameters('RG_Name')]"
           },
+          "Shared_RG_Name": {
+            "type": "string"
+          },
           "nicName": {
             "value": "[variables('nicName')]"
           },

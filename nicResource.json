@@ -8,6 +8,9 @@
     "RG_Name": {
       "type": "string"
     },
+    "Shared_RG_Name": {
+      "type": "string"
+    },
     "nicName": {
       "type": "string"
     },
@@ -59,7 +62,7 @@
                         "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddressName'))]"
                       },
                       "subnet": {
-                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
+                        "id": "[resourceId(parameters('Shared_RG_Name'), 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
                       }
                     }
                   }
