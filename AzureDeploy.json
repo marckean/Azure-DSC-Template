@@ -321,10 +321,10 @@
             "value": "[parameters('RG_Name')]"
           },
           "adminUsername": {
-            "value": "parameters('adminUsername')"
+            "value": "[parameters('adminUsername')]"
           },
           "adminPassword": {
-            "value": "parameters('adminUsername')"
+            "value": "[parameters('adminPassword')]"
           },
           "JukeboxID": {
             "value": "[parameters('JukeboxID')]"
@@ -345,7 +345,7 @@
             "value": "[parameters('DisksType')]"
           },
           "timeZone": {
-            "value": "parameters('timeZone')"
+            "value": "[parameters('timeZone')]"
           },
           "StorageAccountName": {
             "value": "[variables('StorageAccountName')]"
@@ -354,13 +354,13 @@
             "value": "[variables('nicName')]"
           },
           "VNCKey": {
-            "value": "parameters('VNCKey')"
+            "value": "[parameters('VNCKey')]"
           },
           "vaultResourceID": {
-            "value": "parameters('vaultResourceID')"
+            "value": "[parameters('vaultResourceID')]"
           },
           "secretUrlWithVersion1": {
-            "value": "parameters('secretUrlWithVersion1')"
+            "value": "[parameters('secretUrlWithVersion1')]"
           },
           "wadcfgxstart": {
             "value": "[variables('wadcfgxstart')]"
