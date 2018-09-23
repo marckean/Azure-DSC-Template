@@ -106,6 +106,7 @@
     "subnet1Name": "First",
     "subnet2Prefix": "192.168.112.0/24",
     "subnet2Name": "Second",
+    "vaultResourceID": "[resourceId(parameters('vaultResourceGroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]",
     "vmName": "[concat('eJukebox', parameters('JukeboxID'))]",
     "vmSize": "Standard_B2s",
     "nicName": "[concat('eJukebox', parameters('JukeboxID'), '_NIC')]",
@@ -361,7 +362,7 @@
             "value": "parameters('VNCKey')"
           },
           "vaultResourceID": {
-            "value": "[resourceId(parameters('vaultResourceGroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+            "value": "variables('vaultResourceID')"
           },
           "secretUrlWithVersion1": {
             "value": "parameters('secretUrlWithVersion1')"
