@@ -122,7 +122,7 @@
     "nsgResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/nsgResource.json",
     "nicResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/nicResource.json",
     "vmResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/vmResource.json",
-    "StorageAccountName": "[concat('diagstg', uniqueString(subscription().id))]",
+    "StorageAccountName": "[concat('diagstg', uniqueString('RG_Name'))]",
     "nicName": "[concat('eJukebox', parameters('JukeboxID'), '_NIC')]",
     "virtualNetworkName": "parameters('virtualNetworkName')",
     "addressPrefix": "192.168.0.0/16",
