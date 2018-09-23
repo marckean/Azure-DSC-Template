@@ -58,7 +58,7 @@
     },
     "Existing_vNet": {
       "type": "string",
-      "defaultValue": "False",
+      "defaultValue": "True",
       "allowedValues": [
         "True",
         "False"

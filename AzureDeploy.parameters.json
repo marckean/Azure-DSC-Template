@@ -17,7 +17,7 @@
       "value": "1604"
     },
     "RG_Name": {
-      "value": "DSCTestTemplate2"
+      "value": "DSCTestTemplate3"
     },
     "Shared_RG_Name": {
       "value": "SharedResources",
@@ -26,7 +26,7 @@
       }
     },
     "JukeboxID": {
-      "value": "1604",
+      "value": "1605",
       "metadata": {
         "description": "Suffix for Computer Name"
       }
