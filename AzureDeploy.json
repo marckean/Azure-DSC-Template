@@ -47,7 +47,7 @@
     },
     "DisksType": {
       "type": "string",
-      "defaultValue": "Managed",
+      "defaultValue": "Un-Managed",
       "allowedValues": [
         "Managed",
         "Un-Managed"
