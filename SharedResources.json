@@ -27,7 +27,7 @@
       "apiVersion": "2017-05-10",
       "name": "vNetSingleDeployment",
       "type": "Microsoft.Resources/deployments",
-      "resourceGroup": "[parameters('RG_Name')]",
+      "resourceGroup": "[parameters('Shared_RG_Name')]",
       "dependsOn": [],
       "properties": {
         "mode": "Incremental",
