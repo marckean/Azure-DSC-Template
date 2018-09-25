@@ -1,0 +1,413 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "adminUsername": {
+      "type": "string",
+      "defaultValue": "marc.kean"
+    },
+    "adminPassword": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "VNCKey": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "timeZone": {
+      "type": "string",
+      "defaultValue": "AUS Eastern Standard Time"
+    },
+    "vaultResourceID": {
+      "type": "string",
+      "defaultValue": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
+    },
+    "secretUrlWithVersion1": {
+      "type": "string",
+      "defaultValue": "https://msmarcvault.vault.azure.net/secrets/eJukebox-net-PK/73045146013f4a998ce13417598ec208"
+    },
+    "RG_Location": {
+      "type": "string",
+      "defaultValue": "australiaeast"
+    },
+    "RG_Name": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "Shared_RG_Name": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "VM_Name_Prefix": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "VM_Name_Suffix": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Suffix for Computer Name"
+      }
+    },
+    "DisksType": {
+      "type": "string",
+      "defaultValue": "Un-Managed",
+      "allowedValues": [
+        "Managed",
+        "Un-Managed"
+      ],
+      "metadata": {
+        "description": "Disk type, Managed or Un-Managed"
+      }
+    },
+    "Existing_vNet": {
+      "type": "string",
+      "defaultValue": "True",
+      "allowedValues": [
+        "True",
+        "False"
+      ],
+      "metadata": {
+        "description": "Deploy into an existing vNet or not"
+      }
+    },
+    "virtualNetworkName": {
+      "type": "string",
+      "defaultValue": "eJukeNetwork",
+      "metadata": {
+        "description": "vNet to deploy into, or to create if Existing_vNet is false"
+      }
+    },
+    "subnetName": {
+      "type": "string",
+      "defaultValue": "First",
+      "metadata": {
+        "description": "Subnet to deploy into, or to create if Existing_vNet is false"
+      }
+    },
+    "dataDiskCount": {
+      "type": "int",
+      "allowedvalues": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "metadata": {
+        "description": "number of data disks."
+      }
+    },
+    "windowsOSVersion": {
+      "type": "string",
+      "defaultValue": "2016-Datacenter",
+      "allowedValues": [
+        "2008-R2-SP1",
+        "2012-Datacenter",
+        "2012-R2-Datacenter",
+        "2016-Datacenter"
+      ],
+      "metadata": {
+        "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version. Allowed values: 2008-R2-SP1, 2012-Datacenter, 2012-R2-Datacenter."
+      }
+    },
+    "_artifactsLocation": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "_artifactsLocationSasToken": {
+      "type": "string",
+      "defaultValue": ""
+    }
+  },
+  "variables": {
+    "sharedResourcesUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/SharedResources.json",
+    "storageResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/StorageResource.json",
+    "pipResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/pipResource.json",
+    "nsgResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/nsgResource.json",
+    "nicResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/nicResource.json",
+    "vmResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/vmResource.json",
+    "StorageAccountName": "[concat('diagstg', uniqueString(deployment().name))]",
+    "nicName": "[concat(parameters('VM_Name_Prefix'), parameters('VM_Name_Suffix'), '_NIC')]",
+    "virtualNetworkName": "parameters('virtualNetworkName')",
+    "addressPrefix": "192.168.0.0/16",
+    "subnetPrefix": "192.168.111.0/24",
+    "vmName": "[concat(parameters('VM_Name_Prefix'), parameters('VM_Name_Suffix'))]",
+    "vmSize": "Standard_B2s",
+    "dnsNameForPublicIP": "[concat('prefix', uniqueString(deployment().name))]",
+    "publicIPAddressName": "[concat(parameters('VM_Name_Prefix'), parameters('VM_Name_Suffix'), '_PIP')]",
+    "publicIPAddressType": "Dynamic",
+    "NetworkSecurityGroupName": "[concat(parameters('VM_Name_Prefix'), parameters('VM_Name_Suffix'), '_NSG')]",
+    "wadlogs": "<WadCfg> <DiagnosticMonitorConfiguration overallQuotaInMB=\"4096\" xmlns=\"http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration\"> <DiagnosticInfrastructureLogs scheduledTransferLogLevelFilter=\"Error\"/> <WindowsEventLog scheduledTransferPeriod=\"PT1M\" > <DataSource name=\"Application!*[System[(Level = 1 or Level = 2)]]\" /> <DataSource name=\"Security!*[System[(Level = 1 or Level = 2)]]\" /> <DataSource name=\"System!*[System[(Level = 1 or Level = 2)]]\" /></WindowsEventLog>",
+    "wadperfcounters1": "<PerformanceCounters scheduledTransferPeriod=\"PT1M\"><PerformanceCounterConfiguration counterSpecifier=\"\\Processor(_Total)\\% Processor Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU utilization\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor(_Total)\\% Privileged Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU privileged time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor(_Total)\\% User Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU user time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor Information(_Total)\\Processor Frequency\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"CPU frequency\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\System\\Processes\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"Processes\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Process(_Total)\\Thread Count\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"Threads\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Process(_Total)\\Handle Count\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"Handles\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\% Committed Bytes In Use\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Memory usage\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\Available Bytes\" sampleRate=\"PT15S\" unit=\"Bytes\"><annotation displayName=\"Memory available\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\Committed Bytes\" sampleRate=\"PT15S\" unit=\"Bytes\"><annotation displayName=\"Memory committed\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\Commit Limit\" sampleRate=\"PT15S\" unit=\"Bytes\"><annotation displayName=\"Memory commit limit\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\% Disk Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Disk active time\" locale=\"en-us\"/></PerformanceCounterConfiguration>",
+    "wadperfcounters2": "<PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\% Disk Read Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Disk active read time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\% Disk Write Time\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Disk active write time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Transfers/sec\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk operations\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Reads/sec\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk read operations\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Writes/sec\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk write operations\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Bytes/sec\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk speed\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Read Bytes/sec\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk read speed\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk(_Total)\\Disk Write Bytes/sec\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk write speed\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\LogicalDisk(_Total)\\% Free Space\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Disk free space (percentage)\" locale=\"en-us\"/></PerformanceCounterConfiguration></PerformanceCounters>",
+    "wadmetricsresourceid": "[concat('/subscriptions/', subscription().Id, '/resourceGroups/', parameters('RG_Name'), '/providers/', 'Microsoft.Compute/virtualMachines/')]",
+    "wadcfgxend": "\"><MetricAggregation scheduledTransferPeriod=\"PT1H\"/><MetricAggregation scheduledTransferPeriod=\"PT1M\"/></Metrics></DiagnosticMonitorConfiguration></WadCfg>",
+    "wadcfgxstart": "[concat(variables('wadlogs'), variables('wadperfcounters1'), variables('wadperfcounters2'), '<Metrics resourceId=\"')]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2018-05-01",
+      "type": "Microsoft.Resources/resourceGroups",
+      "location": "[parameters('RG_Location')]",
+      "name": "[parameters('Shared_RG_Name')]",
+      "tags": {
+        "displayName": "Shared_ResourceGroup"
+      }
+    },
+    {
+      "apiVersion": "2018-05-01",
+      "type": "Microsoft.Resources/resourceGroups",
+      "location": "[parameters('RG_Location')]",
+      "name": "[parameters('RG_Name')]",
+      "tags": {
+        "displayName": "ResourceGroup"
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "condition": "[equals(parameters('Existing_vNet'),'False')]",
+      "name": "sharedDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[parameters('Shared_RG_Name')]",
+      "dependsOn": [
+        "[parameters('Shared_RG_Name')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "parameters": {
+          "RG_Location": {
+            "value": "[parameters('RG_Location')]"
+          },
+          "Shared_RG_Name": {
+            "value": "[parameters('Shared_RG_Name')]"
+          },
+          "virtualNetworkName": {
+            "value": "[parameters('virtualNetworkName')]"
+          },
+          "addressPrefix": {
+            "value": "[variables('addressPrefix')]"
+          },
+          "subnetName": {
+            "value": "[parameters('subnetName')]"
+          },
+          "subnetPrefix": {
+            "value": "[variables('subnetPrefix')]"
+          }
+        },
+        "templateLink": {
+          "uri": "[variables('sharedResourcesUri')]",
+          "contentVersion": "1.0.0.0"
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "storageDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[parameters('RG_Name')]",
+      "dependsOn": [
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "parameters": {
+          "RG_Location": {
+            "value": "[parameters('RG_Location')]"
+          },
+          "RG_Name": {
+            "value": "[parameters('RG_Name')]"
+          },
+          "StorageAccountName": {
+            "value": "[variables('StorageAccountName')]"
+          }
+        },
+        "templateLink": {
+          "uri": "[variables('storageResourceUri')]",
+          "contentVersion": "1.0.0.0"
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "pipDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[parameters('RG_Name')]",
+      "dependsOn": [
+        "storageDeployment"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "parameters": {
+          "RG_Location": {
+            "value": "[parameters('RG_Location')]"
+          },
+          "RG_Name": {
+            "value": "[parameters('RG_Name')]"
+          },
+          "publicIPAddressName": {
+            "value": "[variables('publicIPAddressName')]"
+          },
+          "publicIPAddressType": {
+            "value": "[variables('publicIPAddressType')]"
+          },
+          "dnsNameForPublicIP": {
+            "value": "[variables('dnsNameForPublicIP')]"
+          }
+        },
+        "templateLink": {
+          "uri": "[variables('pipResourceUri')]",
+          "contentVersion": "1.0.0.0"
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "nsgDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[parameters('RG_Name')]",
+      "dependsOn": [
+        "pipDeployment"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "parameters": {
+          "RG_Location": {
+            "value": "[parameters('RG_Location')]"
+          },
+          "RG_Name": {
+            "value": "[parameters('RG_Name')]"
+          },
+          "NetworkSecurityGroupName": {
+            "value": "[variables('NetworkSecurityGroupName')]"
+          }
+        },
+        "templateLink": {
+          "uri": "[variables('nsgResourceUri')]",
+          "contentVersion": "1.0.0.0"
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "nicDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[parameters('RG_Name')]",
+      "dependsOn": [
+        "nsgDeployment"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "parameters": {
+          "RG_Location": {
+            "value": "[parameters('RG_Location')]"
+          },
+          "RG_Name": {
+            "value": "[parameters('RG_Name')]"
+          },
+          "Shared_RG_Name": {
+            "value": "[parameters('Shared_RG_Name')]"
+          },
+          "nicName": {
+            "value": "[variables('nicName')]"
+          },
+          "publicIPAddressName": {
+            "value": "[variables('publicIPAddressName')]"
+          },
+          "virtualNetworkName": {
+            "value": "[parameters('virtualNetworkName')]"
+          },
+          "subnetName": {
+            "value": "[parameters('subnetName')]"
+          },
+          "NetworkSecurityGroupName": {
+            "value": "[variables('NetworkSecurityGroupName')]"
+          }
+        },
+        "templateLink": {
+          "uri": "[variables('nicResourceUri')]",
+          "contentVersion": "1.0.0.0"
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "vmDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[parameters('RG_Name')]",
+      "dependsOn": [
+        "nicDeployment"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "parameters": {
+          "RG_Location": {
+            "value": "[parameters('RG_Location')]"
+          },
+          "RG_Name": {
+            "value": "[parameters('RG_Name')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "VM_Name_Suffix": {
+            "value": "[parameters('VM_Name_Suffix')]"
+          },
+          "windowsOSVersion": {
+            "value": "[parameters('WindowsOSVersion')]"
+          },
+          "vmName": {
+            "value": "[variables('vmName')]"
+          },
+          "vmSize": {
+            "value": "[variables('vmSize')]"
+          },
+          "dataDiskCount": {
+            "value": "[parameters('DataDiskCount')]"
+          },
+          "DisksType": {
+            "value": "[parameters('DisksType')]"
+          },
+          "timeZone": {
+            "value": "[parameters('timeZone')]"
+          },
+          "StorageAccountName": {
+            "value": "[variables('StorageAccountName')]"
+          },
+          "nicName": {
+            "value": "[variables('nicName')]"
+          },
+          "VNCKey": {
+            "value": "[parameters('VNCKey')]"
+          },
+          "vaultResourceID": {
+            "value": "[parameters('vaultResourceID')]"
+          },
+          "secretUrlWithVersion1": {
+            "value": "[parameters('secretUrlWithVersion1')]"
+          },
+          "wadcfgxstart": {
+            "value": "[variables('wadcfgxstart')]"
+          },
+          "wadmetricsresourceid": {
+            "value": "[variables('wadmetricsresourceid')]"
+          },
+          "wadcfgxend": {
+            "value": "[variables('wadcfgxend')]"
+          },
+          "_artifactsLocation": {
+            "value": "[parameters('_artifactsLocation')]"
+          },
+          "_artifactsLocationSasToken": {
+            "value": "[parameters('_artifactsLocationSasToken')]"
+          }
+        },
+        "templateLink": {
+          "uri": "[variables('vmResourceUri')]",
+          "contentVersion": "1.0.0.0"
+        }
+      }
+    }
+  ]
+}

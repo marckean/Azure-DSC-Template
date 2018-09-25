@@ -3,7 +3,7 @@ configuration Main
 {
 param
 (
-[string]$JukeboxID = "localhost",
+[string]$VM_Name_Suffix = "localhost",
 [string]$nodeName = $env:COMPUTERNAME,
 [string]$artifacts,
 [string]$artifactsSasToken,
