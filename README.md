@@ -26,9 +26,9 @@ Basically, this repo:
 
 - Gives you the choice to use either an **Existing** vNet, or a **Non-Existing** vNet. It will setup a new vNet if you choose **Non-Existing**.
 
-- Uses the **Copy** element with **Resource iteration**, giving you the choice of how many data disks you want to deploy.
+- Deploys a **vNet** into a separate '**Shared**' Resource Group (Cross Resource Group Deployment), a resource group used for shared resources. The concept being, general Azure resources i.e. a vNet are deployed into separate resource groups.
 
-- Deploys a vNet into a separate Resource Group (Cross Resource Group Deployment), a resource group used for shared resources
+- Uses the **Copy** element with **Resource iteration**, giving you the choice of how many data disks you want to deploy.
 
 ### This Repo:
 - Leverages the **DSC extension** to run the configuration on the VM (**DSC\ConfigurationData.ps1**). When running the **DSC extension**, the JSON template also feeds parameter values into this **DSC configuration script** via the DSC extension:
