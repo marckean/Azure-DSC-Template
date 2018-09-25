@@ -181,6 +181,7 @@
       "type": "Microsoft.Resources/deployments",
       "resourceGroup": "[parameters('RG_Name')]",
       "dependsOn": [
+        "ResourceGroup"
       ],
       "properties": {
         "mode": "Incremental",
