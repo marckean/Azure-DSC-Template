@@ -52,7 +52,7 @@ Simply:
 - Change the **AzureDeploy.parameters.json** file
 - Run **Deploy-Azure.ps1**
 
-The below button to 
+## The below buttons don't work as yet: 
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmarckean%2FAzure-DSC-Template%2Fmaster%2FAzureDeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
