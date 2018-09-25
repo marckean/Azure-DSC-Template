@@ -20,9 +20,21 @@
       }
     },
     "RG_Name": {
-      "value": "DSCTestTemplate4",
+      "value": "DSCTestTemplate5",
       "metadata": {
         "description": "Name of the main resource group where the primary Resources are deployed to, e.g. the VM, NIC, Disks etc"
+      }
+    },
+    "VM_Name_Prefix": {
+      "value": "eJukebox",
+      "metadata": {
+        "description": "Prefix for Computer Name"
+      }
+    },
+    "VM_Name_Suffix": {
+      "value": "1607",
+      "metadata": {
+        "description": "Suffix for Computer Name"
       }
     },
     "Shared_RG_Name": {
@@ -73,18 +85,6 @@
       "value": "First",
       "metadata": {
         "description": "Subnet to deploy into, or to create if Existing_vNet is false"
-      }
-    },
-    "VM_Name_Prefix": {
-      "value": "eJukebox",
-      "metadata": {
-        "description": "Prefix for Computer Name"
-      }
-    },
-    "VM_Name_Suffix": {
-      "value": "1606",
-      "metadata": {
-        "description": "Suffix for Computer Name"
       }
     },
     "dataDiskCount": {
