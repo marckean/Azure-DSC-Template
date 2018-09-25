@@ -42,10 +42,10 @@ Basically, this repo:
     - artifactsLocationSasToken
     - VNCKey
 
-### [My other Repo](https://github.com/marckean/Azure-DSC-Automation)
+### [My other Repo](https://github.com/marckean/Azure-DSC-Automation):
 - Leverages the **DSC extension** only to register the VM with the **Azure Automation** pull server in order for DSC to run the configuration on the VM.
 
-### Deployment
+### Deployment:
 Simply:
 - Clone this repo locally
 - Use VS Code, along with the latest Azure PowerShell module
