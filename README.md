@@ -1,15 +1,44 @@
 # Azure-DSC-Template
 
-Details here https://marckean.com/2018/07/24/azure-dsc-deployment-using-a-json-template/
+I setup this repo, as one glorified that deploys the greatest Azure VM, all from **VS Code** & **Azure Rsourse Manager**.
 
-Basically
+Basically, this repo:
 
 - Deploys an Azure VM
+
+- Uses the **Custom Script** extension to set **Set-WinSystemLocale -SystemLocale en-AU**. It copies a script from the **artifcats** location to the local C:\ drive to be used as a user logon script (**UserLogonScript.ps1**), then DSC sets up a scheduled task to call the logon script at the time of any user logon (user account context). Finally, the **Custom Script** extension makes changes DSC Local Configuration Manager - this runs as the system account.
+
+    DSC Local Configuration Manager changes are:
+    - RefreshFrequencyMins = 30
+    - ConfigurationMode = '**ApplyandAutoCorrect**'
+    - RebootNodeIfNeeded = $true
+    - ActionAfterReboot = 'ContinueConfiguration'
+    - ConfigurationModeFrequencyMins = 15
+
+- Uses the new **Microsoft.Resources/resourceGroups** method and creates a resource group in ARM upon deployment, as well as deploys deploys resources to this same Resource Group.
+
+- Makes use of the **Azure Key Vault**, to use both:
+
+    - '**Certificates**' | to install a Private Key Certificate onto the local machine
+    - '**Secrets**' | to store the local admin password, and the VNC software key
+
+- Gives you the choice to use either **Un-Managed** disks, or **Managed** disks.
+
+- Gives you the choice to use either an **Existing** vNet, or a **Non-Existing** vNet. It will setup a new vNet if you choose **Non-Existing**.
+
+- Uses the **Copy** element with **Resource iteration**, giving you the choice of how many data disks you want to deploy.
+
 - Deploys a vNet into a separate Resource Group (Cross Resource Group Deployment), a resource group used for shared resources
-- Leverages the **Custom Script extension** which runs a script as the local computer account at the time of deployment. This script copies a script from the artifcats location to the local C:\ drive to be used as a user logon script. The DSC sets up a scheduled task to call the script at the time of any user logon.
 
 ### This Repo:
-- leverages the **DSC extension** to run the configuration on the VM. The JSON template also feeds parameter values into a DSC configuration script via the DSC extension
+- Leverages the **DSC extension** to run the configuration on the VM (**DSC\ConfigurationData.ps1**). When running the **DSC extension**, the JSON template also feeds parameter values into this **DSC configuration script** via the DSC extension:
+
+    Parameters being:
+    - VM_Name_Suffix
+    - nodeName
+    - artifactsLocation
+    - artifactsLocationSasToken
+    - VNCKey
 
 ### [My other Repo](https://github.com/marckean/Azure-DSC-Automation)
 - Leverages the **DSC extension** only to register the VM with the **Azure Automation** pull server in order for DSC to run the configuration on the VM.
