@@ -2,6 +2,8 @@
 
 I setup this repo, as one glorified that deploys the greatest Azure VM, all from **VS Code** & **Azure Resource Manager**.
 
+This uses **NestedTemplates** galore, which starts with the parent **AzureDeploy.json** template.
+
 Basically, this repo:
 
 - Deploys an Azure VM
