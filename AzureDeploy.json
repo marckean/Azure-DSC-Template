@@ -45,8 +45,7 @@
       ]
     },
     "Existing_vNet": {
-      "type": "string",
-      "defaultValue": ""
+      "type": "string"
     },
     "virtualNetworkName": {
       "type": "string"

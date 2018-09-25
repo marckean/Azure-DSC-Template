@@ -1,6 +1,6 @@
 # Azure-DSC-Template
 
-I setup this repo, as one glorified that deploys the greatest Azure VM, all from **VS Code** & **Azure Rsourse Manager**.
+I setup this repo, as one glorified that deploys the greatest Azure VM, all from **VS Code** & **Azure Resource Manager**.
 
 Basically, this repo:
 
@@ -42,6 +42,15 @@ Basically, this repo:
 
 ### [My other Repo](https://github.com/marckean/Azure-DSC-Automation)
 - Leverages the **DSC extension** only to register the VM with the **Azure Automation** pull server in order for DSC to run the configuration on the VM.
+
+### Deployment
+Simply:
+- Clone this repo locally
+- Use VS Code, along with the latest Azure PowerShell module
+- Change the **AzureDeploy.parameters.json** file
+- Run **Deploy-Azure.ps1**
+
+The below button to 
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmarckean%2FAzure-DSC-Template%2Fmaster%2FAzureDeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
