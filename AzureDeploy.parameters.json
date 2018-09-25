@@ -11,6 +11,9 @@
           "id": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
         },
         "secretName": "VMTestAdminPassword"
+      },
+      "metadata": {
+        "description": "The Secret Identifier of the Secret for the 'Computer Name Admin Password'"
       }
     },
     "RG_Location": {
@@ -87,8 +90,17 @@
         "description": "Subnet to deploy into, or to create if Existing_vNet is false"
       }
     },
-    "dataDiskCount": {
-      "value": 1
+    "vaultResourceID": {
+      "value": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault",
+      "metadata": {
+        "description": "Resource ID of the Azure Key Vault where the Certificates kept"
+      }
+    },
+    "secretUrlWithVersion1": {
+      "value": "https://msmarcvault.vault.azure.net/secrets/eJukebox-net-PK/73045146013f4a998ce13417598ec208",
+      "metadata": {
+        "description": "The Secret Identifier of the Certificate to install on the VM, from the Azure Key Vault"
+      }
     },
     "VNCKey": {
       "reference": {
@@ -96,6 +108,9 @@
           "id": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
         },
         "secretName": "VNCKey"
+      },
+      "metadata": {
+        "description": "The Secret Identifier of the Secret for the 'VNC Install Key'"
       }
     }
   }

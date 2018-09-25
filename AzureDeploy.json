@@ -7,24 +7,20 @@
       "defaultValue": "marc.kean"
     },
     "adminPassword": {
-      "type": "string",
-      "defaultValue": ""
+      "type": "string"
     },
     "VNCKey": {
-      "type": "string",
-      "defaultValue": ""
+      "type": "string"
     },
     "timeZone": {
       "type": "string",
       "defaultValue": "AUS Eastern Standard Time"
     },
     "vaultResourceID": {
-      "type": "string",
-      "defaultValue": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
+      "type": "string"
     },
     "secretUrlWithVersion1": {
-      "type": "string",
-      "defaultValue": "https://msmarcvault.vault.azure.net/secrets/eJukebox-net-PK/73045146013f4a998ce13417598ec208"
+      "type": "string"
     },
     "RG_Location": {
       "type": "string"
@@ -36,16 +32,13 @@
       "type": "string"
     },
     "VM_Name_Prefix": {
-      "type": "string",
-      "defaultValue": ""
+      "type": "string"
     },
     "VM_Name_Suffix": {
-      "type": "string",
-      "defaultValue": ""
+      "type": "string"
     },
     "DisksType": {
       "type": "string",
-      "defaultValue": "",
       "allowedValues": [
         "Managed",
         "Un-Managed"
@@ -56,12 +49,10 @@
       "defaultValue": ""
     },
     "virtualNetworkName": {
-      "type": "string",
-      "defaultValue": ""
+      "type": "string"
     },
     "subnetName": {
-      "type": "string",
-      "defaultValue": ""
+      "type": "string"
     },
     "dataDiskCount": {
       "type": "int",
