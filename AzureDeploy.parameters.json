@@ -13,13 +13,66 @@
         "secretName": "VMTestAdminPassword"
       }
     },
+    "RG_Location": {
+      "value": "australiaeast",
+      "metadata": {
+        "description": "Name of the Azure Region this is deployed to"
+      }
+    },
     "RG_Name": {
-      "value": "DSCTestTemplate4"
+      "value": "DSCTestTemplate4",
+      "metadata": {
+        "description": "Name of the main resource group where the primary Resources are deployed to, e.g. the VM, NIC, Disks etc"
+      }
     },
     "Shared_RG_Name": {
       "value": "SharedResources",
       "metadata": {
-        "description": "Name of the resource group where Shared Resources are deployed to, e.g. the Virtual Network (ignored if deployed into an existing vNet)"
+        "description": "Name of the resource group where Shared Resources are deployed to, e.g. the vNet (ignored if deployed into an existing vNet)"
+      }
+    },
+    "DisksType": {
+      "value": "Un-Managed",
+      "allowedValues": [
+        "Managed",
+        "Un-Managed"
+      ],
+      "metadata": {
+        "description": "Disk type, Managed or Un-Managed"
+      }
+    },
+    "dataDiskCount": {
+      "value": 1,
+      "allowedvalues": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "metadata": {
+        "description": "Number of data disks"
+      }
+    },
+    "Existing_vNet": {
+      "value": "True",
+      "allowedValues": [
+        "True",
+        "False"
+      ],
+      "metadata": {
+        "description": "Deploy into an existing vNet or not"
+      }
+    },
+    "virtualNetworkName": {
+      "value": "eJukeNetwork",
+      "metadata": {
+        "description": "vNet to deploy into, or to create if Existing_vNet is false"
+      }
+    },
+    "subnetName": {
+      "value": "First",
+      "metadata": {
+        "description": "Subnet to deploy into, or to create if Existing_vNet is false"
       }
     },
     "VM_Name_Prefix": {

@@ -27,16 +27,13 @@
       "defaultValue": "https://msmarcvault.vault.azure.net/secrets/eJukebox-net-PK/73045146013f4a998ce13417598ec208"
     },
     "RG_Location": {
-      "type": "string",
-      "defaultValue": "australiaeast"
+      "type": "string"
     },
     "RG_Name": {
-      "type": "string",
-      "defaultValue": ""
+      "type": "string"
     },
     "Shared_RG_Name": {
-      "type": "string",
-      "defaultValue": ""
+      "type": "string"
     },
     "VM_Name_Prefix": {
       "type": "string",
@@ -44,46 +41,27 @@
     },
     "VM_Name_Suffix": {
       "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Suffix for Computer Name"
-      }
+      "defaultValue": ""
     },
     "DisksType": {
       "type": "string",
-      "defaultValue": "Un-Managed",
+      "defaultValue": "",
       "allowedValues": [
         "Managed",
         "Un-Managed"
-      ],
-      "metadata": {
-        "description": "Disk type, Managed or Un-Managed"
-      }
+      ]
     },
     "Existing_vNet": {
       "type": "string",
-      "defaultValue": "True",
-      "allowedValues": [
-        "True",
-        "False"
-      ],
-      "metadata": {
-        "description": "Deploy into an existing vNet or not"
-      }
+      "defaultValue": ""
     },
     "virtualNetworkName": {
       "type": "string",
-      "defaultValue": "eJukeNetwork",
-      "metadata": {
-        "description": "vNet to deploy into, or to create if Existing_vNet is false"
-      }
+      "defaultValue": ""
     },
     "subnetName": {
       "type": "string",
-      "defaultValue": "First",
-      "metadata": {
-        "description": "Subnet to deploy into, or to create if Existing_vNet is false"
-      }
+      "defaultValue": ""
     },
     "dataDiskCount": {
       "type": "int",
@@ -92,10 +70,7 @@
         2,
         3,
         4
-      ],
-      "metadata": {
-        "description": "number of data disks."
-      }
+      ]
     },
     "windowsOSVersion": {
       "type": "string",
