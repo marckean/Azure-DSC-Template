@@ -8,7 +8,7 @@ Basically, this repo:
 
 - Deploys an Azure VM
 
-- Uses the **Custom Script** extension to set **Set-WinSystemLocale -SystemLocale en-AU**. It copies a script from the **artifcats** location to the local C:\ drive to be used as a user logon script (**UserLogonScript.ps1**), then DSC sets up a scheduled task to call the logon script at the time of any user logon (user account context). Finally, the **Custom Script** extension makes changes DSC Local Configuration Manager - this runs as the system account.
+- Uses the **Custom Script** extension to set **Set-WinSystemLocale -SystemLocale en-AU**. It copies a script from the **artifacts** location to the local C:\ drive to be used as a user logon script (**UserLogonScript.ps1**), then DSC sets up a scheduled task to call the logon script at the time of any user logon (user account context). Finally, the **Custom Script** extension makes changes to the DSC Local Configuration Manager - this runs as the system account.
 
     DSC Local Configuration Manager changes are:
     - RefreshFrequencyMins = 30
