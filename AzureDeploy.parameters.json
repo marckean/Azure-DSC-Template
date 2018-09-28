@@ -69,7 +69,10 @@
       }
     },
     "dataDiskSizeGB": {
-      "value": 512
+      "value": 512,
+      "metadata": {
+        "description": "Disk size in multiples of 32, 64, 128, 256, 512, 1024 etc - Max of 4095"
+      }
     },
     "dataDiskCount": {
       "value": 1,
