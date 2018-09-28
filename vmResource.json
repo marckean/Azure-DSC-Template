@@ -137,10 +137,10 @@
                 },
                 "storageProfile": {
                   "imageReference": {
-                    "publisher": "[if(equals(parameters('windowsOSVersion'), '2019-Datacenter'), 'microsoft-hyperv', 'MicrosoftWindowsServer')]",
-                    "offer": "[if(equals(parameters('windowsOSVersion'), '2019-Datacenter'), 'rs5_preview', 'WindowsServer')]",
-                    "version": "[if(equals(parameters('windowsOSVersion'), '2019-Datacenter'), '2019.127.20180517', 'latest')]",
-                    "sku": "[parameters('windowsOSVersion')]"
+                    "publisher": "[variables('imagePublisher')]",
+                    "offer": "[variables('imageOffer')]",
+                    "sku": "[parameters('windowsOSVersion')]",
+                    "version": "[variables('imageVersion')]"
                   },
                   "osDisk": {
                     "createOption": "FromImage",
@@ -335,10 +335,10 @@
                 },
                 "storageProfile": {
                   "imageReference": {
-                    "publisher": "[if(equals(parameters('windowsOSVersion'), '2019-Datacenter'), 'microsoft-hyperv', 'MicrosoftWindowsServer')]",
-                    "offer": "[if(equals(parameters('windowsOSVersion'), '2019-Datacenter'), 'rs5_preview', 'WindowsServer')]",
-                    "version": "[if(equals(parameters('windowsOSVersion'), '2019-Datacenter'), '2019.127.20180517', 'latest')]",
-                    "sku": "[parameters('windowsOSVersion')]"
+                    "publisher": "[variables('imagePublisher')]",
+                    "offer": "[variables('imageOffer')]",
+                    "sku": "[parameters('windowsOSVersion')]",
+                    "version": "[variables('imageVersion')]"
                   },
                   "osDisk": {
                     "createOption": "FromImage",

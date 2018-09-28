@@ -64,7 +64,7 @@
     },
     "windowsOSVersion": {
       "type": "string",
-      "defaultValue": "2019-Datacenter",
+      "defaultValue": "2016-Datacenter",
       "allowedValues": [
         "2008-R2-SP1",
         "2012-Datacenter",
@@ -86,12 +86,12 @@
     }
   },
   "variables": {
-    "sharedResourcesUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/SharedResources.json",
-    "storageResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/StorageResource.json",
-    "pipResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/pipResource.json",
-    "nsgResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/nsgResource.json",
-    "nicResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/nicResource.json",
-    "vmResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/NestedApproach/vmResource.json",
+    "sharedResourcesUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/master/SharedResources.json",
+    "storageResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/master/StorageResource.json",
+    "pipResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/master/pipResource.json",
+    "nsgResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/master/nsgResource.json",
+    "nicResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/master/nicResource.json",
+    "vmResourceUri": "https://raw.githubusercontent.com/marckean/Azure-DSC-Template/master/vmResource.json",
     "StorageAccountName": "[concat('diagstg', uniqueString(deployment().name))]",
     "nicName": "[concat(parameters('VM_Name_Prefix'), parameters('VM_Name_Suffix'), '_NIC')]",
     "virtualNetworkName": "parameters('virtualNetworkName')",
