@@ -40,17 +40,17 @@
     "DisksType": {
       "type": "string",
       "allowedValues": [
-        "Standard_LRS",
-        "Premium_LRS",
-        "StandardSSD_LRS",
-        "UltraSSD_LRS"
+        "Managed",
+        "Un-Managed"
       ]
     },
     "DiskSku": {
       "type": "string",
       "allowedValues": [
-        "Managed",
-        "Un-Managed"
+        "Standard_LRS",
+        "Premium_LRS",
+        "StandardSSD_LRS",
+        "UltraSSD_LRS"
       ]
     },
     "dataDiskSizeGB": {
