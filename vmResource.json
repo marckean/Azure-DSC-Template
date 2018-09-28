@@ -68,8 +68,9 @@
   },
   "variables": {
     "OSDiskName": "[concat('OsDisk', parameters('vmName'))]",
-    "imagePublisher": "MicrosoftWindowsServer",
-    "imageOffer": "WindowsServer",
+    "imagePublisher": "[if(equals(parameters('windowsOSVersion'), '2019-Datacenter'), 'microsoft-hyperv', 'MicrosoftWindowsServer')]",
+    "imageOffer": "[if(equals(parameters('windowsOSVersion'), '2019-Datacenter'), 'rs5_preview', 'WindowsServer')]",
+    "imageVersion": "[if(equals(parameters('windowsOSVersion'), '2019-Datacenter'), '2019.127.20180517', 'latest')]",
     "vmSize": "Standard_B2s",
     "CustomScriptScriptFileName": "CustomScript.ps1",
     "CustomScriptScriptFolder": "CustomScripts",
@@ -139,7 +140,7 @@
                     "publisher": "[variables('imagePublisher')]",
                     "offer": "[variables('imageOffer')]",
                     "sku": "[parameters('windowsOSVersion')]",
-                    "version": "latest"
+                    "version": "[variables('imageVersion')]"
                   },
                   "osDisk": {
                     "createOption": "FromImage",
