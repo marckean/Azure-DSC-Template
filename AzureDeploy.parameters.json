@@ -16,14 +16,8 @@
         "description": "The Secret Identifier of the Secret for the 'Computer Name Admin Password'"
       }
     },
-    "RG_Location": {
-      "value": "australiaeast",
-      "metadata": {
-        "description": "Name of the Azure Region this is deployed to"
-      }
-    },
     "RG_Name": {
-      "value": "DSCTestTemplate5",
+      "value": "DSCTestTemplate6",
       "metadata": {
         "description": "Name of the main resource group where the primary Resources are deployed to, e.g. the VM, NIC, Disks etc"
       }
@@ -35,9 +29,15 @@
       }
     },
     "VM_Name_Suffix": {
-      "value": "1607",
+      "value": "1608",
       "metadata": {
         "description": "Suffix for Computer Name"
+      }
+    },
+    "RG_Location": {
+      "value": "australiaeast",
+      "metadata": {
+        "description": "Name of the Azure Region this is deployed to"
       }
     },
     "Shared_RG_Name": {
