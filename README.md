@@ -22,7 +22,7 @@ Basically, this repo:
 - Makes use of the **Azure Key Vault**, to use both:
 
     - '**Certificates**' | to install a Private Key Certificate onto the local machine
-    - '**Secrets**' | to store the local admin password, and the VNC software key
+    - '**Secrets**' | to store the local admin password for the Windows OS, and the VNC software key in order to setup VNC viewer
 
 - Gives you the choice to use either **Un-Managed** disks, or **Managed** disks.
 
