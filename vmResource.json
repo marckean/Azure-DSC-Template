@@ -32,6 +32,12 @@
     "DisksType": {
       "type": "string"
     },
+    "DiskSku": {
+      "type": "string"
+    },
+    "dataDiskSizeGB": {
+      "type": "string"
+    },
     "timeZone": {
       "type": "string"
     },
@@ -144,14 +150,17 @@
                   },
                   "osDisk": {
                     "createOption": "FromImage",
-                    "name": "[variables('OSDiskName')]"
+                    "name": "[variables('OSDiskName')]",
+                    "managedDisk": {
+                      "storageAccountType": "[parameters('DiskSku')]"
+                  }
                   },
                   "copy": [
                     {
                       "name": "dataDisks",
                       "count": "[parameters('dataDiskCount')]",
                       "input": {
-                        "diskSizeGB": "512",
+                        "diskSizeGB": "[parameters('dataDiskSizeGB')]",
                         "lun": "[copyIndex('dataDisks')]",
                         "createOption": "Empty"
                       }
@@ -353,7 +362,7 @@
                       "name": "datadisks",
                       "count": "[parameters('dataDiskCount')]",
                       "input": {
-                        "diskSizeGB": "512",
+                        "diskSizeGB": "[parameters('dataDiskSizeGB')]",
                         "lun": "[copyIndex('dataDisks')]",
                         "name": "[concat(uniqueString(subscription().id), copyIndex('dataDisks'))]",
                         "vhd": {

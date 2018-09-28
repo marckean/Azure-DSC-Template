@@ -56,6 +56,21 @@
         "description": "Disk type, Managed or Un-Managed"
       }
     },
+    "DiskSku": {
+      "value": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Premium_LRS",
+        "StandardSSD_LRS",
+        "UltraSSD_LRS"
+      ],
+      "metadata": {
+        "description": "Disk Sku"
+      }
+    },
+    "dataDiskSizeGB": {
+      "value": 500
+    },
     "dataDiskCount": {
       "value": 1,
       "allowedvalues": [
