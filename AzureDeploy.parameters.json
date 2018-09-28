@@ -69,7 +69,7 @@
       }
     },
     "dataDiskSizeGB": {
-      "value": 500
+      "value": 512
     },
     "dataDiskCount": {
       "value": 1,
