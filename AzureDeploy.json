@@ -54,7 +54,7 @@
       ]
     },
     "dataDiskSizeGB": {
-      "type": "string"
+      "type": "int"
     },
     "Existing_vNet": {
       "type": "string"
