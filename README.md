@@ -32,6 +32,9 @@ Basically, this repo:
 
 - Uses the **Copy** element with **Resource iteration**, giving you the choice of how many data disks you want to deploy.
 
+## Soon
+This Repo will support the option of using Accelerated Networking
+
 ### This Repo:
 - Leverages the **DSC extension** to run the configuration on the VM (**DSC\ConfigurationData.ps1**). When running the **DSC extension**, the JSON template also feeds parameter values into this **DSC configuration script** via the DSC extension:
 
