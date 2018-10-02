@@ -17,19 +17,19 @@
       }
     },
     "RG_Name": {
-      "value": "DSCTestTemplate6",
+      "value": "IgniteDownloadVM",
       "metadata": {
         "description": "Name of the main resource group where the primary Resources are deployed to, e.g. the VM, NIC, Disks etc"
       }
     },
     "VM_Name_Prefix": {
-      "value": "eJukebox",
+      "value": "Ignite",
       "metadata": {
         "description": "Prefix for Computer Name"
       }
     },
     "VM_Name_Suffix": {
-      "value": "1608",
+      "value": "2018",
       "metadata": {
         "description": "Suffix for Computer Name"
       }
