@@ -17,13 +17,13 @@
       }
     },
     "RG_Name": {
-      "value": "Puppet1",
+      "value": "Puppet2",
       "metadata": {
         "description": "Name of the main resource group where the primary Resources are deployed to, e.g. the VM, NIC, Disks etc"
       }
     },
     "VM_Name_Prefix": {
-      "value": "Puppet",
+      "value": "Puppet2",
       "metadata": {
         "description": "Prefix for Computer Name"
       }
