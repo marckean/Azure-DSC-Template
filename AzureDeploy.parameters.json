@@ -17,13 +17,13 @@
       }
     },
     "RG_Name": {
-      "value": "IgniteDownloadVM",
+      "value": "Puppet1",
       "metadata": {
         "description": "Name of the main resource group where the primary Resources are deployed to, e.g. the VM, NIC, Disks etc"
       }
     },
     "VM_Name_Prefix": {
-      "value": "Ignite",
+      "value": "Puppet",
       "metadata": {
         "description": "Prefix for Computer Name"
       }
@@ -47,7 +47,7 @@
       }
     },
     "DisksType": {
-      "value": "Un-Managed",
+      "value": "Managed",
       "allowedValues": [
         "Managed",
         "Un-Managed"
