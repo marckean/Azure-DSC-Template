@@ -74,9 +74,9 @@
   },
   "variables": {
     "OSDiskName": "[concat('OsDisk', parameters('vmName'))]",
-    "imagePublisher": "[if(equals(parameters('windowsOSVersion'), '2019-Datacenter'), 'microsoft-hyperv', 'MicrosoftWindowsServer')]",
-    "imageOffer": "[if(equals(parameters('windowsOSVersion'), '2019-Datacenter'), 'rs5_preview', 'WindowsServer')]",
-    "imageVersion": "[if(equals(parameters('windowsOSVersion'), '2019-Datacenter'), '2019.127.20180517', 'latest')]",
+    "imagePublisher": "[if(equals(parameters('windowsOSVersion'), '2019-Datacenter'), 'MicrosoftWindowsServer', 'MicrosoftWindowsServer')]",
+    "imageOffer": "[if(equals(parameters('windowsOSVersion'), '2019-Datacenter'), 'WindowsServer', 'WindowsServer')]",
+    "imageVersion": "[if(equals(parameters('windowsOSVersion'), '2019-Datacenter'), 'latest', 'latest')]",
     "vmSize": "Standard_B2s",
     "CustomScriptScriptFileName": "CustomScript.ps1",
     "CustomScriptScriptFolder": "CustomScripts",
@@ -234,8 +234,6 @@
                       "configurationArguments": {
                         "VM_Name_Suffix": "[parameters('VM_Name_Suffix')]",
                         "nodeName": "[parameters('vmName')]",
-                        "artifacts": "[parameters('_artifactsLocation')]",
-                        "artifactsSasToken": "[parameters('_artifactsLocationSasToken')]",
                         "VNCKey": "[parameters('VNCKey')]"
                       },
                       //"configurationData": {
@@ -440,8 +438,6 @@
                       "configurationArguments": {
                         "VM_Name_Suffix": "[parameters('VM_Name_Suffix')]",
                         "nodeName": "[parameters('vmName')]",
-                        "artifacts": "[parameters('_artifactsLocation')]",
-                        "artifactsSasToken": "[parameters('_artifactsLocationSasToken')]",
                         "VNCKey": "[parameters('VNCKey')]"
                       },
                       //"configurationData": {

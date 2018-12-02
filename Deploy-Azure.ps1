@@ -21,10 +21,13 @@ $UploadArtifacts = 'true'
 # Pull RG_Name from parameters file
 $ResourceGroupName = (Get-Content $TemplateParametersFile -Raw | ConvertFrom-Json).parameters.RG_Name.Value
 $StorageContainerName = $ResourceGroupName.ToLowerInvariant() + '-stageartifacts'
-$TemplateFile = $ArtifactStagingDirectory + '\AzureDeploy.json'
+$TemplateFile = 'https://raw.githubusercontent.com/marckean/Azure-DSC-Template/master/AzureDeploy.json'
 $DSCSourceFolder = $ArtifactStagingDirectory + '\DSC'
 $DebugOptions = "None"
 $StorageAccountName = 'stage' + ((Get-AzureRmContext).Subscription.Id).Replace('-', '').substring(0, 19)
+# Existing DSC source files storage account, where DSC source files are stored on blob storage
+$dscStorageAccountName = 'ejukebox03' # Set this to blank '' to skip using DSC source files
+$dscStorageContainerName = 'ejukeartifacts'
 
 try {
     [Microsoft.Azure.Common.Authentication.AzureSession]::ClientFactory.AddUserAgent("AzureQuickStarts-$UI$($host.name)".replace(" ","_"), "1.0")
@@ -65,9 +68,11 @@ if ($UploadArtifacts) {
             #Publish-AzureRmVMDscConfiguration $DSCSourceFilePath -OutputArchivePath $DSCArchiveFilePath -AdditionalPath ($DSCSourceFolder  + '\xPSDesiredStateConfiguration') -Force -Verbose
         }
     }
-
      $StorageAccount = (Get-AzureRmStorageAccount | Where-Object{$_.StorageAccountName -eq $StorageAccountName})
-
+     ### Get existing DSC Source Files storage account
+     if($dscStorageAccountName -ne $null){
+     $dscStorageAccount = (Get-AzureRmStorageAccount | Where-Object{$_.StorageAccountName -eq $dscStorageAccountName})
+     }
     # Create the storage account if it doesn't already exist
     if ($StorageAccount -eq $null) {
         $StorageResourceGroupName = 'ARM_Deploy_Staging'
@@ -80,7 +85,13 @@ if ($UploadArtifacts) {
         $OptionalParameters[$ArtifactsLocationName] = $StorageAccount.Context.BlobEndPoint + $StorageContainerName + "/"
     }
 
-    # Copy files from the local storage staging location to the storage account container
+    # Generate the value for DSC source files location if it is not provided in the parameter file
+    if($dscStorageAccountName -ne $null){
+    if ($OptionalParameters[$dscSourceFilesLocationName] -eq $null) {
+        $OptionalParameters[$dscSourceFilesLocationName] = $dscStorageAccount.Context.BlobEndPoint + $dscStorageContainerName + "/"
+    }
+    }
+    # Copy filses from the local storage staging location to the storage account container
     New-AzureStorageContainer -Name $StorageContainerName -Context $StorageAccount.Context -ErrorAction SilentlyContinue *>&1
 
     $ArtifactFilePaths = Get-ChildItem $ArtifactStagingDirectory -Recurse -File | ForEach-Object -Process {$_.FullName}
@@ -92,14 +103,16 @@ if ($UploadArtifacts) {
         $OptionalParameters[$ArtifactsLocationSasTokenName] = (New-AzureStorageContainerSASToken -Container $StorageContainerName -Context $StorageAccount.Context -Permission r -ExpiryTime (Get-Date).AddHours(4))
     }
 
+    # Generate a 4 hour SAS token for the DSC Source Files location if one was not provided in the parameters file
+    if($dscStorageAccountName -ne $null){
+    if ($OptionalParameters[$dscArtifactsLocationSasTokenName] -eq $null) {
+        $OptionalParameters[$dscArtifactsLocationSasTokenName] = (New-AzureStorageContainerSASToken -Container $dscStorageContainerName -Context $dscStorageAccount.Context -Permission r -ExpiryTime (Get-Date).AddHours(4))
+    }
+    }
+
     # Add the Template file full URI including the SAS token as a TemplateFile Key to the $TemplateArgs hash table
-    $TemplateArgs.Add('TemplateFile', $OptionalParameters[$ArtifactsLocationName] + (Get-ChildItem $TemplateFile).Name + $OptionalParameters[$ArtifactsLocationSasTokenName])
-    
-}
-else {
-
     $TemplateArgs.Add('TemplateFile', $TemplateFile)
-
+    
 }
 
 $TemplateArgs.Add('TemplateParameterFile', $TemplateParametersFile)

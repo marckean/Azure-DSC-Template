@@ -2,7 +2,7 @@ param (
     [string]$artifactsLocation,
     [string]$artifactsLocationSasToken,
     [string]$folderName,
-    [string]$fileToInstall
+    [string]$fileToInstall # UserLogonScript.ps1
 )
 
 $source = $artifactsLocation + "$folderName\$fileToInstall" + $artifactsLocationSasToken

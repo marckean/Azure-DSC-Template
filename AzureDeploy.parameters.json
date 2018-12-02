@@ -17,13 +17,13 @@
       }
     },
     "RG_Name": {
-      "value": "Puppet2",
+      "value": "eJukeNew",
       "metadata": {
         "description": "Name of the main resource group where the primary Resources are deployed to, e.g. the VM, NIC, Disks etc"
       }
     },
     "VM_Name_Prefix": {
-      "value": "Puppet2",
+      "value": "eJukeNew",
       "metadata": {
         "description": "Prefix for Computer Name"
       }
@@ -57,7 +57,7 @@
       }
     },
     "DiskSku": {
-      "value": "Standard_LRS",
+      "value": "Premium_LRS",
       "allowedValues": [
         "Standard_LRS",
         "Premium_LRS",
@@ -75,8 +75,9 @@
       }
     },
     "dataDiskCount": {
-      "value": 1,
+      "value": 0,
       "allowedvalues": [
+        0,
         1,
         2,
         3,
