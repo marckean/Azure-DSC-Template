@@ -70,6 +70,12 @@
     },
     "_artifactsLocationSasToken": {
       "type": "string"
+    },
+    "_DSCartifactsLocation": {
+      "type": "string"
+    },
+    "_DSCartifactsLocationSasToken": {
+      "type": "string"
     }
   },
   "variables": {
@@ -234,7 +240,9 @@
                       "configurationArguments": {
                         "VM_Name_Suffix": "[parameters('VM_Name_Suffix')]",
                         "nodeName": "[parameters('vmName')]",
-                        "VNCKey": "[parameters('VNCKey')]"
+                        "VNCKey": "[parameters('VNCKey')]",
+                        "dscartifacts": "[parameters('DSCartifactsLocation')]",
+                        "dscartifactsSasToken": "[parameters('DSCdscartifactsSasToken')]"
                       },
                       //"configurationData": {
                       //"url": "[concat(parameters('_artifactsLocation'), variables('DSCArchiveFolder'), '/', variables('ConfigurationDataScriptName'))]"
@@ -438,7 +446,9 @@
                       "configurationArguments": {
                         "VM_Name_Suffix": "[parameters('VM_Name_Suffix')]",
                         "nodeName": "[parameters('vmName')]",
-                        "VNCKey": "[parameters('VNCKey')]"
+                        "VNCKey": "[parameters('VNCKey')]",
+                        "dscartifacts": "[parameters('DSCartifactsLocation')]",
+                        "dscartifactsSasToken": "[parameters('DSCdscartifactsSasToken')]"
                       },
                       //"configurationData": {
                       //"url": "[concat(parameters('_artifactsLocation'), variables('DSCArchiveFolder'), '/', variables('ConfigurationDataScriptName'))]"

@@ -5,6 +5,7 @@ param (
     [string]$fileToInstall # UserLogonScript.ps1
 )
 
+# Copy the logon script (UserLogonScript.ps1) from the artifacts location
 $source = $artifactsLocation + "$folderName\$fileToInstall" + $artifactsLocationSasToken
 $dest = "C:"
 #New-Item -Path $dest -ItemType directory

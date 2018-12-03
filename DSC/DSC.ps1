@@ -5,6 +5,8 @@ param
 (
 [string]$VM_Name_Suffix = "localhost",
 [string]$nodeName = $env:COMPUTERNAME,
+[string]$dscartifacts,
+[string]$dscartifactsSasToken,
 [string]$VNCKey
 )
 
