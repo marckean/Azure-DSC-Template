@@ -131,6 +131,50 @@
       "metadata": {
         "description": "The Secret Identifier of the Secret for the 'VNC Install Key'"
       }
+    },
+    "eJukebox": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
+        },
+        "secretName": "eJukebox"
+      },
+      "metadata": {
+        "description": "The Secret Identifier of the Secret for the 'eJukebox user password'"
+      }
+    },
+    "eJukeboxTask": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
+        },
+        "secretName": "eJukeboxTask"
+      },
+      "metadata": {
+        "description": "The Secret Identifier of the Secret for the 'eJukeboxTask user password'"
+      }
+    },
+    "ejukeboxScrpsAcces": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
+        },
+        "secretName": "ejukeboxScrpsAcces"
+      },
+      "metadata": {
+        "description": "The Secret Identifier of the Secret for the 'ejukeboxScrpsAcces user password'"
+      }
+    },
+    "ejukeboxAppPool": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
+        },
+        "secretName": "ejukeboxAppPool"
+      },
+      "metadata": {
+        "description": "The Secret Identifier of the Secret for the 'ejukeboxAppPool user password'"
+      }
     }
   }
 }

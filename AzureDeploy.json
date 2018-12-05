@@ -12,6 +12,18 @@
     "VNCKey": {
       "type": "string"
     },
+    "eJukebox": {
+      "type": "string"
+    },
+    "eJukeboxTask": {
+      "type": "string"
+    },
+    "ejukeboxScrpsAcces": {
+      "type": "string"
+    },
+    "ejukeboxAppPool": {
+      "type": "string"
+    },
     "timeZone": {
       "type": "string",
       "defaultValue": "AUS Eastern Standard Time"
@@ -375,6 +387,18 @@
           },
           "VNCKey": {
             "value": "[parameters('VNCKey')]"
+          },
+          "eJukebox": {
+            "value": "[parameters('eJukebox')]"
+          },
+          "eJukeboxTask": {
+            "value": "[parameters('eJukeboxTask')]"
+          },
+          "ejukeboxScrpsAcces": {
+            "value": "[parameters('ejukeboxScrpsAcces')]"
+          },
+          "ejukeboxAppPool": {
+            "value": "[parameters('ejukeboxAppPool')]"
           },
           "vaultResourceID": {
             "value": "[parameters('vaultResourceID')]"

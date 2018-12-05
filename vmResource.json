@@ -50,6 +50,18 @@
     "VNCKey": {
       "type": "string"
     },
+    "eJukebox": {
+      "type": "string"
+    },
+    "eJukeboxTask": {
+      "type": "string"
+    },
+    "ejukeboxScrpsAcces": {
+      "type": "string"
+    },
+    "ejukeboxAppPool": {
+      "type": "string"
+    },
     "vaultResourceID": {
       "type": "string"
     },
@@ -241,8 +253,12 @@
                         "VM_Name_Suffix": "[parameters('VM_Name_Suffix')]",
                         "nodeName": "[parameters('vmName')]",
                         "VNCKey": "[parameters('VNCKey')]",
-                        "dscartifacts": "[parameters('DSCartifactsLocation')]",
-                        "dscartifactsSasToken": "[parameters('DSCdscartifactsSasToken')]"
+                        "eJukebox_credential": "[parameters('eJukebox')]",
+                        "eJukeboxTask_credential": "[parameters('eJukeboxTask')]",
+                        "ejukeboxScrpsAcces_credential": "[parameters('ejukeboxScrpsAcces')]",
+                        "ejukeboxAppPool_credential": "[parameters('ejukeboxAppPool')]",
+                        "dscartifacts": "[parameters('_DSCartifactsLocation')]",
+                        "dscartifactsSasToken": "[parameters('_DSCartifactsLocationSasToken')]"
                       },
                       //"configurationData": {
                       //"url": "[concat(parameters('_artifactsLocation'), variables('DSCArchiveFolder'), '/', variables('ConfigurationDataScriptName'))]"
@@ -447,8 +463,12 @@
                         "VM_Name_Suffix": "[parameters('VM_Name_Suffix')]",
                         "nodeName": "[parameters('vmName')]",
                         "VNCKey": "[parameters('VNCKey')]",
-                        "dscartifacts": "[parameters('DSCartifactsLocation')]",
-                        "dscartifactsSasToken": "[parameters('DSCdscartifactsSasToken')]"
+                        "eJukebox_credential": "[parameters('eJukebox')]",
+                        "eJukeboxTask_credential": "[parameters('eJukeboxTask')]",
+                        "ejukeboxScrpsAcces_credential": "[parameters('ejukeboxScrpsAcces')]",
+                        "ejukeboxAppPool_credential": "[parameters('ejukeboxAppPool')]",
+                        "dscartifacts": "[parameters('_DSCartifactsLocation')]",
+                        "dscartifactsSasToken": "[parameters('_DSCartifactsLocationSasToken')]"
                       },
                       //"configurationData": {
                       //"url": "[concat(parameters('_artifactsLocation'), variables('DSCArchiveFolder'), '/', variables('ConfigurationDataScriptName'))]"
