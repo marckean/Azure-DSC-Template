@@ -13,16 +13,16 @@
       "type": "string"
     },
     "eJukebox": {
-      "type": "string"
+      "type": "secureObject"
     },
     "eJukeboxTask": {
-      "type": "string"
+      "type": "secureObject"
     },
     "ejukeboxScrpsAcces": {
-      "type": "string"
+      "type": "secureObject"
     },
     "ejukeboxAppPool": {
-      "type": "string"
+      "type": "secureObject"
     },
     "timeZone": {
       "type": "string",

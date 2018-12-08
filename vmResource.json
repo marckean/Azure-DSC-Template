@@ -51,16 +51,16 @@
       "type": "string"
     },
     "eJukebox": {
-      "type": "string"
+      "type": "secureObject"
     },
     "eJukeboxTask": {
-      "type": "string"
+      "type": "secureObject"
     },
     "ejukeboxScrpsAcces": {
-      "type": "string"
+      "type": "secureObject"
     },
     "ejukeboxAppPool": {
-      "type": "string"
+      "type": "secureObject"
     },
     "vaultResourceID": {
       "type": "string"
@@ -102,6 +102,7 @@
     "dscArchiveFolder": "DSC",
     "dscFileName": "DSC.ps1",
     "dscArchiveFileName": "DSC.zip",
+    "ConfigurationDataScriptName": "ConfigurationData.psd1",
     "CustomScriptParameters": "[concat('-artifactsLocation ', parameters('_artifactsLocation'), ' -artifactsLocationSasToken \"', parameters('_artifactsLocationSasToken'), '\" -folderName ', variables('CustomScriptScriptFolder'), ' -fileToInstall ', variables('fileToBeCopied'))]"
   },
   "resources": [
@@ -260,9 +261,9 @@
                         "dscartifacts": "[parameters('_DSCartifactsLocation')]",
                         "dscartifactsSasToken": "[parameters('_DSCartifactsLocationSasToken')]"
                       },
-                      //"configurationData": {
-                      //"url": "[concat(parameters('_artifactsLocation'), variables('DSCArchiveFolder'), '/', variables('ConfigurationDataScriptName'))]"
-                      //},
+                      "configurationData": {
+                      "url": "[concat(parameters('_artifactsLocation'), variables('DSCArchiveFolder'), '/', variables('ConfigurationDataScriptName'))]"
+                      },
                       "RebootNodeIfNeeded": true,
                       "ConfigurationMode": "ApplyandAutoCorrect",
                       "ActionAfterReboot": "ContinueConfiguration",
@@ -470,9 +471,9 @@
                         "dscartifacts": "[parameters('_DSCartifactsLocation')]",
                         "dscartifactsSasToken": "[parameters('_DSCartifactsLocationSasToken')]"
                       },
-                      //"configurationData": {
-                      //"url": "[concat(parameters('_artifactsLocation'), variables('DSCArchiveFolder'), '/', variables('ConfigurationDataScriptName'))]"
-                      //},
+                      "configurationData": {
+                        "url": "[concat(parameters('_artifactsLocation'), variables('DSCArchiveFolder'), '/', variables('ConfigurationDataScriptName'))]"
+                      },
                       "RebootNodeIfNeeded": true,
                       "ConfigurationMode": "ApplyandAutoCorrect",
                       "ActionAfterReboot": "ContinueConfiguration",
