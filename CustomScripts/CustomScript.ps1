@@ -2,6 +2,7 @@ param (
     [string]$artifactsLocation,
     [string]$artifactsLocationSasToken,
     [string]$folderName,
+    [string]$DSCEncryptionCertThumbnail, #need to back this up in the scripts
     [string]$fileToInstall # UserLogonScript.ps1
 )
 
@@ -27,13 +28,14 @@ Configuration LCMConfig
             RebootNodeIfNeeded = $true
             ActionAfterReboot = 'ContinueConfiguration'
             ConfigurationModeFrequencyMins = 15
+            CertificateId = $DSCEncryptionCertificate
         }
     }
 }
 
 LCMConfig -OutputPath "$env:SystemDrive\LCMConfig"
 Set-DscLocalConfigurationManager -Path "$env:SystemDrive\LCMConfig" -Verbose -Force
-Set-DscLocalConfigurationManager .\LCMConfig -Verbose -Force
+#Set-DscLocalConfigurationManager .\LCMConfig -Verbose -Force
 
 <# Dropbox
 $dropboxDBfile = Get-ChildItem -Path $env:USERPROFILE\AppData\Local -Recurse -ErrorAction SilentlyContinue | ? {$_.Name -eq 'host.db'}
