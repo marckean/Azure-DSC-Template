@@ -11,6 +11,9 @@ $dest = "C:"
 #New-Item -Path $dest -ItemType directory
 Invoke-WebRequest $source -OutFile "$dest\$fileToInstall"
 
+# Import to the DSC encryption public certificate to my store
+Import-Certificate -FilePath "$env:temp\DscPublicKey.cer" -CertStoreLocation Cert:\LocalMachine\My
+
 # The DSC configuration that will generate metaconfigurations
 [DscLocalConfigurationManager()]
 Configuration LCMConfig
@@ -30,7 +33,7 @@ Configuration LCMConfig
 
 LCMConfig -OutputPath "$env:SystemDrive\LCMConfig"
 Set-DscLocalConfigurationManager -Path "$env:SystemDrive\LCMConfig" -Verbose -Force
-
+Set-DscLocalConfigurationManager .\LCMConfig -Verbose -Force
 
 <# Dropbox
 $dropboxDBfile = Get-ChildItem -Path $env:USERPROFILE\AppData\Local -Recurse -ErrorAction SilentlyContinue | ? {$_.Name -eq 'host.db'}
