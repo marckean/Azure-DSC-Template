@@ -21,7 +21,6 @@ param
 )
 
 Import-DscResource -ModuleName PSDesiredStateConfiguration
-Import-DscResource -ModuleName xWebAdministration
 
 $BuildData = "$env:SystemDrive\SourceFiles"
 Node $env:COMPUTERNAME
@@ -462,115 +461,7 @@ LocalConfigurationManager
 		}
         DependsOn = "[Script]PHPACLs"
     }
-	# Configure IIS
-	Script ConfigureIIS
-	{
-        TestScript = { # the TestScript block runs first. If the TestScript block returns $false, the SetScript block will run
-            $result = Test-Path -path "$env:SystemDrive\inetpub\wwwroot\request"
-
-            return $result
-        }
-        SetScript = {
-            $HostHeader = "$VM_Name_Suffix.ejukebox.net"
-            $CertSubject = 'ejukebox.net'
-
-            #$cred = Get-Credential
-
-            Import-Module WebAdministration
-            $thumbprint = Get-ChildItem -Path Cert:\LocalMachine\My |
-            where {$_.Subject -match $CertSubject -and $_.HasPrivateKey -eq 'True'} | Select-Object -ExpandProperty Thumbprint
-            #Add HTTPS port 443 binding
-            New-WebBinding -Name "Default Web Site" -IP "*" -Port 443 -Protocol https -HostHeader $hostheader
-            Get-Item -Path "cert:\localmachine\my\$thumbprint" | New-Item -path IIS:\SslBindings\0.0.0.0!443!$hostheader
-            #Remove-Item -path IIS:\SslBindings\0.0.0.0!443
-            #Get-Item IIS:\SslBindings\0.0.0.0!443 | Remove-Item
-            #Set Physical Path for Default Website
-            if ((Test-Path -path "$env:SystemDrive\inetpub\wwwroot\request") -ne $True) {
-                new-item -type directory -path "$env:SystemDrive\inetpub\wwwroot\request"
-            }
-            Set-ItemProperty 'IIS:\sites\Default Web Site' -Name physicalpath -Value $env:SystemDrive\inetpub\wwwroot\request
-            #Create scripts IIS application
-            New-Item -ItemType Directory -Path C:\inetpub\wwwroot\request\scripts
-            New-Item 'IIS:\sites\Default Web Site\scripts' -physicalPath C:\inetpub\wwwroot\request\scripts -Type Application
-
-            #Set Require SSL to the scripts application
-            Set-webconfigurationproperty -Filter //security/access -Name sslflags -Value "Ssl" –PSPath IIS:\  -location 'Default Web Site/scripts'
-            #Install Basic Authentication
-            dism /online /enable-feature /featurename:IIS-BasicAuthentication
-
-
-            #Disable anonymous authentication
-            $process = 'cmd.exe'
-            $arguments = '/c  %systemroot%\System32\inetsrv\appcmd.exe unlock config -section:system.webServer/security/authentication/anonymousAuthentication'
-            start-process $process -ArgumentList $arguments -Wait
-
-            $process = 'cmd.exe'
-            $arguments = '/c  %systemroot%\System32\inetsrv\appcmd.exe set config "Default Web Site/scripts" -section:system.webServer/security/authentication/anonymousAuthentication -enabled:false -commitpath:"Default Web Site/scripts"'
-            start-process $process -ArgumentList $arguments -Wait
-
-            #Enable basic authentication only on the Scripts application
-            $process = 'cmd.exe'
-            $arguments = '/c  %systemroot%\System32\inetsrv\appcmd.exe unlock config -section:system.webServer/security/authentication/basicAuthentication'
-            start-process $process -ArgumentList $arguments -Wait
-
-            $process = 'cmd.exe'
-            $arguments = '/c  %systemroot%\System32\inetsrv\appcmd.exe set config "Default Web Site/scripts" -section:system.webServer/security/authentication/basicAuthentication -enabled:true -commitpath:"Default Web Site/scripts"'
-            start-process $process -ArgumentList $arguments -Wait
-
-        }
-		GetScript = { # should return a hashtable representing the state of the current node
-            $result = Test-Path -path "$env:SystemDrive\inetpub\wwwroot\request"
-			@{
-				"IISConfigured" = $result
-			}
-		}
-        DependsOn = @("[Script]PHPACLs","[User]ejukeboxScrpsAcces")
-    }
-	# Configure IIS Application Pool
-	Script ConfigureIISApplicationPool
-	{
-        TestScript = { # the TestScript block runs first. If the TestScript block returns $false, the SetScript block will run
-            Import-Module WebAdministration
-            if ((Get-ItemProperty 'IIS:\sites\Default Web Site\scripts' -Name applicationPool).value -notmatch 'Default') {return $True}
-			else {return $False}
-            
-        }
-        SetScript = {
-            #Add scripts application to new application pool
-            Import-Module WebAdministration
-            Set-ItemProperty 'IIS:\sites\Default Web Site\scripts' -Name applicationPool -Value eJukeScripts
-
-        }
-		GetScript = { # should return a hashtable representing the state of the current node
-            Import-Module WebAdministration
-            $result = (Get-ItemProperty 'IIS:\sites\Default Web Site\scripts' -Name applicationPool).value
-			@{
-				"Application Pool" = $result
-			}
-		}
-        DependsOn = "[xWebAppPool]eJukeScripts"
-    }
-
-#endregion
-
-
-################################################################################
-##################     xWebAdministration
-################################################################################
-#region Users & Groups
-	# Configure PHP for IIS
-	xWebAppPool eJukeScripts
-	{
-        Name = "eJukeScripts"
-        Ensure = "Present"
-        enable32BitAppOnWin64 = $true
-        autoStart = $true
-        LoadUserProfile = $false
-        startMode = "AlwaysRunning"
-        identityType = 'SpecificUser'
-        DependsOn = "[Script]ConfigureIIS"
-        Credential = $eJukeboxAppPool_credential
-    }
+	
 #endregion
 
 ################################################################################
