@@ -17,19 +17,19 @@
       }
     },
     "RG_Name": {
-      "value": "eJukeNew",
+      "value": "MarcDSC2019",
       "metadata": {
         "description": "Name of the main resource group where the primary Resources are deployed to, e.g. the VM, NIC, Disks etc"
       }
     },
     "VM_Name_Prefix": {
-      "value": "eJukeNew",
+      "value": "MarcDSC",
       "metadata": {
         "description": "Prefix for Computer Name"
       }
     },
     "VM_Name_Suffix": {
-      "value": "2018",
+      "value": "2019",
       "metadata": {
         "description": "Suffix for Computer Name"
       }
@@ -41,7 +41,7 @@
       }
     },
     "Shared_RG_Name": {
-      "value": "SharedResources",
+      "value": "DSCSharedResources",
       "metadata": {
         "description": "Name of the resource group where Shared Resources are deployed to, e.g. the vNet (ignored if deployed into an existing vNet)"
       }
