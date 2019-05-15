@@ -473,8 +473,6 @@ LocalConfigurationManager
         SetScript = {
             $HostHeader = "$VM_Name_Suffix.ejukebox.net"
             $CertSubject = 'ejukebox.net'
-            $Username = 'ejukebox.scrps.acces'
-            $Password = $eJukeboxScriptsAccess_credential
 
             #$cred = Get-Credential
 
