@@ -27,6 +27,8 @@ $DebugOptions = "None"
 $StorageAccountName = 'stage' + ((Get-AzureRmContext).Subscription.Id).Replace('-', '').substring(0, 19)
 # Existing DSC source files storage account, where DSC source files are stored on blob storage
 $dscSourceFilesLocationName = 'DSCStorage'
+$dscArtifactsLocationSasTokenName = '_DSCartifactsLocationSasToken'
+$ArtifactsLocationName = '_artifactsLocationSasToken'
 $dscStorageAccountName = 'marcdsc2019' # Set this to blank '' to skip using DSC source files
 $dscStorageContainerName = 'ejukeartifacts'
 
