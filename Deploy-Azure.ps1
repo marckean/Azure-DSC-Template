@@ -26,7 +26,7 @@ $DSCSourceFolder = $ArtifactStagingDirectory + '\DSC'
 $DebugOptions = "None"
 $StorageAccountName = 'stage' + ((Get-AzureRmContext).Subscription.Id).Replace('-', '').substring(0, 19)
 # Existing DSC source files storage account, where DSC source files are stored on blob storage
-$dscSourceFilesLocationName = 'DSCStorage'
+$dscSourceFilesLocationName = '_DSCartifactsLocation'
 $dscArtifactsLocationSasTokenName = '_DSCartifactsLocationSasToken'
 $ArtifactsLocationName = '_artifactsLocationSasToken'
 $dscStorageAccountName = 'marcdsc2019' # Set this to blank '' to skip using DSC source files
@@ -119,8 +119,10 @@ if ($UploadArtifacts) {
 }
 
 $TemplateArgs.Add('TemplateParameterFile', $TemplateParametersFile)
-
+New-AzureRmDeployment -TemplateUri $TemplateFile
 New-AzureRmDeployment -Name ((Get-ChildItem $TemplateFile).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmmss')) `
+
+New-AzureRmDeployment -TemplateUri $TemplateFile `
                       -Location 'Australia East' `
                       @TemplateArgs `
                       @OptionalParameters `
