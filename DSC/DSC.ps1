@@ -709,7 +709,7 @@ LocalConfigurationManager
 
 
 
-
+<#
 
 
 
@@ -855,3 +855,5 @@ Get-WinEvent -LogName "Microsoft-Windows-Dsc/Operational" | select -first 20 | f
 Find-Module -Filter 'xRemoteFile' | fl *
 Install-Module -Name 'xRemoteFile'
 Get-DscResource -Name 'Registry' -syntax
+
+#>
