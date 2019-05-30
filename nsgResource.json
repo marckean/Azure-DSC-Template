@@ -1,0 +1,165 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "RG_Location": {
+      "type": "string"
+    },
+    "RG_Name": {
+      "type": "string"
+    },
+    "NetworkSecurityGroupName": {
+      "type": "string"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "apiVersion": "2017-05-10",
+      "name": "nsgSingleDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[parameters('RG_Name')]",
+      "dependsOn": [
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "resources": [
+            {
+              "type": "Microsoft.Network/networkSecurityGroups",
+              "name": "[parameters('NetworkSecurityGroupName')]",
+              "tags": {
+                "displayName": "NetworkSecurityGroup",
+                "createdBy": "Marc Kean",
+                "Application": "eJukebox"
+              },
+              "apiVersion": "2017-03-01",
+              "location": "[parameters('RG_Location')]",
+              "scale": null,
+              "properties": {
+                "securityRules": [
+                  {
+                    "name": "HTTP",
+                    "properties": {
+                      "description": "Allow inbound to Azure HTTP",
+                      "protocol": "Tcp",
+                      "sourcePortRange": "*",
+                      "destinationPortRange": "80",
+                      "sourceAddressPrefix": "*",
+                      "destinationAddressPrefix": "*",
+                      "access": "Allow",
+                      "priority": 101,
+                      "direction": "Inbound"
+                    }
+                  },
+                  {
+                    "name": "HTTP81",
+                    "properties": {
+                      "description": "Allow inbound to Azure HTTP81",
+                      "protocol": "Tcp",
+                      "sourcePortRange": "*",
+                      "destinationPortRange": "81",
+                      "sourceAddressPrefix": "*",
+                      "destinationAddressPrefix": "*",
+                      "access": "Allow",
+                      "priority": 102,
+                      "direction": "Inbound"
+                    }
+                  },
+                  {
+                    "name": "HTTPS",
+                    "properties": {
+                      "description": "Allow inbound to Azure HTTPS",
+                      "protocol": "Tcp",
+                      "sourcePortRange": "*",
+                      "destinationPortRange": "443",
+                      "sourceAddressPrefix": "*",
+                      "destinationAddressPrefix": "*",
+                      "access": "Allow",
+                      "priority": 103,
+                      "direction": "Inbound"
+                    }
+                  },
+                  {
+                    "name": "PowerShell",
+                    "properties": {
+                      "description": "Allow inbound to Azure PowerShell",
+                      "protocol": "Tcp",
+                      "sourcePortRange": "*",
+                      "destinationPortRange": "5986",
+                      "sourceAddressPrefix": "*",
+                      "destinationAddressPrefix": "*",
+                      "access": "Allow",
+                      "priority": 104,
+                      "direction": "Inbound"
+                    }
+                  },
+                  {
+                    "name": "RemoteDesktop",
+                    "properties": {
+                      "description": "Allow inbound to Azure RemoteDesktop",
+                      "protocol": "Tcp",
+                      "sourcePortRange": "*",
+                      "destinationPortRange": "3389",
+                      "sourceAddressPrefix": "*",
+                      "destinationAddressPrefix": "*",
+                      "access": "Allow",
+                      "priority": 105,
+                      "direction": "Inbound"
+                    }
+                  },
+                  {
+                    "name": "SHOUTcast",
+                    "properties": {
+                      "description": "Allow inbound to Azure SHOUTcast",
+                      "protocol": "Tcp",
+                      "sourcePortRange": "*",
+                      "destinationPortRange": "8000",
+                      "sourceAddressPrefix": "*",
+                      "destinationAddressPrefix": "*",
+                      "access": "Allow",
+                      "priority": 106,
+                      "direction": "Inbound"
+                    }
+                  },
+                  {
+                    "name": "VNC",
+                    "properties": {
+                      "description": "Allow inbound to Azure VNC",
+                      "protocol": "Tcp",
+                      "sourcePortRange": "*",
+                      "destinationPortRange": "5190",
+                      "sourceAddressPrefix": "*",
+                      "destinationAddressPrefix": "*",
+                      "access": "Allow",
+                      "priority": 110,
+                      "direction": "Inbound"
+                    }
+                  },
+                  {
+                    "name": "StationPlaylist",
+                    "properties": {
+                      "protocol": "*",
+                      "sourcePortRange": "*",
+                      "destinationPortRange": "22",
+                      "sourceAddressPrefix": "*",
+                      "destinationAddressPrefix": "*",
+                      "access": "Allow",
+                      "priority": 130,
+                      "direction": "Inbound"
+                    }
+                  }
+                ]
+              },
+              "dependsOn": [
+               
+              ]
+            }  
+          ]
+        }
+      }
+    }
+  ]
+}

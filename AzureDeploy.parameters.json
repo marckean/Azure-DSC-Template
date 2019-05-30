@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "adminUsername": {
+      "value": "marc.kean"
+    },
+    "adminPassword": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
+        },
+        "secretName": "VMTestAdminPassword"
+      }
+    },
+    "RG_Name": {
+      "value": "DSCTestTemplate4"
+    },
+    "Shared_RG_Name": {
+      "value": "SharedResources",
+      "metadata": {
+        "description": "Name of the resource group where Shared Resources are deployed to, e.g. the Virtual Network (ignored if deployed into an existing vNet)"
+      }
+    },
+    "VM_Name_Prefix": {
+      "value": "eJukebox",
+      "metadata": {
+        "description": "Prefix for Computer Name"
+      }
+    },
+    "VM_Name_Suffix": {
+      "value": "1606",
+      "metadata": {
+        "description": "Suffix for Computer Name"
+      }
+    },
+    "dataDiskCount": {
+      "value": 1
+    },
+    "VNCKey": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
+        },
+        "secretName": "VNCKey"
+      }
+    }
+  }
+}
