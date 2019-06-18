@@ -43,11 +43,11 @@ Logon to https://resources.azure.com same as your Azure logon. Navigate through 
 Select your Key Vault, then on the right select both **ReadWrite** & **Edit**.
 <p align="center"><img src="./ReadmeImages/Image04.png" width=80% height=80%></p>
 At the very bottom, change the 3 items to say ‘true‘, then press the PUT button at the top to apply the settings.
-<p align="center"><img src="./ReadmeImages/Image05.png" width=60%></p>
+<p align="center"><img src="./ReadmeImages/Image05.png" width=80% height=80%></p>
 
 ## How are these passwords & secrets accessed by using a JSON template?
 To create two parameters **adminPassword** & **VNCKey** as per my GIT repo, in the parameters section at the top of **WindowsVirtualMachine.json**, add in these parameters.
-<p align="center"><img src="./ReadmeImages/Image06.png" width=60%></p>
+<p align="center"><img src="./ReadmeImages/Image06.png" width=80% height=80%></p>
 In the **WindowsVirtualMachine.parameters.json** file, add the same parameters while referencing the Secret name & Resource ID of your Key Vault.
 <p align="center"><img src="./ReadmeImages/Image07.png" width=70%></p>
 
@@ -69,5 +69,5 @@ Simply export a .PFX (Private Key) certificate from your computer.
 
 
 <p align="center">
-  <img src="AzureNetworkT1,T2,T3.png" width=60%>
+  <img src="AzureNetworkT1,T2,T3.png" width=80% height=80%>
 </p>
