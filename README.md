@@ -53,7 +53,7 @@ In the **WindowsVirtualMachine.parameters.json** file, add the same parameters w
 
 ## Certificates
 This template in this blog post has the ability to import in a .PFX certificate.
-<p align="center"><img src="./ReadmeImages/Image08.png" width=70%></p>
+<p align="center"><img src="./ReadmeImages/Image08.png" width=70% height=70%></p>
 **Certificates** are also kept in Azure’s Key Vault under Certificates.
 <p align="center"><img src="./ReadmeImages/Image09.png" width=80%></p>
 Simply export a .PFX (Private Key) certificate from your computer.
