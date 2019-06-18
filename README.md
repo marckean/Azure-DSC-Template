@@ -70,11 +70,11 @@ This template in this blog post has the ability to import in a .PFX certificate.
 
 Simply export a .PFX (Private Key) certificate from your computer.
 
-<p align="center"><img src="./ReadmeImages/Image10.png" width=80% height=80%></p>
+<p align="center"><img src="./ReadmeImages/Image10.png" width=60% height=60%></p>
 
 Then upload this certificate to Azure’s Key Vault.
 
-<p align="center"><img src="./ReadmeImages/Image11.png" width=80% height=80%></p>
+<p align="center"><img src="./ReadmeImages/Image11.png" width=70% height=70%></p>
 
 You need to then click on the newly imported certificate in Azure Key Vault, then copy the **Secret Identifier** to the clipboard of your computer.
 
