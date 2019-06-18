@@ -57,16 +57,16 @@ To create two parameters **adminPassword** & **VNCKey** as per my GIT repo, in t
 
 In the **WindowsVirtualMachine.parameters.json** file, add the same parameters while referencing the Secret name & Resource ID of your Key Vault.
 
-<p align="center"><img src="./ReadmeImages/Image07.png" width=70%></p>
+<p align="center"><img src="./ReadmeImages/Image07.png" width=80% height=80%></p>
 
 ## Certificates
 This template in this blog post has the ability to import in a .PFX certificate.
 
-<p align="center"><img src="./ReadmeImages/Image08.png" width=70% height=70%></p>
+<p align="center"><img src="./ReadmeImages/Image08.png" width=80% height=80%></p>
 
 **Certificates** are also kept in Azure’s Key Vault under Certificates.
 
-<p align="center"><img src="./ReadmeImages/Image09.png" width=80%></p>
+<p align="center"><img src="./ReadmeImages/Image09.png" width=80% height=80%></p>
 
 Simply export a .PFX (Private Key) certificate from your computer.
 
@@ -79,8 +79,3 @@ Simply export a .PFX (Private Key) certificate from your computer.
 </a>
 
 
-
-
-<p align="center">
-  <img src="AzureNetworkT1,T2,T3.png" width=80% height=80%>
-</p>
