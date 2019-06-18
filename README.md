@@ -41,7 +41,7 @@ To allow Azure services to be able to access Azure Key Vault, you’ll need to o
 Logon to https://resources.azure.com same as your Azure logon. Navigate through the levels to where your Key Vault is located…. Subscriptions > {Your Subscription} > resourceGroups > {Your Resource Group} > providers > vaults……
 
 Select your Key Vault, then on the right select both **ReadWrite** & **Edit**.
-<p align="center"><img src="./ReadmeImages/Image04.png" width=70%></p>
+<p align="center"><img src="./ReadmeImages/Image04.png" width=80% height=80%></p>
 At the very bottom, change the 3 items to say ‘true‘, then press the PUT button at the top to apply the settings.
 <p align="center"><img src="./ReadmeImages/Image05.png" width=60%></p>
 
