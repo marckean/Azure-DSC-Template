@@ -57,7 +57,7 @@ To create two parameters **adminPassword** & **VNCKey** as per my GIT repo, in t
 
 In the **WindowsVirtualMachine.parameters.json** file, add the same parameters while referencing the Secret name & Resource ID of your Key Vault.
 
-<p align="center"><img src="./ReadmeImages/Image07.png" width=80% height=80%></p>
+<p align="center"><img src="./ReadmeImages/Image07.png" width=90% height=90%></p>
 
 ## Certificates
 This template in this blog post has the ability to import in a .PFX certificate.
@@ -78,12 +78,12 @@ Then upload this certificate to Azure’s Key Vault.
 
 You need to then click on the newly imported certificate in Azure Key Vault, then copy the **Secret Identifier** to the clipboard of your computer.
 
-<p align="center"><img src="./ReadmeImages/Image12.png" width=80% height=80%></p>
+<p align="center"><img src="./ReadmeImages/Image12.png" width=90% height=90%></p>
 
 ## Changes to the JSON Template
 Make sure you have the local copy of the GitHub repo folder open in VS Code….
 
-<p align="center"><img src="./ReadmeImages/Image13.png" width=80% height=80%></p>
+<p align="center"><img src="./ReadmeImages/Image13.png" width=70% height=70%></p>
 
 Select the JSON template, in VS Code you need to run through all the parameters at the top and in the parameters file, change the settings as you see fit to suite your environment. For instance the Azure Automation parameters.
 
