@@ -35,7 +35,7 @@ The best place I have found to store source files is in the local repo folder it
 Sensitive information like passwords etc or Software licence keys used as part of a DSC initiated software installation, you would need to store these in Azure’s Key Vault.
 
 Create a Key Vault of you don’t have one already. Then for the purpose of this blog, add the two secrets below, adding your own values.
-<p align="center"><img src="./ReadmeImages/Image03.png" width=70%></p>
+<p align="center"><img src="./ReadmeImages/Image03.png" width=80% height=80%></p>
 To allow Azure services to be able to access Azure Key Vault, you’ll need to open it up to allow access.
 
 Logon to https://resources.azure.com same as your Azure logon. Navigate through the levels to where your Key Vault is located…. Subscriptions > {Your Subscription} > resourceGroups > {Your Resource Group} > providers > vaults……
