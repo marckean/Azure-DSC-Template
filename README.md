@@ -70,6 +70,31 @@ This template in this blog post has the ability to import in a .PFX certificate.
 
 Simply export a .PFX (Private Key) certificate from your computer.
 
+<p align="center"><img src="./ReadmeImages/Image10.png" width=80% height=80%></p>
+
+Then upload this certificate to Azure’s Key Vault.
+
+<p align="center"><img src="./ReadmeImages/Image11.png" width=80% height=80%></p>
+
+You need to then click on the newly imported certificate in Azure Key Vault, then copy the **Secret Identifier** to the clipboard of your computer.
+
+<p align="center"><img src="./ReadmeImages/Image12.png" width=80% height=80%></p>
+
+## Changes to the JSON Template
+Make sure you have the local copy of the GitHub repo folder open in VS Code….
+
+<p align="center"><img src="./ReadmeImages/Image13.png" width=80% height=80%></p>
+
+Select the JSON template, in VS Code you need to run through all the parameters at the top and in the parameters file, change the settings as you see fit to suite your environment. For instance the Azure Automation parameters.
+
+You also need to change specifically the Secret Identifier as per the step above.
+
+<p align="center"><img src="./ReadmeImages/Image14.png" width=80% height=80%></p>
+
+Once you’re happy everything looks good | Save, commit the file locally, then sync to your GitHub repo.
+
+## Deployment
+
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmarckean%2FAzure-DSC-Template%2Fmaster%2FWindowsVirtualMachine.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
