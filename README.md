@@ -43,7 +43,7 @@ Logon to https://resources.azure.com same as your Azure logon. Navigate through 
 Select your Key Vault, then on the right select both **ReadWrite** & **Edit**.
 <p align="center"><img src="./ReadmeImages/Image04.png" height="200"></p>
 At the very bottom, change the 3 items to say ‘true‘, then press the PUT button at the top to apply the settings.
-<p align="center"><img src="./ReadmeImages/Image05.png" height="200"></p>
+<p align="center"><img src="./ReadmeImages/Image05.png" height=80%></p>
 
 ## How are these passwords & secrets accessed by using a JSON template?
 To create two parameters **adminPassword** & **VNCKey** as per my GIT repo, in the parameters section at the top of **WindowsVirtualMachine.json**, add in these parameters.
