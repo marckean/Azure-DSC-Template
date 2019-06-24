@@ -5,8 +5,8 @@ Details here https://marckean.com/2018/07/24/azure-dsc-deployment-using-a-json-t
 Basically
 
 - Uses the **Microsoft.Resources/resourceGroups** method and deploys a Resource Group
-- Deploys an Azure VM
-- Deploys a vNet into a separate Resource Group (Cross Resource Group Deployment), a resource group used for shared resources
+- Deploys an Azure VM using all **nested deployments**, each VM resource is a separate template
+- Deploys a vNet into a separate Resource Group **Cross Resource Group Deployment**, a resource group used for **shared resources**
 - Leverages the **Custom Script extension** which runs a script as the local computer account at the time of deployment. This script copies a script from the artifcats location to the local C:\ drive to be used as a user logon script. The DSC sets up a scheduled task to call the script at the time of any user logon.
 - Leverages the Azure VM **DSC extension** to run the configuration on the VM. The JSON template also feeds parameter values into a DSC configuration script via the DSC extension
 
@@ -16,7 +16,7 @@ Basically
 ### [My other Repo](https://github.com/marckean/Azure-DSC-Automation)
 - Leverages the **DSC extension** only to register the VM with the **Azure Automation** pull server in order for DSC to run the configuration on the VM.
 
-You should:
+However, for this repo **Azure-DSC-Template**, you should:
 
 - Fork my repo to your own GitHub account from GitHub’s website
 <p align="center"><img src="./ReadmeImages/Image01.png" width=80%></p>
@@ -93,8 +93,9 @@ You also need to change specifically the Secret Identifier as per the step above
 
 Once you’re happy everything looks good | Save, commit the file locally, then sync to your GitHub repo.
 
-## Deployment
+The other option, you can simply deploy this as is
 
+## Deployment
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmarckean%2FAzure-DSC-Template%2Fmaster%2FWindowsVirtualMachine.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
