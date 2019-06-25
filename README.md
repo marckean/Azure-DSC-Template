@@ -2,7 +2,7 @@
 
 Details here https://marckean.com/2018/07/24/azure-dsc-deployment-using-a-json-template/
 
-Basically
+Basically:
 
 - Uses the **Microsoft.Resources/resourceGroups** method and deploys a Resource Group
 - Deploys an Azure VM using all **nested deployments**, each VM resource is a separate template
@@ -16,7 +16,8 @@ Basically
 ### [My other Repo](https://github.com/marckean/Azure-DSC-Automation)
 - Leverages the **DSC extension** only to register the VM with the **Azure Automation** pull server in order for DSC to run the configuration on the VM.
 
-However, for this repo **Azure-DSC-Template**, you should:
+## Forking Option
+A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project. As there are so many changes to this repo to this repo **Azure-DSC-Template**, you should:
 
 - Fork my repo to your own GitHub account from GitHub’s website
 <p align="center"><img src="./ReadmeImages/Image01.png" width=80%></p>
