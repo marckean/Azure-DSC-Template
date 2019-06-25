@@ -17,7 +17,11 @@ Basically:
 - Leverages the **DSC extension** only to register the VM with the **Azure Automation** pull server in order for DSC to run the configuration on the VM.
 
 ## Forking Option
-A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project. As there are so many changes to this repo to this repo **Azure-DSC-Template**, you should:
+A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project. As there are so many unique aspects to this repo i.e.
+- Storing the local VM admin password & VNC key as a **secret** in **Azure Key Vault**
+- Option to add certificate private keys (.PFX files) to the deployed VM using **Azure Key Vault**
+
+to this repo **Azure-DSC-Template**, you should:
 
 - Fork my repo to your own GitHub account from GitHub’s website
 <p align="center"><img src="./ReadmeImages/Image01.png" width=80%></p>

@@ -8,11 +8,46 @@
     },
     "adminPassword": {
       "type": "string",
-      "defaultValue": ""
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
+        },
+        "secretName": "VMTestAdminPassword"
+      }
+    },
+    "RG_Name": {
+      "type": "string",
+      "defaultValue": "DSCTestTemplate4"
+    },
+    "Shared_RG_Name": {
+      "type": "string",
+      "defaultValue": "SharedResources",
+      "metadata": {
+        "description": "Name of the resource group where Shared Resources are deployed to, e.g. the Virtual Network (ignored if deployed into an existing vNet)"
+      }
+    },
+    "VM_Name_Prefix": {
+      "type": "string",
+      "defaultValue": "eJukebox",
+      "metadata": {
+        "description": "Prefix for Computer Name"
+      }
+    },
+    "VM_Name_Suffix": {
+      "type": "string",
+      "defaultValue": "1606",
+      "metadata": {
+        "description": "Suffix for Computer Name"
+      }
     },
     "VNCKey": {
       "type": "string",
-      "defaultValue": ""
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/6bb00255-5486-4db1-96ca-5baefc18b0b2/resourceGroups/MSMarcVault/providers/Microsoft.KeyVault/vaults/MSMarcVault"
+        },
+        "secretName": "VNCKey"
+      }
     },
     "timeZone": {
       "type": "string",
@@ -29,25 +64,6 @@
     "RG_Location": {
       "type": "string",
       "defaultValue": "australiaeast"
-    },
-    "RG_Name": {
-      "type": "string",
-      "defaultValue": ""
-    },
-    "Shared_RG_Name": {
-      "type": "string",
-      "defaultValue": ""
-    },
-    "VM_Name_Prefix": {
-      "type": "string",
-      "defaultValue": ""
-    },
-    "VM_Name_Suffix": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Suffix for Computer Name"
-      }
     },
     "DisksType": {
       "type": "string",
