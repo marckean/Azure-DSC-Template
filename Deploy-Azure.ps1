@@ -10,12 +10,12 @@ $AADAppId = 'ea77ac17-5785-419b-a198-aaa384421905' # 201809MarcKeanSP_CLI
 $securePass = Read-Host "Azure password: " -AsSecureString
 $TenantId = '72f988bf-86f1-41af-91ab-2d7cd011db47' # microsoft.onmicrosoft.com
 $Cred = New-Object System.Management.Automation.PSCredential ($AADAppId, $securePass)
-Connect-AzureRmAccount -Credential $cred -ServicePrincipal -TenantId $TenantId
+Connect-AzAccount -Credential $cred -ServicePrincipal -TenantId $TenantId
 
-Select-AzureRmSubscription -SubscriptionId $SubscriptionId
+Select-AzSubscription -SubscriptionId $SubscriptionId
 
 $ArtifactStagingDirectory = '.'
-$TemplateParametersFile = $ArtifactStagingDirectory + '\AzureDeploy.parameters.json'
+$TemplateParametersFile = $ArtifactStagingDirectory + '\AzureDeploy.json'
 $ResourceGroupLocation = 'australiaeast'
 $UploadArtifacts = 'true'
 # Pull RG_Name from parameters file
@@ -24,7 +24,7 @@ $StorageContainerName = $ResourceGroupName.ToLowerInvariant() + '-stageartifacts
 $TemplateFile = $ArtifactStagingDirectory + '\AzureDeploy.json'
 $DSCSourceFolder = $ArtifactStagingDirectory + '\DSC'
 $DebugOptions = "None"
-$StorageAccountName = 'stage' + ((Get-AzureRmContext).Subscription.Id).Replace('-', '').substring(0, 19)
+$StorageAccountName = 'stage' + ((Get-AzContext).Subscription.Id).Replace('-', '').substring(0, 19)
 
 try {
     [Microsoft.Azure.Common.Authentication.AzureSession]::ClientFactory.AddUserAgent("AzureQuickStarts-$UI$($host.name)".replace(" ","_"), "1.0")
